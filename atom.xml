@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-05-28T14:20:21.077Z</updated>
+  <updated>2020-05-30T05:45:33.699Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Qt基础教程</title>
+    <link href="https://cryfeifei.top/2020/05/30/qt-ji-chu-jiao-cheng/"/>
+    <id>https://cryfeifei.top/2020/05/30/qt-ji-chu-jiao-cheng/</id>
+    <published>2020-05-30T05:18:13.000Z</published>
+    <updated>2020-05-30T05:45:33.699Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Qt主界面卡死的解决方案-一些具体实现方式</title>

@@ -198,4 +198,29 @@ TimerThread<span class="token operator">::</span><span class="token operator">~<
         <tag>多线程</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Qt基础教程</title>
+    <url>/2020/05/30/qt-ji-chu-jiao-cheng/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>磕磕绊绊，自己也学Qt很久了。本意想弄个视频教程来教大家如何入门Qt，然后自己还是懒癌犯了，我还是喜欢讲解Qt的源码。</p>
+<p>目前Qt的基础教程还是很多的，但是质量堪忧。刚入门时我看的时豆子君的学习之路，然后还是学到了不少的东西，也慢慢的对Qt有了自己的看法。回头看豆子君的教程还是有一些可以补充的。</p>
+<p>这次搞Qt的基础教程，我准备把我认为该补充的文章结合豆子大佬的教程搞一份新的教程出来。给豆子君发邮件也已经得到了他的允许。<a href="https://www.cryfeifei.cn/532.html" target="_blank" rel="noopener" title="往来邮件">往来邮件</a></p>
+<p>还有二三里的教程-Qt一二三，我看已经停更了，我也准备把他的停更的文章以及模块补充一些。（看来高级部分已经收费了</p>
+<p>目前基本就是这样的想法。准备整理一份新的Qt基础教程。</p>
+<p>我会一点点整理出来的。</p>
+<h1 id="Qt-基本概念"><a href="#Qt-基本概念" class="headerlink" title="Qt 基本概念"></a>Qt 基本概念</h1><ul>
+<li><a href="https://www.cryfeifei.cn/539.html" target="_blank" rel="noopener" title="Qt的基本概念-WIKI">Qt的基本概念-WIKI</a></li>
+</ul>
+<p>引读</p>
+<blockquote>
+<p><a href="https://www.cryfeifei.cn/541.html" target="_blank" rel="noopener" title="Qt简介">Qt简介</a><br><a href="https://www.cryfeifei.cn/545.html" target="_blank" rel="noopener" title="关于Qt">关于Qt</a><br><a href="https://www.cryfeifei.cn/542.html" target="_blank" rel="noopener" title="姚冬对Qt的看法">姚冬对Qt的看法</a></p>
+</blockquote>
+<h1 id="开发环境的搭建"><a href="#开发环境的搭建" class="headerlink" title="开发环境的搭建"></a>开发环境的搭建</h1><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><ul>
+<li><a href="https://www.cryfeifei.cn/620.html" target="_blank" rel="noopener" title="Windows下VS2019编译Qt5.13.2源码">Windows下VS2019编译Qt5.13.2源码</a></li>
+</ul>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ul>
+<li><a href="https://www.cryfeifei.cn/577.html" target="_blank" rel="noopener" title="Linux搭建Qt5.14开发环境">Linux搭建Qt5.14开发环境-傻瓜式</a>;</li>
+<li><a href="https://www.cryfeifei.cn/611.html" target="_blank" rel="noopener" title="Linux搭建Qt5.14开发环境-源码编译">Linux搭建Qt5.14开发环境-源码编译</a></li>
+</ul>
+<h1 id="Qt-比较重要的概念"><a href="#Qt-比较重要的概念" class="headerlink" title="Qt 比较重要的概念"></a>Qt 比较重要的概念</h1><h1 id="Qt-容器类"><a href="#Qt-容器类" class="headerlink" title="Qt 容器类"></a>Qt 容器类</h1><h1 id="Qt-MVC"><a href="#Qt-MVC" class="headerlink" title="Qt MVC"></a>Qt MVC</h1><h1 id="Qt-Widget"><a href="#Qt-Widget" class="headerlink" title="Qt Widget"></a>Qt Widget</h1><h1 id="Qt-Core"><a href="#Qt-Core" class="headerlink" title="Qt Core"></a>Qt Core</h1><h1 id="Qt多线程"><a href="#Qt多线程" class="headerlink" title="Qt多线程"></a>Qt多线程</h1><h1 id="Qt网络"><a href="#Qt网络" class="headerlink" title="Qt网络"></a>Qt网络</h1><h1 id="Qt打印"><a href="#Qt打印" class="headerlink" title="Qt打印"></a>Qt打印</h1>]]></content>
+  </entry>
 </search>
