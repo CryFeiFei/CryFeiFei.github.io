@@ -327,4 +327,18 @@ QString <span class="token function">getUserName</span><span class="token punctu
         <tag>Linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Poppler在Mac OS下编译</title>
+    <url>/2020/06/26/poppler-zai-mac-os-xia-bian-yi/</url>
+    <content><![CDATA[<p>#前言<br>众所周知，Poppler-qt5是跨平台的，但是目前Poppler在Mac OS下编译的资料一直没有找到。但是目前手头也没有mac的机器来试试（我可是搞Linux的！但是都是一个Unix爹啊）。目前有两个方法去编译Mac版本的poppler。现在特意总结下。毕竟我还是想把自己的阅读器搞到Mac上试试的。（这就是你想买Mac的理由？）</p>
+<h2 id="MacPorts"><a href="#MacPorts" class="headerlink" title="MacPorts"></a>MacPorts</h2><p>去Poppler的官方网站发现Poppler是支持MacPorts的。MacPorts是Mac上支持的第三方的包管理器（跟Ubuntu的 apt-get很像）。可以通过这个包管理器安装。</p>
+<h2 id="自己编译"><a href="#自己编译" class="headerlink" title="自己编译"></a>自己编译</h2><p>浏览了半天，发现一个老外写的文章。特意把链接放到这里。有兴趣的可以自己编译下。<br>原文<a href="http://www.freebyte.fr/?p=8" target="_blank" rel="noopener">http://www.freebyte.fr/?p=8</a></p>
+<p>这是我目前找到的所有在MacOS下编译的方法了。有想过使用google跟福昕合作开源的pdfium，先给自己挖个坑吧。</p>
+<p>PS:<br>最新的Qt6预览版已经有了pdf模块，就是使用的webengine里的pdf模块。<br>等出来之后就可以更新自己的阅读器了。</p>
+]]></content>
+      <tags>
+        <tag>Qt</tag>
+        <tag>poppler</tag>
+      </tags>
+  </entry>
 </search>
