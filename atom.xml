@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-25T16:32:20.401Z</updated>
+  <updated>2020-06-25T16:58:28.357Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Qt在Linux下获取当前系统用户名</title>
+    <link href="https://cryfeifei.top/2020/06/26/qt-zai-linux-xia-huo-qu-dang-qian-xi-tong-yong-hu-ming/"/>
+    <id>https://cryfeifei.top/2020/06/26/qt-zai-linux-xia-huo-qu-dang-qian-xi-tong-yong-hu-ming/</id>
+    <published>2020-06-25T16:50:14.000Z</published>
+    <updated>2020-06-25T16:58:28.357Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt; Qt没有直接的接口去获取到当前系统用户名，只能够间接的通过现有的接口去获取。（比如下边的例子通过获取home路径）&lt;/p&gt;
+&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;token
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>poppler-data(Windows)编译</title>
