@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-14T02:50:59.676Z</updated>
+  <updated>2020-06-25T16:32:20.401Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>poppler-data(Windows)编译</title>
+    <link href="https://cryfeifei.top/2020/06/26/poppler-data-windows-bian-yi/"/>
+    <id>https://cryfeifei.top/2020/06/26/poppler-data-windows-bian-yi/</id>
+    <published>2020-06-25T16:25:42.000Z</published>
+    <updated>2020-06-25T16:32:20.401Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;以Windows平台举例&lt;/p&gt;
+&lt;p&gt;下载 poppler-data ，进入目录&lt;/p&gt;
+&lt;p&gt;下载链接&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://poppler.freedesktop.org/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="poppler" scheme="https://cryfeifei.top/tags/poppler/"/>
+    
+      <category term="poppler-data" scheme="https://cryfeifei.top/tags/poppler-data/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt线程基础</title>
