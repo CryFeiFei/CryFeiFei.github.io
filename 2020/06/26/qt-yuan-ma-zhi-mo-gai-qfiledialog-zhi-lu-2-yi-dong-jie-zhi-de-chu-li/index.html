@@ -1,0 +1,1151 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Qt源码之魔改QFileDialog之路-2 移动介质的处理, Qt, C++">
+    <meta name="description" content="前言移动介质，一般就是指当前Linux系统下的 U 盘 / 挂载硬盘。 这两个移动介质都是挂载在/media/yourusername下来做的处理。（fhs2.4）（实际上fhs3.0的标准已经改到/run/media/username下了">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Qt源码之魔改QFileDialog之路-2 移动介质的处理 | 张小飞</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="张小飞" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">张小飞</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/2020/05/30/qt-ji-chu-jiao-cheng/" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>Qt基础教程</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">张小飞</div>
+        <div class="logo-desc">
+            
+            一个CPP开发的博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/2020/05/30/qt-ji-chu-jiao-cheng/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Qt基础教程
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Qt源码之魔改QFileDialog之路-2 移动介质的处理
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Qt/">
+                                <span class="chip bg-color">Qt</span>
+                            </a>
+                        
+                            <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
+                                <span class="chip bg-color">Qt源码</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-06-26
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-06-26
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    923
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    4 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>移动介质，一般就是指当前Linux系统下的 <strong>U 盘 / 挂载硬盘</strong>。 这两个移动介质都是挂载在<strong>/media/yourusername</strong>下来做的处理。（fhs2.4）（实际上fhs3.0的标准已经改到/run/media/username下了）</p>
+<h2 id="前期调研"><a href="#前期调研" class="headerlink" title="前期调研"></a>前期调研</h2><p>从网上找到关于u盘检测的插拔有两种方案（这两种方案硬盘挂载是检测不到的）：</p>
+<h3 id="U盘插拔检测"><a href="#U盘插拔检测" class="headerlink" title="U盘插拔检测"></a>U盘插拔检测</h3><h4 id="QDbus的方案"><a href="#QDbus的方案" class="headerlink" title="QDbus的方案"></a>QDbus的方案</h4><blockquote>
+<ul>
+<li>使用QDbus来检测U盘的插拔的处理，原文链接 <a href="http://www.qtcn.org/bbs/read-htm-tid-14535.html" target="_blank" rel="noopener">http://www.qtcn.org/bbs/read-htm-tid-14535.html</a></li>
+</ul>
+</blockquote>
+<p>防止网址被吞这里把代码上上</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//在pro文件中应该加入</span>
+QT <span class="token operator">+</span><span class="token operator">=</span>dbus
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QtDBus/QDBusConnection></span></span>
+<span class="token comment" spellcheck="true">//以下为检测设备的插入</span>
+QDBusConnection<span class="token operator">::</span><span class="token function">systemBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span> <span class="token string">"org.freedesktop.Hal"</span><span class="token punctuation">,</span>
+                        <span class="token string">"/org/freedesktop/Hal/Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"org.freedesktop.Hal.Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"DeviceAdded"</span><span class="token punctuation">,</span>
+                        <span class="token keyword">this</span><span class="token punctuation">,</span>
+                        <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">slotDeviceAdded</span><span class="token punctuation">(</span>QString <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//以下为检查设备的拨出</span>
+QDBusConnection<span class="token operator">::</span><span class="token function">systemBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span> <span class="token string">"org.freedesktop.Hal"</span><span class="token punctuation">,</span>
+                        <span class="token string">"/org/freedesktop/Hal/Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"org.freedesktop.Hal.Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"DeviceRemoved"</span><span class="token punctuation">,</span>
+                        <span class="token keyword">this</span><span class="token punctuation">,</span>
+                        <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">slotDeviceRemoved</span><span class="token punctuation">(</span>QString <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+<span class="token comment" spellcheck="true">//在slotDeviceAdded(QString udi)函数中，要使用到</span>
+
+QDBusInterface <span class="token function">device</span><span class="token punctuation">(</span><span class="token string">"org.freedesktop.Hal"</span><span class="token punctuation">,</span> udi<span class="token punctuation">,</span> <span class="token string">"org.freedesktop.Hal.Device"</span> <span class="token punctuation">,</span> QDBusConnection<span class="token operator">::</span><span class="token function">systemBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//通过HAL可以查询到设备为volume的设备，然后通过判断是否为/dev/sd*的设备，就可以判断出是否为U盘，然后调用mount就可以了。</span>
+<span class="token comment" spellcheck="true">//这时记录下U盘的UDI，在检测到设备拨出时，再查询一下U盘的UDI是否还在，就知道U盘是否被拨出了。</span></code></pre>
+<h4 id="QSocketNotifier来实现"><a href="#QSocketNotifier来实现" class="headerlink" title="QSocketNotifier来实现"></a>QSocketNotifier来实现</h4><p>这个是某个老哥使用socket来实现文件监控的，实际上这个方案完全可以使用QFileSystemWatcher来检测<strong>/proc/mounts</strong>（实际上Qt源码QSystemWatcher，里边的监控文件的实现就是使用的QSocketNotifier=。=，既然这个老哥自己想出来了，还是把他的链接贴上去吧，<a href="https://blog.csdn.net/penghuilater/article/details/53410646" target="_blank" rel="noopener">https://blog.csdn.net/penghuilater/article/details/53410646</a> 接下来我会讲QFileSystemWatcher的实现原理的），代码我还是照样贴上，防止网页被吞。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">ifndef</span> VOLUMEMONITOR_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> VOLUMEMONITOR_H</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QObject></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QSet></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QSocketNotifier></span></span>
+<span class="token keyword">class</span> <span class="token class-name">VolumeMonitor</span> <span class="token operator">:</span> <span class="token keyword">public</span> QObject
+<span class="token punctuation">{</span>
+    Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">VolumeMonitor</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">VolumeMonitor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+signals<span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">deviceAdded</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> addDev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">deviceRemoved</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> removeDe<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> slots<span class="token operator">:</span>
+    <span class="token keyword">bool</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> <span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> <span class="token function">isRunning</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">onFileChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> m_fileKde <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    QSocketNotifier<span class="token operator">*</span> m_socketNotifier<span class="token punctuation">;</span>
+    QSet<span class="token operator">&lt;</span>QString<span class="token operator">></span> m_fileContentSet<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment" spellcheck="true">// VOLUMEMONITOR_H </span>
+
+
+<span class="token comment" spellcheck="true">//-------------------------------------------------------</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"volumemonitor.h"</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QFile></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QSet></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QTextStream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QDebug></span></span>
+
+<span class="token keyword">namespace</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span> mountFile<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"/proc/mounts"</span><span class="token punctuation">;</span>
+    QSet <span class="token operator">&lt;</span>QString<span class="token operator">></span> <span class="token function">getMountFileContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        QFile <span class="token function">file</span><span class="token punctuation">(</span>mountFile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        QSet <span class="token operator">&lt;</span>QString<span class="token operator">></span> fileContentSet<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>QIODevice<span class="token operator">::</span>ReadOnly <span class="token operator">|</span> QIODevice<span class="token operator">::</span>Text<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                QTextStream <span class="token function">textStream</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                QString fileContent <span class="token operator">=</span> textStream<span class="token punctuation">.</span><span class="token function">readAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                QStringList items <span class="token operator">=</span> fileContent<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">foreach</span> <span class="token punctuation">(</span>QString item<span class="token punctuation">,</span> items<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        fileContentSet <span class="token operator">&lt;&lt;</span> item<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                file<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> fileContentSet<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    QString <span class="token function">getMountPoint</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> record<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> QStringList items <span class="token operator">=</span> record<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>items<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> items<span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+VolumeMonitor<span class="token operator">::</span><span class="token function">VolumeMonitor</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent<span class="token punctuation">)</span>
+    <span class="token operator">:</span> <span class="token function">QObject</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">bool</span> VolumeMonitor<span class="token operator">::</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//get the set of mounted device's info;</span>
+    m_fileContentSet <span class="token operator">=</span> <span class="token function">getMountFileContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    m_fileKde <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span>mountFile<span class="token punctuation">,</span> O_RDONLY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_fileKde <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">qWarning</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"open /proc/mounts failed!"</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    m_socketNotifier <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">QSocketNotifier</span><span class="token punctuation">(</span>m_fileKde<span class="token punctuation">,</span>
+                                           QSocketNotifier<span class="token operator">::</span>Write<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">connect</span><span class="token punctuation">(</span>m_socketNotifier<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QSocketNotifier<span class="token operator">::</span>activated<span class="token punctuation">,</span>
+            <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>VolumeMonitor<span class="token operator">::</span>onFileChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">bool</span> VolumeMonitor<span class="token operator">::</span><span class="token function">isRunning</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_fileKde<span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> m_socketNotifier<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">bool</span> VolumeMonitor<span class="token operator">::</span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">isRunning</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">close</span><span class="token punctuation">(</span>m_fileKde<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        m_fileKde <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">delete</span> m_socketNotifier<span class="token punctuation">;</span>
+        m_socketNotifier <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> VolumeMonitor<span class="token operator">::</span><span class="token function">onFileChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    QSet <span class="token operator">&lt;</span>QString<span class="token operator">></span> changedItemSet <span class="token operator">=</span> <span class="token function">getMountFileContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> item<span class="token operator">:</span> changedItemSet <span class="token operator">-</span> m_fileContentSet<span class="token punctuation">)</span>
+        emit <span class="token function">deviceAdded</span><span class="token punctuation">(</span><span class="token function">getMountPoint</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> item<span class="token operator">:</span> m_fileContentSet <span class="token operator">-</span> changedItemSet<span class="token punctuation">)</span>
+        emit <span class="token function">deviceRemoved</span><span class="token punctuation">(</span><span class="token function">getMountPoint</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    m_fileContentSet <span class="token operator">=</span> changedItemSet<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+VolumeMonitor<span class="token operator">::</span><span class="token operator">~</span><span class="token function">VolumeMonitor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="QStorageInfo"><a href="#QStorageInfo" class="headerlink" title="QStorageInfo"></a>QStorageInfo</h4><p>实际上Qt 5.4之后在QtCore中引入了一个新的类叫做QStorageInfo，这个类可以获取到相关的磁盘信息。这个并不是关键的，因为本次我也没有使用这个类，就是在这里简单的提一下。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>实际上这一篇的关键技术是QFileSystemWatcher，把<strong>/media/yourusername</strong>添加到监视目录中，然后就可以通过QFileInfo and QDir来获取到相关的信息，其中QFileDialog中的QFileSystemModel也可以跟随实时更新。这样依旧可以依旧获取到移动介质的信息以及插拔信息。这个才是最终的解决方案。接下来要讲一下QFileSystemWatcher的源码。可能你看到的源码版本与我的版本不同。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://cryfeifei.top" rel="external nofollow noreferrer">张小飞</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                    </span>
+                <span class="reprint-info">
+                    <a href="https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/">https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY-NC-ND 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://cryfeifei.top" target="_blank">张小飞</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Qt/">
+                                    <span class="chip bg-color">Qt</span>
+                                </a>
+                            
+                                <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
+                                    <span class="chip bg-color">Qt源码</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Qt源码之魔改QFileDialog之路-2 移动介质的处理">
+                        
+                        <span class="card-title">Qt源码之魔改QFileDialog之路-2 移动介质的处理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言移动介质，一般就是指当前Linux系统下的 U 盘 / 挂载硬盘。 这两个移动介质都是挂载在/media/yourusername下来做的处理。（fhs2.4）（实际上fhs3.0的标准已经改到/run/media/username下了
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            张小飞
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                    <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
+                        <span class="chip bg-color">Qt源码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Qt源码之魔改QFileDialog之路-1">
+                        
+                        <span class="card-title">Qt源码之魔改QFileDialog之路-1</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言之前着急发Linux社区版本的WPS，所以这里都没有好好的去更改打开本地文件对话框那里的逻辑。由于这里的代码是从其它平台迁移过来的，所以这里的逻辑就没有动。对于用户交互来讲可以说是非常恶心心了。因为我们是做产品的，产品驱动技术。这次呢，
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            张小飞
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                    <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
+                        <span class="chip bg-color">Qt源码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 张小飞<br />'
+            + '文章作者: 张小飞<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://cryfeifei.top" target="_blank">张小飞</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">7.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "5";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/cryfeifei" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:zhangpf0313@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

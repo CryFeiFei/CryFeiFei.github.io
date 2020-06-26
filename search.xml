@@ -481,4 +481,203 @@ QFileInfo <span class="token function">fileInfo</span><span class="token punctua
         <tag>lambda</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Qt源码之魔改QFileDialog之路-2 移动介质的处理</title>
+    <url>/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>移动介质，一般就是指当前Linux系统下的 <strong>U 盘 / 挂载硬盘</strong>。 这两个移动介质都是挂载在<strong>/media/yourusername</strong>下来做的处理。（fhs2.4）（实际上fhs3.0的标准已经改到/run/media/username下了）</p>
+<h2 id="前期调研"><a href="#前期调研" class="headerlink" title="前期调研"></a>前期调研</h2><p>从网上找到关于u盘检测的插拔有两种方案（这两种方案硬盘挂载是检测不到的）：</p>
+<h3 id="U盘插拔检测"><a href="#U盘插拔检测" class="headerlink" title="U盘插拔检测"></a>U盘插拔检测</h3><h4 id="QDbus的方案"><a href="#QDbus的方案" class="headerlink" title="QDbus的方案"></a>QDbus的方案</h4><blockquote>
+<ul>
+<li>使用QDbus来检测U盘的插拔的处理，原文链接 <a href="http://www.qtcn.org/bbs/read-htm-tid-14535.html" target="_blank" rel="noopener">http://www.qtcn.org/bbs/read-htm-tid-14535.html</a></li>
+</ul>
+</blockquote>
+<p>防止网址被吞这里把代码上上</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//在pro文件中应该加入</span>
+QT <span class="token operator">+</span><span class="token operator">=</span>dbus
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QtDBus/QDBusConnection></span></span>
+<span class="token comment" spellcheck="true">//以下为检测设备的插入</span>
+QDBusConnection<span class="token operator">::</span><span class="token function">systemBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span> <span class="token string">"org.freedesktop.Hal"</span><span class="token punctuation">,</span>
+                        <span class="token string">"/org/freedesktop/Hal/Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"org.freedesktop.Hal.Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"DeviceAdded"</span><span class="token punctuation">,</span>
+                        <span class="token keyword">this</span><span class="token punctuation">,</span>
+                        <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">slotDeviceAdded</span><span class="token punctuation">(</span>QString <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//以下为检查设备的拨出</span>
+QDBusConnection<span class="token operator">::</span><span class="token function">systemBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span> <span class="token string">"org.freedesktop.Hal"</span><span class="token punctuation">,</span>
+                        <span class="token string">"/org/freedesktop/Hal/Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"org.freedesktop.Hal.Manager"</span><span class="token punctuation">,</span>
+                        <span class="token string">"DeviceRemoved"</span><span class="token punctuation">,</span>
+                        <span class="token keyword">this</span><span class="token punctuation">,</span>
+                        <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">slotDeviceRemoved</span><span class="token punctuation">(</span>QString <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+<span class="token comment" spellcheck="true">//在slotDeviceAdded(QString udi)函数中，要使用到</span>
+
+QDBusInterface <span class="token function">device</span><span class="token punctuation">(</span><span class="token string">"org.freedesktop.Hal"</span><span class="token punctuation">,</span> udi<span class="token punctuation">,</span> <span class="token string">"org.freedesktop.Hal.Device"</span> <span class="token punctuation">,</span> QDBusConnection<span class="token operator">::</span><span class="token function">systemBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//通过HAL可以查询到设备为volume的设备，然后通过判断是否为/dev/sd*的设备，就可以判断出是否为U盘，然后调用mount就可以了。</span>
+<span class="token comment" spellcheck="true">//这时记录下U盘的UDI，在检测到设备拨出时，再查询一下U盘的UDI是否还在，就知道U盘是否被拨出了。</span></code></pre>
+<h4 id="QSocketNotifier来实现"><a href="#QSocketNotifier来实现" class="headerlink" title="QSocketNotifier来实现"></a>QSocketNotifier来实现</h4><p>这个是某个老哥使用socket来实现文件监控的，实际上这个方案完全可以使用QFileSystemWatcher来检测<strong>/proc/mounts</strong>（实际上Qt源码QSystemWatcher，里边的监控文件的实现就是使用的QSocketNotifier=。=，既然这个老哥自己想出来了，还是把他的链接贴上去吧，<a href="https://blog.csdn.net/penghuilater/article/details/53410646" target="_blank" rel="noopener">https://blog.csdn.net/penghuilater/article/details/53410646</a> 接下来我会讲QFileSystemWatcher的实现原理的），代码我还是照样贴上，防止网页被吞。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">ifndef</span> VOLUMEMONITOR_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> VOLUMEMONITOR_H</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QObject></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QSet></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QSocketNotifier></span></span>
+<span class="token keyword">class</span> <span class="token class-name">VolumeMonitor</span> <span class="token operator">:</span> <span class="token keyword">public</span> QObject
+<span class="token punctuation">{</span>
+    Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">VolumeMonitor</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">VolumeMonitor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+signals<span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">deviceAdded</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> addDev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">deviceRemoved</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> removeDe<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> slots<span class="token operator">:</span>
+    <span class="token keyword">bool</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> <span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> <span class="token function">isRunning</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">onFileChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> m_fileKde <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    QSocketNotifier<span class="token operator">*</span> m_socketNotifier<span class="token punctuation">;</span>
+    QSet<span class="token operator">&lt;</span>QString<span class="token operator">></span> m_fileContentSet<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment" spellcheck="true">// VOLUMEMONITOR_H </span>
+
+
+<span class="token comment" spellcheck="true">//-------------------------------------------------------</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"volumemonitor.h"</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QFile></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QSet></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QTextStream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QDebug></span></span>
+
+<span class="token keyword">namespace</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span> mountFile<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"/proc/mounts"</span><span class="token punctuation">;</span>
+    QSet <span class="token operator">&lt;</span>QString<span class="token operator">></span> <span class="token function">getMountFileContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        QFile <span class="token function">file</span><span class="token punctuation">(</span>mountFile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        QSet <span class="token operator">&lt;</span>QString<span class="token operator">></span> fileContentSet<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>QIODevice<span class="token operator">::</span>ReadOnly <span class="token operator">|</span> QIODevice<span class="token operator">::</span>Text<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                QTextStream <span class="token function">textStream</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                QString fileContent <span class="token operator">=</span> textStream<span class="token punctuation">.</span><span class="token function">readAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                QStringList items <span class="token operator">=</span> fileContent<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">foreach</span> <span class="token punctuation">(</span>QString item<span class="token punctuation">,</span> items<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        fileContentSet <span class="token operator">&lt;&lt;</span> item<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                file<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> fileContentSet<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    QString <span class="token function">getMountPoint</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> record<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> QStringList items <span class="token operator">=</span> record<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>items<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> items<span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+VolumeMonitor<span class="token operator">::</span><span class="token function">VolumeMonitor</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent<span class="token punctuation">)</span>
+    <span class="token operator">:</span> <span class="token function">QObject</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">bool</span> VolumeMonitor<span class="token operator">::</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//get the set of mounted device's info;</span>
+    m_fileContentSet <span class="token operator">=</span> <span class="token function">getMountFileContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    m_fileKde <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span>mountFile<span class="token punctuation">,</span> O_RDONLY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_fileKde <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">qWarning</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"open /proc/mounts failed!"</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    m_socketNotifier <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">QSocketNotifier</span><span class="token punctuation">(</span>m_fileKde<span class="token punctuation">,</span>
+                                           QSocketNotifier<span class="token operator">::</span>Write<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">connect</span><span class="token punctuation">(</span>m_socketNotifier<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QSocketNotifier<span class="token operator">::</span>activated<span class="token punctuation">,</span>
+            <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>VolumeMonitor<span class="token operator">::</span>onFileChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">bool</span> VolumeMonitor<span class="token operator">::</span><span class="token function">isRunning</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_fileKde<span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> m_socketNotifier<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">bool</span> VolumeMonitor<span class="token operator">::</span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">isRunning</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">close</span><span class="token punctuation">(</span>m_fileKde<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        m_fileKde <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">delete</span> m_socketNotifier<span class="token punctuation">;</span>
+        m_socketNotifier <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> VolumeMonitor<span class="token operator">::</span><span class="token function">onFileChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    QSet <span class="token operator">&lt;</span>QString<span class="token operator">></span> changedItemSet <span class="token operator">=</span> <span class="token function">getMountFileContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> item<span class="token operator">:</span> changedItemSet <span class="token operator">-</span> m_fileContentSet<span class="token punctuation">)</span>
+        emit <span class="token function">deviceAdded</span><span class="token punctuation">(</span><span class="token function">getMountPoint</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> item<span class="token operator">:</span> m_fileContentSet <span class="token operator">-</span> changedItemSet<span class="token punctuation">)</span>
+        emit <span class="token function">deviceRemoved</span><span class="token punctuation">(</span><span class="token function">getMountPoint</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    m_fileContentSet <span class="token operator">=</span> changedItemSet<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+VolumeMonitor<span class="token operator">::</span><span class="token operator">~</span><span class="token function">VolumeMonitor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="QStorageInfo"><a href="#QStorageInfo" class="headerlink" title="QStorageInfo"></a>QStorageInfo</h4><p>实际上Qt 5.4之后在QtCore中引入了一个新的类叫做QStorageInfo，这个类可以获取到相关的磁盘信息。这个并不是关键的，因为本次我也没有使用这个类，就是在这里简单的提一下。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>实际上这一篇的关键技术是QFileSystemWatcher，把<strong>/media/yourusername</strong>添加到监视目录中，然后就可以通过QFileInfo and QDir来获取到相关的信息，其中QFileDialog中的QFileSystemModel也可以跟随实时更新。这样依旧可以依旧获取到移动介质的信息以及插拔信息。这个才是最终的解决方案。接下来要讲一下QFileSystemWatcher的源码。可能你看到的源码版本与我的版本不同。</p>
+]]></content>
+      <tags>
+        <tag>Qt</tag>
+        <tag>Qt源码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt源码之魔改QFileDialog之路-1</title>
+    <url>/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前着急发Linux社区版本的WPS，所以这里都没有好好的去更改打开本地文件对话框那里的逻辑。由于这里的代码是从其它平台迁移过来的，所以这里的逻辑就没有动。对于用户交互来讲可以说是非常恶心心了。因为我们是做产品的，产品驱动技术。这次呢，前前后后大概花了两周的时间终于把这个产品稳定下来了。里边碰到了一些技术要点与难点。这里简单的总结下。</p>
+<p>图1. 原来没有</p>
+<h2 id="自己造轮子"><a href="#自己造轮子" class="headerlink" title="自己造轮子"></a>自己造轮子</h2><p>实际上这是我的第一个方案，一开始想得太简单，用了个递归的方式去读取QFileInfo的信息，发现栈爆了，然后用QFileSystQFileemModel来读取当前文件夹的信息。总结下就是使用QFileSystQFileemModel +QFileSystemWatcher +  QAbstractItemDelegate的方式去做，做了一个星期，完成了七八成，但是发现细节真的太多了，再给我两个星期我可能都做不完，于是放弃这个方案。突然想起来Qt还有个自带的QFileDialog。于是才开始我的第二个方案。</p>
+<h2 id="使用QFileDialog类"><a href="#使用QFileDialog类" class="headerlink" title="使用QFileDialog类"></a>使用QFileDialog类</h2><p>这个方案我一开始连想都没有想，只是想尝试下看看能不能改造下，发现最终经过了一个星期的改造+适配也是把这个功能完成了。然后加到WPS中了。下边开始讲我在开发中遇到的一些技术要点。</p>
+<h3 id="QFileDialog简单介绍"><a href="#QFileDialog简单介绍" class="headerlink" title="QFileDialog简单介绍"></a>QFileDialog简单介绍</h3><p>QFileDialog实现基本上是我自己实现的复杂版本，基本要点也是QFileSystemModel类来显示当前的目录信息，使用QFileInfoGatherer 线程类专门监视目录的变化。QFileInfoGatherer线程类基本实现核心也是QFileSystemWatcher，使用了 条件变量 + 锁来做同步。具体的实现还是相当多的， 大家有兴趣可以去阅读下Qt的源码。</p>
+<h3 id="如何改造QFileDialog类"><a href="#如何改造QFileDialog类" class="headerlink" title="如何改造QFileDialog类"></a>如何改造QFileDialog类</h3><h4 id="改造利器"><a href="#改造利器" class="headerlink" title="改造利器"></a>改造利器</h4><p>与其说是如何改造QFileDialog类，不如说是如何改造Qt官方提供的控件，这种方式有一个缺点，就是严重依赖Qt官方源码（ps，有兴趣的可以把这个类的代码提取出来，我去fork，逃））。像WPS自己维护的Qt分支，这个方式我是可以接受的，因为源码就在我这里，哈哈。跑偏了，基本上这样改造是没有多大问题的，官方现在对于QWidget这套代码改动实际上是很少的。现在说一下改造QFileDialog的利器</p>
+<ul>
+<li>findChild()</li>
+<li>findChildren()</li>
+<li>metaObject()-&gt;className() (实际上这个基本没用到，了解下也是很好的)</li>
+</ul>
+<h4 id="改造原理"><a href="#改造原理" class="headerlink" title="改造原理"></a>改造原理</h4><p>todo findchild与findchildren的文章。<br>findChild&lt;QLineEdit*&gt;(“fileNameEdit”);</p>
+<ul>
+<li>设置QFileDialog的setOption</li>
+<li>使用fildChild通过控件名 或者通过findChildren 找到 需要隐藏的左边列表，然后setVisible(false);</li>
+</ul>
+<p>这样最关键的问题解决了，可以把这个东西设置成无边框然后嵌入到右边的控件中。然后在对话框中左边加上几个侧边栏，然后主要问题就解决了。</p>
+<h4 id="改造细节，其它的相关细节，比如过滤器相关的属性设置QFileDialog都有相关的接口去设置（这个自己去阅读API文档去），唯一一个需要我去解决的就是保存时要将后缀名取出来，然后用到了QtFileDialog中的正则表达式，我已经提取出来了。"><a href="#改造细节，其它的相关细节，比如过滤器相关的属性设置QFileDialog都有相关的接口去设置（这个自己去阅读API文档去），唯一一个需要我去解决的就是保存时要将后缀名取出来，然后用到了QtFileDialog中的正则表达式，我已经提取出来了。" class="headerlink" title="改造细节，其它的相关细节，比如过滤器相关的属性设置QFileDialog都有相关的接口去设置（这个自己去阅读API文档去），唯一一个需要我去解决的就是保存时要将后缀名取出来，然后用到了QtFileDialog中的正则表达式，我已经提取出来了。"></a>改造细节，其它的相关细节，比如过滤器相关的属性设置QFileDialog都有相关的接口去设置（这个自己去阅读API文档去），唯一一个需要我去解决的就是保存时要将后缀名取出来，然后用到了QtFileDialog中的正则表达式，我已经提取出来了。</h4><h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>以为这就完了？图样图内务。还有移动介质呢？！</p>
+<h1 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h1><p>这是我18年的解决方案了。现在准备自己重写这个东西，感觉也没有什么难得地方。这里准备重写了。</p>
+]]></content>
+      <tags>
+        <tag>Qt</tag>
+        <tag>Qt源码</tag>
+      </tags>
+  </entry>
 </search>

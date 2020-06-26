@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-26T04:02:31.975Z</updated>
+  <updated>2020-06-26T07:14:56.818Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Qt源码之魔改QFileDialog之路-2 移动介质的处理</title>
+    <link href="https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/"/>
+    <id>https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/</id>
+    <published>2020-06-26T07:13:36.000Z</published>
+    <updated>2020-06-26T07:14:56.818Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;移动介质，一般就是指当前Linux系统下的 &lt;strong&gt;U 盘 / 挂载硬盘&lt;/strong&gt;。
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt源码之魔改QFileDialog之路-1</title>
+    <link href="https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/"/>
+    <id>https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/</id>
+    <published>2020-06-26T07:10:29.000Z</published>
+    <updated>2020-06-26T07:12:55.089Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>error: &#39;this&#39; cannot be implicitly captured in this context</title>
