@@ -357,4 +357,128 @@ mingw32-make install</code></pre>]]></content>
         <tag>windows</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Ubuntu16.04下pip3的安装，升级，卸载</title>
+    <url>/2020/06/26/ubuntu16-04-xia-pip3-de-an-zhuang-sheng-ji-xie-zai/</url>
+    <content><![CDATA[<p>最近开发机换了Ubuntu16.04，来记录下。</p>
+<p>Python2与Python3是可以共存的，Ubuntu默认装好了。<br>命令python就是Python2<br>命令python3一般是Python3.5</p>
+<p>以下命令适用于Python2，把pip3改成对应的pip就好</p>
+<p>安装pip3</p>
+<pre class=" language-shell"><code class="language-shell">sudo apt-get install python3-pip</code></pre>
+<p>升级pip3</p>
+<pre class=" language-shell"><code class="language-shell">sudo pip3 install --upgrade pip</code></pre>
+<p>卸载pip3</p>
+<pre class=" language-shell"><code class="language-shell">sudo apt-get remove python3-pip</code></pre>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Python</tag>
+        <tag>pip3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用QtCteator编译QtCreator</title>
+    <url>/2020/06/26/shi-yong-qtcteator-bian-yi-qtcreator/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>原谅我标题党了，本文标题应该是使用Clang依赖Qt编译QtCreator。</p>
+<p>目前在Linux上做开发，一直使用的IDE就是QtCreator。 实际上一直有想做一个编辑器的想法（因为我觉得QtCreator有点笨重，而我只是想要一个单纯的编辑器的功能。目前开源的优秀的使用Qt制作的编辑器好象是没有。我也一直喜欢使用vim，而且QtCreator也有fakevim的插件。QtCreator我也用着比较舒服，还是Qt写的，我也比较熟悉Qt的代码，所以想要魔改这个项目了。而且从官方fork的话，以后有啥bug可以直接cherry-pick过来，逃）。趁着这个机会，阅读下这个IDE的架构是如何设计的。</p>
+<p>我个人一直很喜欢QtCreator这个IDE，当然没有vs强大（宇宙第一IDE可不是吹的），是不可多得的优秀的IDE。配置环境什么的也比较简单方便。目前我的开发机器环境为Ubuntu16.04,就暂时以这个环境来讲吧。</p>
+<h2 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h2><p>如果编译QtCreator，实际上官方的wiki是有的，链接在这里 <a href="https://wiki.qt.io/Building_Qt_Creator_from_Git" target="_blank" rel="noopener">https://wiki.qt.io/Building_Qt_Creator_from_Git</a> 简单的讲，就是如下几个条件</p>
+<blockquote>
+<ul>
+<li>Qt5.6.2及以后版本以后版本的Qt库</li>
+<li>clang5.0及之后版本的编译器</li>
+</ul>
+</blockquote>
+<h3 id="Qt编译"><a href="#Qt编译" class="headerlink" title="Qt编译"></a>Qt编译</h3><p>截止2018年10月13日。目前最新的Qt版本是Qt5.11.2。（5.12还在测试中）那就以最新的Qt版本来编译QtCreator吧。去官网下载最新版本的Qt源码<a href="http://download.qt.io/archive/qt/5.11/5.11.2/single/" target="_blank" rel="noopener">http://download.qt.io/archive/qt/5.11/5.11.2/single/</a><br>比如我就下载到了 /home/zhangpf/Qt/Qt5.11下，解压到当前文件夹，然后新建个新的目录用于放编译好的Qt。</p>
+<pre class=" language-shell"><code class="language-shell">mkdir qt5.11.2
+cd /home/zhangpf/Qt/Qt5.11/qt-everywhere-src-5.11.2</code></pre>
+<p>准备编译Qt。（在这里我一开始下载的Qt5.10的版本，因为我还怕5.11不稳定，但是发现编译的时候QtScript模块编译不过，QtCreator工程又依赖QtScript，google了下发现不只是我有这个问题，但是还未解决，已经报了QTBUG。所以我才又下载的Qt5.11的版本来编译的。）</p>
+<p>然后继续</p>
+<pre class=" language-shell"><code class="language-shell">./configure -prefix /home/zhangpf/Qt/Qt5.11/qt5.11.2 -debug -opensource -confirm-license
+cd /home/zhangpf/Qt/Qt5.11/qt5.11.2
+make && make install</code></pre>
+<p>比如我的电脑cpu是i7-7700,4核8线程，我就可以make -j8。还是看自己电脑的性能了。<br>恩，这时候Qt5.11.2的库就准备好了。</p>
+<h2 id="clang准备。"><a href="#clang准备。" class="headerlink" title="clang准备。"></a>clang准备。</h2><p>下载链接<a href="http://releases.llvm.org/download.html" target="_blank" rel="noopener">http://releases.llvm.org/download.html</a> 下载clang clang++ 5.0以后预编译好的版本，比如我就是下载clang6.0的Ubuntu16.04的版本。下载下来可以直接用。放到了/opt 下，然后我又做了个软链到/usr/local/bin/下。</p>
+<h2 id="QtCreator准备"><a href="#QtCreator准备" class="headerlink" title="QtCreator准备"></a>QtCreator准备</h2><p>官方已经讲得很明确了，直接</p>
+<pre><code>git clone --recursive https://code.qt.io/qt-creator/qt-creator.git</code></pre><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><h3 id="配置QtCreator"><a href="#配置QtCreator" class="headerlink" title="配置QtCreator"></a>配置QtCreator</h3><blockquote>
+<ul>
+<li>工具-选项-构建和运行-编译器   把刚才下载好的clang添加进去，点击应用</li>
+<li>工具-选项-构建和运行-QtVersion 添加一个QtVersion 把编译好的Qt5.11.2 qmake路径加进去，点击应用</li>
+<li>工具-选项-构建和运行-构建套件 添加一个构建套件取名qtcreator，编译器跟QtVersion选择成刚才添加的。点击应用</li>
+</ul>
+</blockquote>
+<h3 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h3><p>直接打开QtCreator的pro文件，构建套件选择刚才新建的qtcreator。然后直接右键pro文件，qmake-&gt;构建.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>qtcreator源码149m。编译出来的debug版本的QtCreator 1.5G。也是相当大的一个Qt工程了。从头折腾到尾，基本没发现啥大的编译问题与疑难杂症，也就只有一个Qt5.10版本QtScript编译不过的问题，还被我规避掉了。接下来就该阅读这个工程的源码，去更改我想要的结果了。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Linux更换difftool为meld</title>
+    <url>/2020/06/26/linux-geng-huan-difftool-wei-meld/</url>
+    <content><![CDATA[<h3 id="meld"><a href="#meld" class="headerlink" title="meld"></a>meld</h3><pre class=" language-shell"><code class="language-shell">#设置默认的git diff的比较工具
+#配置比较工具.可以用git difftool 调用.
+git config --global diff.tool meld
+git config --global difftool.prompt false
+</code></pre>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>git</tag>
+        <tag>meld</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QFileDialog中的tips</title>
+    <url>/2020/06/26/qfiledialog-zhong-de-tips/</url>
+    <content><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>最近看QFileDialog的实现比较多，也对比了几家操作系统厂商跟Qt的QFileDialog中的实现，也自己造了个小轮子。也学到了一些东西，特意来分享下。</p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>可以将类型诸如这种的格式</p>
+<pre><code>WPS文字 文件(*.wps)  提取成这种 *.wps</code></pre><p>本来打算自己写正则表达式的，生怕自己写的效率比较低，就从QFileDialog的源码中扣取出来了。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//from QFileDialog</span>
+<span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>qt_file_dialog_filter_reg_exp <span class="token operator">=</span>
+<span class="token string">"^(.*)\\(([a-zA-Z0-9_.*? +;#\\-\\[\\]@\\{\\}/!&lt;>\\$%&amp;=^~:\\|]*)\\)$"</span><span class="token punctuation">;</span>
+QStringList <span class="token function">qt_clean_filter_list</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>filter<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    QRegExp <span class="token function">regexp</span><span class="token punctuation">(</span>QString<span class="token operator">::</span><span class="token function">fromLatin1</span><span class="token punctuation">(</span>qt_file_dialog_filter_reg_exp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    QString f <span class="token operator">=</span> filter<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> regexp<span class="token punctuation">.</span><span class="token function">indexIn</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        f <span class="token operator">=</span> regexp<span class="token punctuation">.</span><span class="token function">cap</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> f<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token function">QLatin1Char</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">,</span> QString<span class="token operator">::</span>SkipEmptyParts<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="QFileInfo的新奇使用方法"><a href="#QFileInfo的新奇使用方法" class="headerlink" title="QFileInfo的新奇使用方法"></a>QFileInfo的新奇使用方法</h3><p>实际上我又遇到了一个源码中关于QFileInfo一个原来没有用过的用法。</p>
+<p>直接将</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token operator">*</span><span class="token punctuation">.</span>wps </code></pre>
+<p>这种字符当做QString放进了QFileInfo来获取其basename（文件名）跟 suffix（后缀），或者使用其它的函数。一般我都是传个文件路径的，没想到还能用这种方法解析字符串。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//这时候可以用QFileInfo把一些复杂的字符串的什么前缀，后缀名全都解析出来了，包括*.tar.gz这种复杂的，QFileInfo都有函数来提取</span>
+QFileInfo <span class="token function">fileInfo</span><span class="token punctuation">(</span><span class="token function">QString</span><span class="token punctuation">(</span><span class="token string">"*.wps"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>我本来想自己解析这个字符串的，发现QFileDialog的源码中还有这种用法，真的很神奇。</p>
+<h3 id="文件管理器的吐槽"><a href="#文件管理器的吐槽" class="headerlink" title="文件管理器的吐槽"></a>文件管理器的吐槽</h3><p>最近看了看KDE的dolphin文件管理器代码的实现，还有深度的文件管理器的实现，还有一些乱七八糟第三方的，还有Qt自带的QFileDialog。就属KDE的dolphin做的最厉害，交互最好，优化的最好。</p>
+<p>深度的文件管理器跟Qt自带QFileDialog遇到复杂的网络文件以及延迟都会卡死，也没有任何交互。QFileDialog我理解这个东西一开始就不是给网络文件用的，卡死我还是可以接受的，但是深度作为操作系统厂商做成这样就有点不太合适了。大概扫了下源码，也跟QFileDialog一样重写了model，model这里交互还是得好好优化下啊。这就是自己造轮子的坏处。</p>
+<p>从一个开发的角度，简单的吐槽一下，反正给他们官方反馈了。因为deepin的文件管理器的bug实在太多了=。=。</p>
+<p>嗯，KDE大法好！话说，一开始的设计可以从借鉴（copy）KDE的实现嘛，都这么多年了…</p>
+<p>造轮子不要对自己太自信…实时上我自己造的小轮子也有这个问题=。=。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>这是我前年的时候看各个厂商以及调研QFileDialog总结出来一点小结论。去年年底我又把这部分捡起来了。现在已经优化到加载千万级别的数据，界面不会卡住的地步了。有时间把这部分东西写出来</p>
+]]></content>
+      <tags>
+        <tag>Qt</tag>
+        <tag>Qt源码</tag>
+        <tag>QFileDialog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>error: &#39;this&#39; cannot be implicitly captured in this context</title>
+    <url>/2020/06/26/error-this-cannot-be-implicitly-captured-in-this-context/</url>
+    <content><![CDATA[<p>讲真，使用Qt反射 + 元对象 + C++11 的特性，写c++代码简直不要太爽，代码优雅的不是一丁半点。</p>
+<p>今天使用lambda表达式的时候，发现报了个编译错误</p>
+<pre class=" language-cpp"><code class="language-cpp">error<span class="token operator">:</span> <span class="token string">'this'</span> cannot be implicitly captured in <span class="token keyword">this</span> context</code></pre>
+<p>纠其原因，在于我在lambda表达式中使用了某个成员变量，但是没有捕获this</p>
+<p>把代码</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>加上this就可以了</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+]]></content>
+      <tags>
+        <tag>cpp</tag>
+        <tag>lambda</tag>
+      </tags>
+  </entry>
 </search>

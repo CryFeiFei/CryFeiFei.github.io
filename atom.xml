@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-26T02:35:48.703Z</updated>
+  <updated>2020-06-26T04:02:31.975Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,147 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>error: &#39;this&#39; cannot be implicitly captured in this context</title>
+    <link href="https://cryfeifei.top/2020/06/26/error-this-cannot-be-implicitly-captured-in-this-context/"/>
+    <id>https://cryfeifei.top/2020/06/26/error-this-cannot-be-implicitly-captured-in-this-context/</id>
+    <published>2020-06-26T04:01:07.000Z</published>
+    <updated>2020-06-26T04:02:31.975Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;讲真，使用Qt反射 + 元对象 + C++11 的特性，写c++代码简直不要太爽，代码优雅的不是一丁半点。&lt;/p&gt;
+&lt;p&gt;今天使用lambda表达式的时候，发现报了个编译错误&lt;/p&gt;
+&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="cpp" scheme="https://cryfeifei.top/tags/cpp/"/>
+    
+      <category term="lambda" scheme="https://cryfeifei.top/tags/lambda/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>QFileDialog中的tips</title>
+    <link href="https://cryfeifei.top/2020/06/26/qfiledialog-zhong-de-tips/"/>
+    <id>https://cryfeifei.top/2020/06/26/qfiledialog-zhong-de-tips/</id>
+    <published>2020-06-26T03:56:25.000Z</published>
+    <updated>2020-06-26T03:57:36.277Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
+    
+      <category term="QFileDialog" scheme="https://cryfeifei.top/tags/QFileDialog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux更换difftool为meld</title>
+    <link href="https://cryfeifei.top/2020/06/26/linux-geng-huan-difftool-wei-meld/"/>
+    <id>https://cryfeifei.top/2020/06/26/linux-geng-huan-difftool-wei-meld/</id>
+    <published>2020-06-26T03:43:01.000Z</published>
+    <updated>2020-06-26T03:44:08.268Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;meld&quot;&gt;&lt;a href=&quot;#meld&quot; class=&quot;headerlink&quot; title=&quot;meld&quot;&gt;&lt;/a&gt;meld&lt;/h3&gt;&lt;pre class=&quot; language-shell&quot;&gt;&lt;code
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="git" scheme="https://cryfeifei.top/tags/git/"/>
+    
+      <category term="meld" scheme="https://cryfeifei.top/tags/meld/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用QtCteator编译QtCreator</title>
+    <link href="https://cryfeifei.top/2020/06/26/shi-yong-qtcteator-bian-yi-qtcreator/"/>
+    <id>https://cryfeifei.top/2020/06/26/shi-yong-qtcteator-bian-yi-qtcreator/</id>
+    <published>2020-06-26T02:41:13.000Z</published>
+    <updated>2020-06-26T03:37:53.887Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu16.04下pip3的安装，升级，卸载</title>
+    <link href="https://cryfeifei.top/2020/06/26/ubuntu16-04-xia-pip3-de-an-zhuang-sheng-ji-xie-zai/"/>
+    <id>https://cryfeifei.top/2020/06/26/ubuntu16-04-xia-pip3-de-an-zhuang-sheng-ji-xie-zai/</id>
+    <published>2020-06-26T02:39:45.000Z</published>
+    <updated>2020-06-26T02:41:38.655Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近开发机换了Ubuntu16.04，来记录下。&lt;/p&gt;
+&lt;p&gt;Python2与Python3是可以共存的，Ubuntu默认装好了。&lt;br&gt;命令python就是Python2&lt;br&gt;命令python3一般是Python3.5&lt;/p&gt;
+&lt;p&gt;以下命令适用于Python2，把p
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="Python" scheme="https://cryfeifei.top/tags/Python/"/>
+    
+      <category term="pip3" scheme="https://cryfeifei.top/tags/pip3/"/>
+    
+  </entry>
   
   <entry>
     <title>Poppler在Windows下编译</title>
