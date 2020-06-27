@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-26T07:14:56.818Z</updated>
+  <updated>2020-06-27T04:37:37.292Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>QFileSystemWatcher源码剖析(Linux)</title>
+    <link href="https://cryfeifei.top/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux/"/>
+    <id>https://cryfeifei.top/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux/</id>
+    <published>2020-06-27T04:25:45.000Z</published>
+    <updated>2020-06-27T04:37:37.292Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;QFileSystemWatcher的作用是监视本地文件夹的变化以及文件的变化。&lt;/p&gt;
+&lt;h2 id=&quot;概述&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
+    
+      <category term="Qt源码剖析" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt源码之魔改QFileDialog之路-2 移动介质的处理</title>
