@@ -4494,4 +4494,82 @@ read: Connection reset by peer</code></pre>
         <tag>中文</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux下使用WPS做office的二次开发</title>
+    <url>/2020/06/27/linux-xia-shi-yong-wps-zuo-office-de-er-ci-kai-fa/</url>
+    <content><![CDATA[<h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>上个版本WPS在Linux上就已经支持二次开发了，可以直接去看官网相关的介绍。<a href="https://open.wps.cn/" target="_blank" rel="noopener">https://open.wps.cn/</a></p>
+<p>我们选择WPS的客户端进行二次开发</p>
+<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><ul>
+<li>Ubuntu18.04</li>
+<li>wps-office_11.1.0.9126_amd64.deb</li>
+<li>Qt的开发环境（我本地5.14）</li>
+</ul>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="下载WPS的二次开发demo"><a href="#下载WPS的二次开发demo" class="headerlink" title="下载WPS的二次开发demo"></a>下载WPS的二次开发demo</h2><p>我们写了一些WPS的二次开发demo来给大家学习</p>
+<p>C++跟Qt代码风格跟我们内部编码风格保持一致。可以看看。</p>
+<pre class=" language-shell"><code class="language-shell">// 这个链接是一个版本，已经失效
+git clone https://git.dev.tencent.com/zouyingfeng/wps.git</code></pre>
+<p>这是现在的路径。 <a href="https://zouyingfeng.coding.net/p/wps/d/wps/git/tree/master" target="_blank" rel="noopener" title="https://zouyingfeng.coding.net/p/wps/d/wps/git/tree/master">https://zouyingfeng.coding.net/p/wps/d/wps/git/tree/master</a></p>
+<p>然后进入cpp的demo的文件夹</p>
+<p>tips</p>
+<p>我这是Ubuntu18.04，这里cpp的pro文件还是要稍微改一下</p>
+<pre class=" language-cpp"><code class="language-cpp">LIBS <span class="token operator">+</span><span class="token operator">=</span> libc<span class="token operator">++</span>abi<span class="token punctuation">.</span>so<span class="token number">.1</span></code></pre>
+<p>//改成</p>
+<pre class=" language-cpp"><code class="language-cpp">LIBS <span class="token operator">+</span><span class="token operator">=</span> <span class="token operator">/</span>opt<span class="token operator">/</span>kingsoft<span class="token operator">/</span>wps<span class="token operator">-</span>office<span class="token operator">/</span>office6<span class="token operator">/</span>libc<span class="token operator">++</span>abi<span class="token punctuation">.</span>so<span class="token number">.1</span></code></pre>
+<p>需要制定下这个路径。然后就可以编译过了，否则可能会找不到libc++abi.so.1的库。</p>
+<p>接下来使用</p>
+<pre class=" language-cpp"><code class="language-cpp">qmake
+make</code></pre>
+<p>然后执行<br>wpsDemo可执行文件就可以了。</p>
+<p>然后点击</p>
+<p>初始化<br>新建文档<br>就可以新建文档了</p>
+<p>上一个运行图。<br><img src="img/linux_wps.png" alt=""></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>我这是个官方的demo，社区用户可以自己用这个demo把界面隐藏，然后可以自己做一个命令行批量转化pdf的小工具</p>
+<h2 id="PS-关于python的接口"><a href="#PS-关于python的接口" class="headerlink" title="PS 关于python的接口"></a>PS 关于python的接口</h2><p>我的一个同事用python的swig封装了这个c++接口，然后搞成了python库，有兴趣可以github看一下</p>
+<p>上地址<br><a href="https://github.com/timxx/pywpsrpc" target="_blank" rel="noopener" title="https://github.com/timxx/pywpsrpc">https://github.com/timxx/pywpsrpc</a></p>
+<p>作者是我们团队的一个大佬，热心人，WPS的插入公式的功能就是他门几个做的，也可以欢迎骚扰他。</p>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>WPS</tag>
+        <tag>office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux清空回收站</title>
+    <url>/2020/06/27/linux-qing-kong-hui-shou-zhan/</url>
+    <content><![CDATA[<pre class=" language-shell"><code class="language-shell">rm -rf $HOME/.local/share/Trash/files/*</code></pre>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树莓派搭建wordpress</title>
+    <url>/2020/06/27/shu-mei-pai-da-jian-wordpress/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>跟Ubuntu是差不多的。<br>把mysql换成了mariadb</p>
+<pre class=" language-shell"><code class="language-shell">sudo apt update
+sudo apt-get install apache2 -y
+sudo apt-get install php7.0 -y
+sudo apt-get install libapache2-mod-php7.3
+sudo apt install php7.3-mysql 
+sudo apt install phpmyadmin -y
+sudo apt install mariadb-server
+
+// 重启服务
+sudo systemctl restart mariadb
+sudo systemctl restart apache2.service</code></pre>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><pre class=" language-shell"><code class="language-shell">sudo mysql -u root -p
+CREATE DATABASE wordpress;
+CREATE USER wordpressuser;
+SET PASSWORD FOR wordpressuser= PASSWORD("password123");
+GRANT ALL PRIVILEGES ON wordpress.* TO wordpressuser IDENTIFIED BY"password123";
+FLUSH PRIVILEGES;
+exit;</code></pre>
+]]></content>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>wordpress</tag>
+      </tags>
+  </entry>
 </search>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-27T11:09:27.008Z</updated>
+  <updated>2020-06-27T11:23:16.374Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,90 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux下使用WPS做office的二次开发</title>
+    <link href="https://cryfeifei.top/2020/06/27/linux-xia-shi-yong-wps-zuo-office-de-er-ci-kai-fa/"/>
+    <id>https://cryfeifei.top/2020/06/27/linux-xia-shi-yong-wps-zuo-office-de-er-ci-kai-fa/</id>
+    <published>2020-06-27T11:17:26.000Z</published>
+    <updated>2020-06-27T11:23:16.374Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h1&gt;&lt;p&gt;上个版本WPS在Linux上就已经支持二次开发了，可以直接去看官网相关的介绍。&lt;a href=&quot;https://open.wps.cn/&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="WPS" scheme="https://cryfeifei.top/tags/WPS/"/>
+    
+      <category term="office" scheme="https://cryfeifei.top/tags/office/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux清空回收站</title>
+    <link href="https://cryfeifei.top/2020/06/27/linux-qing-kong-hui-shou-zhan/"/>
+    <id>https://cryfeifei.top/2020/06/27/linux-qing-kong-hui-shou-zhan/</id>
+    <published>2020-06-27T11:15:53.000Z</published>
+    <updated>2020-06-27T11:16:22.767Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;pre class=&quot; language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;rm -rf
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="shell" scheme="https://cryfeifei.top/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树莓派搭建wordpress</title>
+    <link href="https://cryfeifei.top/2020/06/27/shu-mei-pai-da-jian-wordpress/"/>
+    <id>https://cryfeifei.top/2020/06/27/shu-mei-pai-da-jian-wordpress/</id>
+    <published>2020-06-27T11:10:40.000Z</published>
+    <updated>2020-06-27T11:15:30.479Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;跟Ubuntu是差不多的。&lt;br&gt;把mysql换成了mariadb&lt;/p&gt;
+&lt;pre class=&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="树莓派" scheme="https://cryfeifei.top/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+      <category term="wordpress" scheme="https://cryfeifei.top/tags/wordpress/"/>
+    
+  </entry>
   
   <entry>
     <title>md转化为微信公众号格式</title>
@@ -506,88 +590,6 @@ sshfs xxx
       <category term="元对象" scheme="https://cryfeifei.top/tags/%E5%85%83%E5%AF%B9%E8%B1%A1/"/>
     
       <category term="反射" scheme="https://cryfeifei.top/tags/%E5%8F%8D%E5%B0%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CPP lambda表达式</title>
-    <link href="https://cryfeifei.top/2020/06/27/cpp-lambda-biao-da-shi/"/>
-    <id>https://cryfeifei.top/2020/06/27/cpp-lambda-biao-da-shi/</id>
-    <published>2020-06-27T07:34:43.000Z</published>
-    <updated>2020-06-27T07:42:29.959Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;其实一直有个疑问，就是lambda表达式捕获this变量的时候是不是引用传递。想用代码测试下是不是引用传递。生怕有拷贝构造函数啊！&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;    m_test1 = 1;  //成员便来嗯
-    auto fTest = [this]()
-   
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="cpp" scheme="https://cryfeifei.top/tags/cpp/"/>
-    
-      <category term="lambda" scheme="https://cryfeifei.top/tags/lambda/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux安装系统出现错误failed to load ldlinux.c32</title>
-    <link href="https://cryfeifei.top/2020/06/27/linux-an-zhuang-xi-tong-chu-xian-cuo-wu-failed-to-load-ldlinux-c32/"/>
-    <id>https://cryfeifei.top/2020/06/27/linux-an-zhuang-xi-tong-chu-xian-cuo-wu-failed-to-load-ldlinux-c32/</id>
-    <published>2020-06-27T07:31:46.000Z</published>
-    <updated>2020-06-27T07:32:29.930Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;UltraISO
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>QApplication::setGraphicsSystem</title>
-    <link href="https://cryfeifei.top/2020/06/27/qapplication-setgraphicssystem/"/>
-    <id>https://cryfeifei.top/2020/06/27/qapplication-setgraphicssystem/</id>
-    <published>2020-06-27T07:29:03.000Z</published>
-    <updated>2020-06-27T07:30:41.480Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;QApplication-setGraphicsSystem-QString&quot;&gt;&lt;a href=&quot;#QApplication-setGraphicsSystem-QString&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
     
   </entry>
   
