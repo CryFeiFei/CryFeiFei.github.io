@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="QApplication::setGraphicsSystem, Qt, C++">
-    <meta name="description" content="QApplication::setGraphicsSystem(QString )这个函数是整个application全局的设置，主要是设置全局文字，图像的绘制引擎。
-绘制引擎大家都知道，选择好的绘制引擎对于程序的提升是非常大的。
-其中有三">
+    <meta name="keywords" content="Linux下使用inotify监控文件动作, Qt, C++">
+    <meta name="description" content="Linux下使用inotify监控文件动作序在日常应用中，常常会遇到以下场景，监控文件夹A，若文件夹中的B文件发生变化，则执行C命令。Linux下可以通过inotify完成该功能。自从Linux kernel 2.6.13起，inotify">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>QApplication::setGraphicsSystem | 张小飞</title>
+    <title>Linux下使用inotify监控文件动作 | 张小飞</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -243,13 +241,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        QApplication::setGraphicsSystem
+                        Linux下使用inotify监控文件动作
                     </div>
                 </div>
             </div>
@@ -361,12 +359,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Qt/">
-                                <span class="chip bg-color">Qt</span>
-                            </a>
-                        
                             <a href="/tags/Linux/">
                                 <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                            <a href="/tags/inotify/">
+                                <span class="chip bg-color">inotify</span>
                             </a>
                         
                     </div>
@@ -395,14 +393,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    142
+                    925
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 				
@@ -418,24 +416,147 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="QApplication-setGraphicsSystem-QString"><a href="#QApplication-setGraphicsSystem-QString" class="headerlink" title="QApplication::setGraphicsSystem(QString )"></a>QApplication::setGraphicsSystem(QString )</h2><p>这个函数是整个application全局的设置，主要是设置全局文字，图像的绘制引擎。</p>
-<p>绘制引擎大家都知道，选择好的绘制引擎对于程序的提升是非常大的。</p>
-<p>其中有三个值可以设置</p>
-<ul>
-<li>native: 本地引擎</li>
-<li>raster：QT自带光栅引擎</li>
-<li>opengl: 需开发板支持</li>
-</ul>
-<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
-<li><p>这个函数需要QApplication构造函数之前调用</p>
+                <h2 id="Linux下使用inotify监控文件动作"><a href="#Linux下使用inotify监控文件动作" class="headerlink" title="Linux下使用inotify监控文件动作"></a>Linux下使用inotify监控文件动作</h2><h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>在日常应用中，常常会遇到以下场景，监控文件夹A，若文件夹中的B文件发生变化，则执行C命令。Linux下可以通过inotify完成该功能。<br>自从Linux kernel 2.6.13起，inotify以作为内核的一部份，同时需要glibc 2.4以上版本。</p>
+<h4 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h4><ul>
+<li><p>inotify_init() – 创建一个inotify实例</p>
 </li>
-<li><p>5.11中这个函数已经被废弃掉</p>
+<li><p>inotify_add_watch(int fd, const char *pathname, uint32_t mask) – 加入文件或目录到inotify进行监测</p>
 </li>
-<li><p>opengl需要本地支持</p>
-</li>
-<li><p>x11下本地引擎比较慢，最好使用raster。</p>
+<li><p>inotify_rm_watch(int fd, int wd) – 移除一个watcher</p>
 </li>
 </ul>
+<h4 id="相关结构"><a href="#相关结构" class="headerlink" title="相关结构"></a>相关结构</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">inotify_event</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span>      wd;       <span class="comment">/* Watch descriptor */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> mask;     <span class="comment">/* Mask of events */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> cookie;   <span class="comment">/* Unique cookie associating related</span></span><br><span class="line"><span class="comment">                                     events (for rename(2)) */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> len;      <span class="comment">/* Size of name field */</span></span><br><span class="line">    <span class="keyword">char</span>     name[];   <span class="comment">/* Optional null-terminated name */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-Mask"><a href="#3-Mask" class="headerlink" title="3 Mask"></a>3 Mask</h4><p>适用于 inotify_add_watch mask 与 read 返回的inotify_event中mask</p>
+<table>
+<thead>
+<tr>
+<th>mask</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IN_ACCESS</td>
+<td>文件被访问</td>
+</tr>
+<tr>
+<td>IN_ATTRIB</td>
+<td>文件属性发生变化</td>
+</tr>
+<tr>
+<td>IN_CLOSE_WRITE</td>
+<td>以write方式打开文件并关闭</td>
+</tr>
+<tr>
+<td>IN_CLOSE_NOWRITE</td>
+<td>以非write方式打开文件并关闭</td>
+</tr>
+<tr>
+<td>IN_CREATE</td>
+<td>文件或目录被创建</td>
+</tr>
+<tr>
+<td>IN_DELETE</td>
+<td>文件或目录被删除（被监测的文件夹A中B文件被删除）</td>
+</tr>
+<tr>
+<td>IN_DELETE_SELF</td>
+<td>被监测的文件或目录被删除（被监测的文件夹A被删除）</td>
+</tr>
+<tr>
+<td>IN_MODIFY</td>
+<td>文件被修改</td>
+</tr>
+<tr>
+<td>IN_MOVE_SELF</td>
+<td>被监测的文件或目录移动</td>
+</tr>
+<tr>
+<td>IN_MOVED_FROM</td>
+<td>文件移出被监测的目录</td>
+</tr>
+<tr>
+<td>IN_MOVED_TO</td>
+<td>文件移入被监测的目录</td>
+</tr>
+<tr>
+<td>IN_OPEN</td>
+<td>文件被打开</td>
+</tr>
+<tr>
+<td>上述flag的集合</td>
+<td></td>
+</tr>
+<tr>
+<td>IN_ALL_EVENTS</td>
+<td>以上所有flag的集合</td>
+</tr>
+<tr>
+<td>IN_MOVE</td>
+<td>IN_MOVED_TO</td>
+</tr>
+<tr>
+<td>IN_CLOSE</td>
+<td>IN_CLOSE_WRITE</td>
+</tr>
+<tr>
+<td>不常用的flag</td>
+<td></td>
+</tr>
+<tr>
+<td>IN_DONT_FOLLOW</td>
+<td>不follow符号链接 (since 2.6.15)</td>
+</tr>
+<tr>
+<td>IN_EXCL_UNLINK</td>
+<td>当文件从监测目中unlink后，则不再报告该文件的相关event，比如监控/tmp使用 (since 2.6.36)</td>
+</tr>
+<tr>
+<td>IN_MASK_ADD</td>
+<td>追打MASK到被监测的pathname</td>
+</tr>
+<tr>
+<td>IN_ONESHOT</td>
+<td>只监测一次</td>
+</tr>
+<tr>
+<td>IN_ONLYDIR</td>
+<td>只监测目录</td>
+</tr>
+</tbody></table>
+<p>仅由read返回</p>
+<table>
+<thead>
+<tr>
+<th>mask</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IN_IGNORED</td>
+<td>inotify_rm_watch，文件被删除或者文件系统被umount</td>
+</tr>
+<tr>
+<td>IN_ISDIR</td>
+<td>发生事件的是一个目录</td>
+</tr>
+<tr>
+<td>IN_Q_OVERFLOW</td>
+<td>Event队列溢出</td>
+</tr>
+<tr>
+<td>IN_UNMOUNT</td>
+<td>文件系统unmount</td>
+</tr>
+</tbody></table>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>用途：监测指定文件或目录（或不指定则为当前目录）的一切动作。<br>使用：inotify </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/inotify.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;error.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;  </span></span></span><br><span class="line">  </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR(text) <span class="meta-keyword">error</span>(1, errno, <span class="meta-string">"%s"</span>, text)  </span></span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EventMask</span> &#123;</span>  </span><br><span class="line">    <span class="keyword">int</span>        flag;  </span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;  </span><br><span class="line">  </span><br><span class="line">&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">freadsome</span><span class="params">(<span class="keyword">void</span> *dest, <span class="keyword">size_t</span> remain, FILE *file)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> *offset = (<span class="keyword">char</span>*)dest;  </span><br><span class="line">    <span class="keyword">while</span> (remain) &#123;  </span><br><span class="line">        <span class="keyword">int</span> n = fread(offset, <span class="number">1</span>, remain, file);  </span><br><span class="line">        <span class="keyword">if</span> (n==<span class="number">0</span>) &#123;  </span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        remain -= n;  </span><br><span class="line">        offset += n;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *target;  </span><br><span class="line">    <span class="keyword">if</span> (argc == <span class="number">1</span>) &#123;  </span><br><span class="line">        target = <span class="string">"."</span>;  </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        target = argv[<span class="number">1</span>];  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    EventMask event_masks[] = &#123;  </span><br><span class="line">           &#123;IN_ACCESS        , <span class="string">"IN_ACCESS"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_ATTRIB        , <span class="string">"IN_ATTRIB"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_CLOSE_WRITE   , <span class="string">"IN_CLOSE_WRITE"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_CLOSE_NOWRITE , <span class="string">"IN_CLOSE_NOWRITE"</span>&#125; ,    </span><br><span class="line">           &#123;IN_CREATE        , <span class="string">"IN_CREATE"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_DELETE        , <span class="string">"IN_DELETE"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_DELETE_SELF   , <span class="string">"IN_DELETE_SELF"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_MODIFY        , <span class="string">"IN_MODIFY"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_MOVE_SELF     , <span class="string">"IN_MOVE_SELF"</span>&#125;     ,    </span><br><span class="line">           &#123;IN_MOVED_FROM    , <span class="string">"IN_MOVED_FROM"</span>&#125;    ,    </span><br><span class="line">           &#123;IN_MOVED_TO      , <span class="string">"IN_MOVED_TO"</span>&#125;      ,    </span><br><span class="line">           &#123;IN_OPEN          , <span class="string">"IN_OPEN"</span>&#125;          ,    </span><br><span class="line">  </span><br><span class="line">           &#123;IN_DONT_FOLLOW   , <span class="string">"IN_DONT_FOLLOW"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_EXCL_UNLINK   , <span class="string">"IN_EXCL_UNLINK"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_MASK_ADD      , <span class="string">"IN_MASK_ADD"</span>&#125;      ,    </span><br><span class="line">           &#123;IN_ONESHOT       , <span class="string">"IN_ONESHOT"</span>&#125;       ,    </span><br><span class="line">           &#123;IN_ONLYDIR       , <span class="string">"IN_ONLYDIR"</span>&#125;       ,    </span><br><span class="line">  </span><br><span class="line">           &#123;IN_IGNORED       , <span class="string">"IN_IGNORED"</span>&#125;       ,    </span><br><span class="line">           &#123;IN_ISDIR         , <span class="string">"IN_ISDIR"</span>&#125;         ,    </span><br><span class="line">           &#123;IN_Q_OVERFLOW    , <span class="string">"IN_Q_OVERFLOW"</span>&#125;    ,    </span><br><span class="line">           &#123;IN_UNMOUNT       , <span class="string">"IN_UNMOUNT"</span>&#125;       ,    </span><br><span class="line">    &#125;;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> monitor = inotify_init();  </span><br><span class="line">    <span class="keyword">if</span> ( <span class="number">-1</span> == monitor ) &#123;  </span><br><span class="line">        ERROR(<span class="string">"monitor"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> watcher = inotify_add_watch(monitor, target, IN_ALL_EVENTS);  </span><br><span class="line">    <span class="keyword">if</span> ( <span class="number">-1</span> == watcher  ) &#123;  </span><br><span class="line">        ERROR(<span class="string">"inotify_add_watch"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    FILE *monitor_file = fdopen(monitor, <span class="string">"r"</span>);  </span><br><span class="line">    <span class="keyword">char</span> last_name[<span class="number">1024</span>];  </span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">1024</span>];  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/* event:inotify_event -&gt; name:char[event.len] */</span>  </span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;  </span><br><span class="line">        inotify_event event;  </span><br><span class="line">        <span class="keyword">if</span> ( <span class="number">-1</span> == freadsome(&amp;event, <span class="keyword">sizeof</span>(event), monitor_file) ) &#123;  </span><br><span class="line">            ERROR(<span class="string">"freadsome"</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">if</span> (event.len) &#123;  </span><br><span class="line">            freadsome(name, event.len, monitor_file);  </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="built_in">sprintf</span>(name, <span class="string">"FD: %d\n"</span>, event.wd);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(name, last_name) != <span class="number">0</span>) &#123;  </span><br><span class="line">            <span class="built_in">puts</span>(name);  </span><br><span class="line">            <span class="built_in">strcpy</span>(last_name, name);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">/* 显示event的mask的含义 */</span>  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="keyword">sizeof</span>(event_masks)/<span class="keyword">sizeof</span>(EventMask); ++i) &#123;  </span><br><span class="line">            <span class="keyword">if</span> (event.mask &amp; event_masks[i].flag) &#123;  </span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"\t%s\n"</span>, event_masks[i].name);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果： vim 中 对监测目录中的 inotify.cc 进行保存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4913</span></span><br><span class="line">    IN_CREATE</span><br><span class="line">    IN_OPEN</span><br><span class="line">    IN_ATTRIB</span><br><span class="line">    IN_CLOSE_WRITE</span><br><span class="line">    IN_DELETE</span><br><span class="line">inotify.cc</span><br><span class="line">    IN_MOVED_FROM</span><br><span class="line">inotify.cc~</span><br><span class="line">    IN_MOVED_TO</span><br><span class="line">inotify.cc</span><br><span class="line">    IN_CREATE</span><br><span class="line">    IN_OPEN</span><br><span class="line">    IN_MODIFY</span><br><span class="line">    IN_CLOSE_WRITE</span><br><span class="line">    IN_ATTRIB</span><br><span class="line">inotify.cc~</span><br><span class="line">    IN_DELETE</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，vim保存文件的流程为<br>创建一个4913文件用于检测vim对目录的控制权限<br>把inotify.cc更名为inotify.cc~<br>新建inotify.cc，并写入buffer<br>删除inotify.cc</p>
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><a href="http://man7.org/linux/man-pages/man7/inotify.7.html" target="_blank" rel="noopener" title="http://man7.org/linux/man-pages/man7/inotify.7.html">http://man7.org/linux/man-pages/man7/inotify.7.html</a></p>
 
             </div>
             <hr/>
@@ -461,7 +582,7 @@
                     </i>
                     </span>
                 <span class="reprint-info">
-                    <a href="https://cryfeifei.top/2020/06/27/qapplication-setgraphicssystem/">https://cryfeifei.top/2020/06/27/qapplication-setgraphicssystem/</a>
+                    <a href="https://cryfeifei.top/2020/06/27/linux-inotify/">https://cryfeifei.top/2020/06/27/linux-inotify/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -499,12 +620,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Qt/">
-                                    <span class="chip bg-color">Qt</span>
-                                </a>
-                            
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/inotify/">
+                                    <span class="chip bg-color">inotify</span>
                                 </a>
                             
                         </div>
@@ -545,30 +666,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/06/27/linux-an-zhuang-xi-tong-chu-xian-cuo-wu-failed-to-load-ldlinux-c32/">
+                <a href="/2020/06/27/linux-inotify/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux安装系统出现错误failed to load ldlinux.c32">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Linux下使用inotify监控文件动作">
                         
-                        <span class="card-title">Linux安装系统出现错误failed to load ldlinux.c32</span>
+                        <span class="card-title">Linux下使用inotify监控文件动作</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            UltraISO 刻录映像时写入方式选择”RAW”
-
+                            Linux下使用inotify监控文件动作序在日常应用中，常常会遇到以下场景，监控文件夹A，若文件夹中的B文件发生变化，则执行C命令。Linux下可以通过inotify完成该功能。自从Linux kernel 2.6.13起，inotify
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -577,11 +698,16 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/inotify/">
+                        <span class="chip bg-color">inotify</span>
                     </a>
                     
                 </div>
@@ -595,20 +721,19 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/27/oh-my-zsh-git-man-qia-dun-wen-ti-jie-jue/">
+                <a href="/2020/06/27/shen-ru-liao-jie-qt-xiao-xi-xun-huan-ji-xian-cheng-xiang-guan-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="oh-my-zsh git 慢/卡顿问题解决">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="深入了解QT消息循环及线程相关性">
                         
-                        <span class="card-title">oh-my-zsh git 慢/卡顿问题解决</span>
+                        <span class="card-title">深入了解QT消息循环及线程相关性</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            快一点进入git的目录
-git config --add oh-my-zsh.hide-dirty 1再快一点git config --add oh-my-zsh.hide-status 1
+                            一、什么是Qt消息循环  Qt消息循环，就是从一个队列中不断取出消息，并响应消息的过程。窗体的鼠标、键盘、输入法、绘制，各种消息，都来自于Qt的消息循环。以Windows操作系统为例，Qt接管Windows原生窗口消息，并翻译成Qt的消息，
                         
                     </div>
                     <div class="publish-info">
@@ -626,12 +751,8 @@ git config --add oh-my-zsh.hide-dirty 1再快一点git config --add oh-my-zsh.hi
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/git/">
-                        <span class="chip bg-color">git</span>
-                    </a>
-                    
-                    <a href="/tags/oh-my-zsh/">
-                        <span class="chip bg-color">oh-my-zsh</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
                 </div>

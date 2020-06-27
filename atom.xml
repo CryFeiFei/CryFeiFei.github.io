@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-27T15:01:41.209Z</updated>
+  <updated>2020-06-27T15:04:04.336Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux下使用inotify监控文件动作</title>
+    <link href="https://cryfeifei.top/2020/06/27/linux-inotify/"/>
+    <id>https://cryfeifei.top/2020/06/27/linux-inotify/</id>
+    <published>2020-06-27T15:03:06.000Z</published>
+    <updated>2020-06-27T15:04:04.336Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Linux下使用inotify监控文件动作&quot;&gt;&lt;a href=&quot;#Linux下使用inotify监控文件动作&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="inotify" scheme="https://cryfeifei.top/tags/inotify/"/>
+    
+  </entry>
   
   <entry>
     <title>深入了解QT消息循环及线程相关性</title>
@@ -543,33 +570,6 @@ sshfs xxx
       <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
     
       <category term="QFileSystemWatcher" scheme="https://cryfeifei.top/tags/QFileSystemWatcher/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux网速测试方法</title>
-    <link href="https://cryfeifei.top/2020/06/27/linux-wang-su-ce-shi-fang-fa/"/>
-    <id>https://cryfeifei.top/2020/06/27/linux-wang-su-ce-shi-fang-fa/</id>
-    <published>2020-06-27T08:19:17.000Z</published>
-    <updated>2020-06-27T08:20:34.363Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;pre class=&quot; language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;pip install
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="Python" scheme="https://cryfeifei.top/tags/Python/"/>
     
   </entry>
   
