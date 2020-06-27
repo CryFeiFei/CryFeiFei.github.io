@@ -401,7 +401,7 @@ wps-office_11.1.0.9126_a">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    424
+                    418
                 </div>
                 
 
@@ -449,7 +449,6 @@ make</code></pre>
 <p>然后执行<br>wpsDemo可执行文件就可以了。</p>
 <p>然后点击</p>
 <p>初始化<br>新建文档<br>就可以新建文档了</p>
-<p>上一个运行图。<br><img src="img/linux_wps.png" alt=""></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>我这是个官方的demo，社区用户可以自己用这个demo把界面隐藏，然后可以自己做一个命令行批量转化pdf的小工具</p>
 <h2 id="PS-关于python的接口"><a href="#PS-关于python的接口" class="headerlink" title="PS 关于python的接口"></a>PS 关于python的接口</h2><p>我的一个同事用python的swig封装了这个c++接口，然后搞成了python库，有兴趣可以github看一下</p>
 <p>上地址<br><a href="https://github.com/timxx/pywpsrpc" target="_blank" rel="noopener" title="https://github.com/timxx/pywpsrpc">https://github.com/timxx/pywpsrpc</a></p>
@@ -567,34 +566,36 @@ make</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/27/linux-xia-shi-yong-wps-zuo-office-de-er-ci-kai-fa/">
+                <a href="/2020/06/27/windows-xia-qt-wu-bian-kuang-ke-bian-hua-de-shi-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Linux下使用WPS做office的二次开发">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="windows下Qt无边框可变化的实现">
                         
-                        <span class="card-title">Linux下使用WPS做office的二次开发</span>
+                        <span class="card-title">windows下Qt无边框可变化的实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            序上个版本WPS在Linux上就已经支持二次开发了，可以直接去看官网相关的介绍。https://open.wps.cn/
-我们选择WPS的客户端进行二次开发
-开发环境
-Ubuntu18.04
-wps-office_11.1.0.9126_a
+                            #ifndef FLWIDGET_H
+#define FLWIDGET_H
+
+#include &lt;QWidget>
+#include &lt;QMouseEvent>
+
+class FLWidget : public QWidget
+
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -603,20 +604,15 @@ wps-office_11.1.0.9126_a
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
-                    <a href="/tags/WPS/">
-                        <span class="chip bg-color">WPS</span>
-                    </a>
-                    
-                    <a href="/tags/office/">
-                        <span class="chip bg-color">office</span>
+                    <a href="/tags/windows/">
+                        <span class="chip bg-color">windows</span>
                     </a>
                     
                 </div>
@@ -860,7 +856,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">23.6k</span>&nbsp;字
+                class="white-color">24.4k</span>&nbsp;字
             
             
             
