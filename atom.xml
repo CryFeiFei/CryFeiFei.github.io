@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-27T12:11:10.048Z</updated>
+  <updated>2020-06-27T12:22:57.751Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test1</title>
-    <link href="https://cryfeifei.top/2020/06/27/test1/"/>
-    <id>https://cryfeifei.top/2020/06/27/test1/</id>
-    <published>2020-06-27T12:07:05.000Z</published>
-    <updated>2020-06-27T12:11:10.048Z</updated>
+    <title>Warning: File &#39;tests/checkasm/Makefile&#39; has modification time 56376655 s in</title>
+    <link href="https://cryfeifei.top/2020/06/27/warning-file-tests-checkasm-makefile-has-modification-time-56376655-s-in/"/>
+    <id>https://cryfeifei.top/2020/06/27/warning-file-tests-checkasm-makefile-has-modification-time-56376655-s-in/</id>
+    <published>2020-06-27T12:22:09.000Z</published>
+    <updated>2020-06-27T12:22:57.751Z</updated>
     
     <summary type="html">
     
@@ -29,13 +29,15 @@
       
         
         
-          &lt;p&gt;&lt;img src=&quot;/.top//Builder-Pattern.jpg&quot;
+          &lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span
         
       
     
     </summary>
     
     
+    
+      <category term="shell" scheme="https://cryfeifei.top/tags/shell/"/>
     
   </entry>
   
