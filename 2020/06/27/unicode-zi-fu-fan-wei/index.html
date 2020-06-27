@@ -1,0 +1,2157 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Unicode字符范围, Qt, C++">
+    <meta name="description" content="https://blog.csdn.net/m372897500/article/details/37592543
+
+
+
+十进制
+十进制
+十六进制
+十六进制
+字符数
+编码分类（中文）
+编码分类（英文）
+
+
+
+起始
+终止
+起始
+终止
+(个)
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Unicode字符范围 | 张小飞</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="张小飞" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">张小飞</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/2020/05/30/qt-ji-chu-jiao-cheng/" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>Qt基础教程</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">张小飞</div>
+        <div class="logo-desc">
+            
+            一个CPP开发的博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/2020/05/30/qt-ji-chu-jiao-cheng/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Qt基础教程
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Unicode字符范围
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Unicode/">
+                                <span class="chip bg-color">Unicode</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-06-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-06-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><a href="https://blog.csdn.net/m372897500/article/details/37592543" target="_blank" rel="noopener">https://blog.csdn.net/m372897500/article/details/37592543</a></p>
+<table>
+<thead>
+<tr>
+<th>十进制</th>
+<th>十进制</th>
+<th>十六进制</th>
+<th>十六进制</th>
+<th>字符数</th>
+<th>编码分类（中文）</th>
+<th>编码分类（英文）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>起始</td>
+<td>终止</td>
+<td>起始</td>
+<td>终止</td>
+<td>(个)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>127</td>
+<td>0000</td>
+<td>007F</td>
+<td>128</td>
+<td>C0控制符及基本拉丁文</td>
+<td>C0 Control and Basic Latin</td>
+</tr>
+<tr>
+<td>128</td>
+<td>255</td>
+<td>0080</td>
+<td>00FF</td>
+<td>128</td>
+<td>C1控制符及拉丁文补充-1</td>
+<td>C1 Control and Latin 1 Supplement</td>
+</tr>
+<tr>
+<td>256</td>
+<td>383</td>
+<td>0100</td>
+<td>017F</td>
+<td>128</td>
+<td>拉丁文扩展-A</td>
+<td>Latin Extended-A</td>
+</tr>
+<tr>
+<td>384</td>
+<td>591</td>
+<td>0180</td>
+<td>024F</td>
+<td>208</td>
+<td>拉丁文扩展-B</td>
+<td>Latin Extended-B</td>
+</tr>
+<tr>
+<td>592</td>
+<td>687</td>
+<td>0250</td>
+<td>02AF</td>
+<td>96</td>
+<td>国际音标扩展</td>
+<td>IPA Extensions</td>
+</tr>
+<tr>
+<td>688</td>
+<td>767</td>
+<td>02B0</td>
+<td>02FF</td>
+<td>80</td>
+<td>空白修饰字母</td>
+<td>Spacing Modifiers</td>
+</tr>
+<tr>
+<td>768</td>
+<td>879</td>
+<td>0300</td>
+<td>036F</td>
+<td>112</td>
+<td>结合用读音符号</td>
+<td>Combining Diacritics Marks</td>
+</tr>
+<tr>
+<td>880</td>
+<td>1023</td>
+<td>0370</td>
+<td>03FF</td>
+<td>144</td>
+<td>希腊文及科普特文</td>
+<td>Greek and Coptic</td>
+</tr>
+<tr>
+<td>1024</td>
+<td>1279</td>
+<td>0400</td>
+<td>04FF</td>
+<td>256</td>
+<td>西里尔字母</td>
+<td>Cyrillic</td>
+</tr>
+<tr>
+<td>1280</td>
+<td>1327</td>
+<td>0500</td>
+<td>052F</td>
+<td>48</td>
+<td>西里尔字母补充</td>
+<td>Cyrillic Supplement</td>
+</tr>
+<tr>
+<td>1328</td>
+<td>1423</td>
+<td>0530</td>
+<td>058F</td>
+<td>96</td>
+<td>亚美尼亚语</td>
+<td>Armenian</td>
+</tr>
+<tr>
+<td>1424</td>
+<td>1535</td>
+<td>0590</td>
+<td>05FF</td>
+<td>112</td>
+<td>希伯来文</td>
+<td>Hebrew</td>
+</tr>
+<tr>
+<td>1536</td>
+<td>1791</td>
+<td>0600</td>
+<td>06FF</td>
+<td>256</td>
+<td>阿拉伯文</td>
+<td>Arabic</td>
+</tr>
+<tr>
+<td>1792</td>
+<td>1871</td>
+<td>0700</td>
+<td>074F</td>
+<td>80</td>
+<td>叙利亚文</td>
+<td>Syriac</td>
+</tr>
+<tr>
+<td>1872</td>
+<td>1919</td>
+<td>0750</td>
+<td>077F</td>
+<td>48</td>
+<td>阿拉伯文补充</td>
+<td>Arabic Supplement</td>
+</tr>
+<tr>
+<td>1920</td>
+<td>1983</td>
+<td>0780</td>
+<td>07BF</td>
+<td>64</td>
+<td>马尔代夫语</td>
+<td>Thaana</td>
+</tr>
+<tr>
+<td>1984</td>
+<td>2047</td>
+<td>07C0</td>
+<td>07FF</td>
+<td>64</td>
+<td>西非書面語言</td>
+<td>N’Ko</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>2143</td>
+<td>0800</td>
+<td>085F</td>
+<td>96</td>
+<td>阿维斯塔语及巴列维语</td>
+<td>Avestan and Pahlavi</td>
+</tr>
+<tr>
+<td>2144</td>
+<td>2175</td>
+<td>0860</td>
+<td>087F</td>
+<td>32</td>
+<td>Mandaic</td>
+<td>Mandaic</td>
+</tr>
+<tr>
+<td>2176</td>
+<td>2223</td>
+<td>0880</td>
+<td>08AF</td>
+<td>48</td>
+<td>撒马利亚语</td>
+<td>Samaritan</td>
+</tr>
+<tr>
+<td>2304</td>
+<td>2431</td>
+<td>0900</td>
+<td>097F</td>
+<td>128</td>
+<td>天城文书</td>
+<td>Devanagari</td>
+</tr>
+<tr>
+<td>2432</td>
+<td>2559</td>
+<td>0980</td>
+<td>09FF</td>
+<td>128</td>
+<td>孟加拉语</td>
+<td>Bengali</td>
+</tr>
+<tr>
+<td>2560</td>
+<td>2687</td>
+<td>0A00</td>
+<td>0A7F</td>
+<td>128</td>
+<td>锡克教文</td>
+<td>Gurmukhi</td>
+</tr>
+<tr>
+<td>2688</td>
+<td>2815</td>
+<td>0A80</td>
+<td>0AFF</td>
+<td>128</td>
+<td>古吉拉特文</td>
+<td>Gujarati</td>
+</tr>
+<tr>
+<td>2816</td>
+<td>2943</td>
+<td>0B00</td>
+<td>0B7F</td>
+<td>128</td>
+<td>奥里亚文</td>
+<td>Oriya</td>
+</tr>
+<tr>
+<td>2944</td>
+<td>3071</td>
+<td>0B80</td>
+<td>0BFF</td>
+<td>128</td>
+<td>泰米尔文</td>
+<td>Tamil</td>
+</tr>
+<tr>
+<td>3072</td>
+<td>3199</td>
+<td>0C00</td>
+<td>0C7F</td>
+<td>128</td>
+<td>泰卢固文</td>
+<td>Telugu</td>
+</tr>
+<tr>
+<td>3200</td>
+<td>3327</td>
+<td>0C80</td>
+<td>0CFF</td>
+<td>128</td>
+<td>卡纳达文</td>
+<td>Kannada</td>
+</tr>
+<tr>
+<td>3328</td>
+<td>3455</td>
+<td>0D00</td>
+<td>0D7F</td>
+<td>128</td>
+<td>德拉维族语</td>
+<td>Malayalam</td>
+</tr>
+<tr>
+<td>3456</td>
+<td>3583</td>
+<td>0D80</td>
+<td>0DFF</td>
+<td>128</td>
+<td>僧伽罗语</td>
+<td>Sinhala</td>
+</tr>
+<tr>
+<td>3584</td>
+<td>3711</td>
+<td>0E00</td>
+<td>0E7F</td>
+<td>128</td>
+<td>泰文</td>
+<td>Thai</td>
+</tr>
+<tr>
+<td>3712</td>
+<td>3839</td>
+<td>0E80</td>
+<td>0EFF</td>
+<td>128</td>
+<td>老挝文</td>
+<td>Lao</td>
+</tr>
+<tr>
+<td>3840</td>
+<td>4095</td>
+<td>0F00</td>
+<td>0FFF</td>
+<td>256</td>
+<td>藏文</td>
+<td>Tibetan</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>4255</td>
+<td>1000</td>
+<td>109F</td>
+<td>160</td>
+<td>缅甸语</td>
+<td>Myanmar</td>
+</tr>
+<tr>
+<td>4256</td>
+<td>4351</td>
+<td>10A0</td>
+<td>10FF</td>
+<td>96</td>
+<td>格鲁吉亚语</td>
+<td>Georgian</td>
+</tr>
+<tr>
+<td>4352</td>
+<td>4607</td>
+<td>1100</td>
+<td>11FF</td>
+<td>256</td>
+<td>朝鲜文</td>
+<td>Hangul Jamo</td>
+</tr>
+<tr>
+<td>4608</td>
+<td>4991</td>
+<td>1200</td>
+<td>137F</td>
+<td>384</td>
+<td>埃塞俄比亚语</td>
+<td>Ethiopic</td>
+</tr>
+<tr>
+<td>4992</td>
+<td>5023</td>
+<td>1380</td>
+<td>139F</td>
+<td>32</td>
+<td>埃塞俄比亚语补充</td>
+<td>Ethiopic Supplement</td>
+</tr>
+<tr>
+<td>5024</td>
+<td>5119</td>
+<td>13A0</td>
+<td>13FF</td>
+<td>96</td>
+<td>切罗基语</td>
+<td>Cherokee</td>
+</tr>
+<tr>
+<td>5120</td>
+<td>5759</td>
+<td>1400</td>
+<td>167F</td>
+<td>640</td>
+<td>统一加拿大土著语音节</td>
+<td>Unified Canadian Aboriginal Syllabics</td>
+</tr>
+<tr>
+<td>5760</td>
+<td>5791</td>
+<td>1680</td>
+<td>169F</td>
+<td>32</td>
+<td>欧甘字母</td>
+<td>Ogham</td>
+</tr>
+<tr>
+<td>5792</td>
+<td>5887</td>
+<td>16A0</td>
+<td>16FF</td>
+<td>96</td>
+<td>如尼文</td>
+<td>Runic</td>
+</tr>
+<tr>
+<td>5888</td>
+<td>5919</td>
+<td>1700</td>
+<td>171F</td>
+<td>32</td>
+<td>塔加拉语</td>
+<td>Tagalog</td>
+</tr>
+<tr>
+<td>5920</td>
+<td>5951</td>
+<td>1720</td>
+<td>173F</td>
+<td>32</td>
+<td>Hanunóo</td>
+<td>Hanunóo</td>
+</tr>
+<tr>
+<td>5952</td>
+<td>5983</td>
+<td>1740</td>
+<td>175F</td>
+<td>32</td>
+<td>Buhid</td>
+<td>Buhid</td>
+</tr>
+<tr>
+<td>5984</td>
+<td>6015</td>
+<td>1760</td>
+<td>177F</td>
+<td>32</td>
+<td>Tagbanwa</td>
+<td>Tagbanwa</td>
+</tr>
+<tr>
+<td>6016</td>
+<td>6143</td>
+<td>1780</td>
+<td>17FF</td>
+<td>128</td>
+<td>高棉语</td>
+<td>Khmer</td>
+</tr>
+<tr>
+<td>6144</td>
+<td>6319</td>
+<td>1800</td>
+<td>18AF</td>
+<td>176</td>
+<td>蒙古文</td>
+<td>Mongolian</td>
+</tr>
+<tr>
+<td>6320</td>
+<td>6399</td>
+<td>18B0</td>
+<td>18FF</td>
+<td>80</td>
+<td>Cham</td>
+<td>Cham</td>
+</tr>
+<tr>
+<td>6400</td>
+<td>6479</td>
+<td>1900</td>
+<td>194F</td>
+<td>80</td>
+<td>Limbu</td>
+<td>Limbu</td>
+</tr>
+<tr>
+<td>6480</td>
+<td>6527</td>
+<td>1950</td>
+<td>197F</td>
+<td>48</td>
+<td>德宏泰语</td>
+<td>Tai Le</td>
+</tr>
+<tr>
+<td>6528</td>
+<td>6623</td>
+<td>1980</td>
+<td>19DF</td>
+<td>96</td>
+<td>新傣仂语</td>
+<td>New Tai Lue</td>
+</tr>
+<tr>
+<td>6624</td>
+<td>6655</td>
+<td>19E0</td>
+<td>19FF</td>
+<td>32</td>
+<td>高棉语记号</td>
+<td>Kmer Symbols</td>
+</tr>
+<tr>
+<td>6656</td>
+<td>6687</td>
+<td>1A00</td>
+<td>1A1F</td>
+<td>32</td>
+<td>Buginese</td>
+<td>Buginese</td>
+</tr>
+<tr>
+<td>6688</td>
+<td>6751</td>
+<td>1A20</td>
+<td>1A5F</td>
+<td>64</td>
+<td>Batak</td>
+<td>Batak</td>
+</tr>
+<tr>
+<td>6784</td>
+<td>6895</td>
+<td>1A80</td>
+<td>1AEF</td>
+<td>112</td>
+<td>Lanna</td>
+<td>Lanna</td>
+</tr>
+<tr>
+<td>6912</td>
+<td>7039</td>
+<td>1B00</td>
+<td>1B7F</td>
+<td>128</td>
+<td>巴厘语</td>
+<td>Balinese</td>
+</tr>
+<tr>
+<td>7040</td>
+<td>7088</td>
+<td>1B80</td>
+<td>1BB0</td>
+<td>49</td>
+<td>巽他语</td>
+<td>Sundanese</td>
+</tr>
+<tr>
+<td>7104</td>
+<td>7167</td>
+<td>1BC0</td>
+<td>1BFF</td>
+<td>64</td>
+<td>Pahawh Hmong</td>
+<td>Pahawh Hmong</td>
+</tr>
+<tr>
+<td>7168</td>
+<td>7247</td>
+<td>1C00</td>
+<td>1C4F</td>
+<td>80</td>
+<td>雷布查语</td>
+<td>Lepcha</td>
+</tr>
+<tr>
+<td>7248</td>
+<td>7295</td>
+<td>1C50</td>
+<td>1C7F</td>
+<td>48</td>
+<td>Ol Chiki</td>
+<td>Ol Chiki</td>
+</tr>
+<tr>
+<td>7296</td>
+<td>7391</td>
+<td>1C80</td>
+<td>1CDF</td>
+<td>96</td>
+<td>曼尼普尔语</td>
+<td>Meithei/Manipuri</td>
+</tr>
+<tr>
+<td>7424</td>
+<td>7551</td>
+<td>1D00</td>
+<td>1D7F</td>
+<td>128</td>
+<td>语音学扩展</td>
+<td>Phonetic Extensions</td>
+</tr>
+<tr>
+<td>7552</td>
+<td>7615</td>
+<td>1D80</td>
+<td>1DBF</td>
+<td>64</td>
+<td>语音学扩展补充</td>
+<td>Phonetic Extensions Supplement</td>
+</tr>
+<tr>
+<td>7616</td>
+<td>7679</td>
+<td>1DC0</td>
+<td>1DFF</td>
+<td>64</td>
+<td>结合用读音符号补充</td>
+<td>Combining Diacritics Marks Supplement</td>
+</tr>
+<tr>
+<td>7680</td>
+<td>7935</td>
+<td>1E00</td>
+<td>1EFF</td>
+<td>256</td>
+<td>拉丁文扩充附加</td>
+<td>Latin Extended Additional</td>
+</tr>
+<tr>
+<td>7936</td>
+<td>8191</td>
+<td>1F00</td>
+<td>1FFF</td>
+<td>256</td>
+<td>希腊语扩充</td>
+<td>Greek Extended</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>8303</td>
+<td>2000</td>
+<td>206F</td>
+<td>112</td>
+<td>常用标点</td>
+<td>General Punctuation</td>
+</tr>
+<tr>
+<td>8304</td>
+<td>8351</td>
+<td>2070</td>
+<td>209F</td>
+<td>48</td>
+<td>上标及下标</td>
+<td>Superscripts and Subscripts</td>
+</tr>
+<tr>
+<td>8352</td>
+<td>8399</td>
+<td>20A0</td>
+<td>20CF</td>
+<td>48</td>
+<td>货币符号</td>
+<td>Currency Symbols</td>
+</tr>
+<tr>
+<td>8400</td>
+<td>8447</td>
+<td>20D0</td>
+<td>20FF</td>
+<td>48</td>
+<td>组合用记号</td>
+<td>Combining Diacritics Marks for Symbols</td>
+</tr>
+<tr>
+<td>8448</td>
+<td>8527</td>
+<td>2100</td>
+<td>214F</td>
+<td>80</td>
+<td>字母式符号</td>
+<td>Letterlike Symbols</td>
+</tr>
+<tr>
+<td>8528</td>
+<td>8591</td>
+<td>2150</td>
+<td>218F</td>
+<td>64</td>
+<td>数字形式</td>
+<td>Number Form</td>
+</tr>
+<tr>
+<td>8592</td>
+<td>8703</td>
+<td>2190</td>
+<td>21FF</td>
+<td>112</td>
+<td>箭头</td>
+<td>Arrows</td>
+</tr>
+<tr>
+<td>8704</td>
+<td>8959</td>
+<td>2200</td>
+<td>22FF</td>
+<td>256</td>
+<td>数学运算符</td>
+<td>Mathematical Operator</td>
+</tr>
+<tr>
+<td>8960</td>
+<td>9215</td>
+<td>2300</td>
+<td>23FF</td>
+<td>256</td>
+<td>杂项工业符号</td>
+<td>Miscellaneous Technical</td>
+</tr>
+<tr>
+<td>9216</td>
+<td>9279</td>
+<td>2400</td>
+<td>243F</td>
+<td>64</td>
+<td>控制图片</td>
+<td>Control Pictures</td>
+</tr>
+<tr>
+<td>9280</td>
+<td>9311</td>
+<td>2440</td>
+<td>245F</td>
+<td>32</td>
+<td>光学识别符</td>
+<td>Optical Character Recognition</td>
+</tr>
+<tr>
+<td>9312</td>
+<td>9471</td>
+<td>2460</td>
+<td>24FF</td>
+<td>160</td>
+<td>封闭式字母数字</td>
+<td>Enclosed Alphanumerics</td>
+</tr>
+<tr>
+<td>9472</td>
+<td>9599</td>
+<td>2500</td>
+<td>257F</td>
+<td>128</td>
+<td>制表符</td>
+<td>Box Drawing</td>
+</tr>
+<tr>
+<td>9600</td>
+<td>9631</td>
+<td>2580</td>
+<td>259F</td>
+<td>32</td>
+<td>方块元素</td>
+<td>Block Element</td>
+</tr>
+<tr>
+<td>9632</td>
+<td>9727</td>
+<td>25A0</td>
+<td>25FF</td>
+<td>96</td>
+<td>几何图形</td>
+<td>Geometric Shapes</td>
+</tr>
+<tr>
+<td>9728</td>
+<td>9983</td>
+<td>2600</td>
+<td>26FF</td>
+<td>256</td>
+<td>杂项符号</td>
+<td>Miscellaneous Symbols</td>
+</tr>
+<tr>
+<td>9984</td>
+<td>10175</td>
+<td>2700</td>
+<td>27BF</td>
+<td>192</td>
+<td>印刷符号</td>
+<td>Dingbats</td>
+</tr>
+<tr>
+<td>10176</td>
+<td>10223</td>
+<td>27C0</td>
+<td>27EF</td>
+<td>48</td>
+<td>杂项数学符号-A</td>
+<td>Miscellaneous Mathematical Symbols-A</td>
+</tr>
+<tr>
+<td>10224</td>
+<td>10239</td>
+<td>27F0</td>
+<td>27FF</td>
+<td>16</td>
+<td>追加箭头-A</td>
+<td>Supplemental Arrows-A</td>
+</tr>
+<tr>
+<td>10240</td>
+<td>10495</td>
+<td>2800</td>
+<td>28FF</td>
+<td>256</td>
+<td>盲文点字模型</td>
+<td>Braille Patterns</td>
+</tr>
+<tr>
+<td>10496</td>
+<td>10623</td>
+<td>2900</td>
+<td>297F</td>
+<td>128</td>
+<td>追加箭头-B</td>
+<td>Supplemental Arrows-B</td>
+</tr>
+<tr>
+<td>10624</td>
+<td>10751</td>
+<td>2980</td>
+<td>29FF</td>
+<td>128</td>
+<td>杂项数学符号-B</td>
+<td>Miscellaneous Mathematical Symbols-B</td>
+</tr>
+<tr>
+<td>10752</td>
+<td>11007</td>
+<td>2A00</td>
+<td>2AFF</td>
+<td>256</td>
+<td>追加数学运算符</td>
+<td>Supplemental Mathematical Operator</td>
+</tr>
+<tr>
+<td>11008</td>
+<td>11263</td>
+<td>2B00</td>
+<td>2BFF</td>
+<td>256</td>
+<td>杂项符号和箭头</td>
+<td>Miscellaneous Symbols and Arrows</td>
+</tr>
+<tr>
+<td>11264</td>
+<td>11359</td>
+<td>2C00</td>
+<td>2C5F</td>
+<td>96</td>
+<td>格拉哥里字母</td>
+<td>Glagolitic</td>
+</tr>
+<tr>
+<td>11360</td>
+<td>11391</td>
+<td>2C60</td>
+<td>2C7F</td>
+<td>32</td>
+<td>拉丁文扩展-C</td>
+<td>Latin Extended-C</td>
+</tr>
+<tr>
+<td>11392</td>
+<td>11519</td>
+<td>2C80</td>
+<td>2CFF</td>
+<td>128</td>
+<td>古埃及语</td>
+<td>Coptic</td>
+</tr>
+<tr>
+<td>11520</td>
+<td>11567</td>
+<td>2D00</td>
+<td>2D2F</td>
+<td>48</td>
+<td>格鲁吉亚语补充</td>
+<td>Georgian Supplement</td>
+</tr>
+<tr>
+<td>11568</td>
+<td>11647</td>
+<td>2D30</td>
+<td>2D7F</td>
+<td>80</td>
+<td>提非纳文</td>
+<td>Tifinagh</td>
+</tr>
+<tr>
+<td>11648</td>
+<td>11743</td>
+<td>2D80</td>
+<td>2DDF</td>
+<td>96</td>
+<td>埃塞俄比亚语扩展</td>
+<td>Ethiopic Extended</td>
+</tr>
+<tr>
+<td>11776</td>
+<td>11903</td>
+<td>2E00</td>
+<td>2E7F</td>
+<td>128</td>
+<td>追加标点</td>
+<td>Supplemental Punctuation</td>
+</tr>
+<tr>
+<td>11904</td>
+<td>12031</td>
+<td>2E80</td>
+<td>2EFF</td>
+<td>128</td>
+<td>CJK 部首补充</td>
+<td>CJK Radicals Supplement</td>
+</tr>
+<tr>
+<td>12032</td>
+<td>12255</td>
+<td>2F00</td>
+<td>2FDF</td>
+<td>224</td>
+<td>康熙字典部首</td>
+<td>Kangxi Radicals</td>
+</tr>
+<tr>
+<td>12272</td>
+<td>12287</td>
+<td>2FF0</td>
+<td>2FFF</td>
+<td>16</td>
+<td>表意文字描述符</td>
+<td>Ideographic Description Characters</td>
+</tr>
+<tr>
+<td>12288</td>
+<td>12351</td>
+<td>3000</td>
+<td>303F</td>
+<td>64</td>
+<td>CJK 符号和标点</td>
+<td>CJK Symbols and Punctuation</td>
+</tr>
+<tr>
+<td>12352</td>
+<td>12447</td>
+<td>3040</td>
+<td>309F</td>
+<td>96</td>
+<td>日文平假名</td>
+<td>Hiragana</td>
+</tr>
+<tr>
+<td>12448</td>
+<td>12543</td>
+<td>30A0</td>
+<td>30FF</td>
+<td>96</td>
+<td>日文片假名</td>
+<td>Katakana</td>
+</tr>
+<tr>
+<td>12544</td>
+<td>12591</td>
+<td>3100</td>
+<td>312F</td>
+<td>48</td>
+<td>注音字母</td>
+<td>Bopomofo</td>
+</tr>
+<tr>
+<td>12592</td>
+<td>12687</td>
+<td>3130</td>
+<td>318F</td>
+<td>96</td>
+<td>朝鲜文兼容字母</td>
+<td>Hangul Compatibility Jamo</td>
+</tr>
+<tr>
+<td>12688</td>
+<td>12703</td>
+<td>3190</td>
+<td>319F</td>
+<td>16</td>
+<td>象形字注释标志</td>
+<td>Kanbun</td>
+</tr>
+<tr>
+<td>12704</td>
+<td>12735</td>
+<td>31A0</td>
+<td>31BF</td>
+<td>32</td>
+<td>注音字母扩展</td>
+<td>Bopomofo Extended</td>
+</tr>
+<tr>
+<td>12736</td>
+<td>12783</td>
+<td>31C0</td>
+<td>31EF</td>
+<td>48</td>
+<td>CJK 笔画</td>
+<td>CJK Strokes</td>
+</tr>
+<tr>
+<td>12784</td>
+<td>12799</td>
+<td>31F0</td>
+<td>31FF</td>
+<td>16</td>
+<td>日文片假名语音扩展</td>
+<td>Katakana Phonetic Extensions</td>
+</tr>
+<tr>
+<td>12800</td>
+<td>13055</td>
+<td>3200</td>
+<td>32FF</td>
+<td>256</td>
+<td>封闭式 CJK 文字和月份</td>
+<td>Enclosed CJK Letters and Months</td>
+</tr>
+<tr>
+<td>13056</td>
+<td>13311</td>
+<td>3300</td>
+<td>33FF</td>
+<td>256</td>
+<td>CJK 兼容</td>
+<td>CJK Compatibility</td>
+</tr>
+<tr>
+<td>13312</td>
+<td>19903</td>
+<td>3400</td>
+<td>4DBF</td>
+<td>6592</td>
+<td>CJK 统一表意符号扩展 A</td>
+<td>CJK Unified Ideographs Extension A</td>
+</tr>
+<tr>
+<td>19904</td>
+<td>19967</td>
+<td>4DC0</td>
+<td>4DFF</td>
+<td>64</td>
+<td>易经六十四卦符号</td>
+<td>Yijing Hexagrams Symbols</td>
+</tr>
+<tr>
+<td>19968</td>
+<td>40895</td>
+<td>4E00</td>
+<td>9FBF</td>
+<td>20928</td>
+<td>CJK 统一表意符号</td>
+<td>CJK Unified Ideographs</td>
+</tr>
+<tr>
+<td>40960</td>
+<td>42127</td>
+<td>A000</td>
+<td>A48F</td>
+<td>1168</td>
+<td>彝文音节</td>
+<td>Yi Syllables</td>
+</tr>
+<tr>
+<td>42128</td>
+<td>42191</td>
+<td>A490</td>
+<td>A4CF</td>
+<td>64</td>
+<td>彝文字根</td>
+<td>Yi Radicals</td>
+</tr>
+<tr>
+<td>42240</td>
+<td>42527</td>
+<td>A500</td>
+<td>A61F</td>
+<td>288</td>
+<td>Vai</td>
+<td>Vai</td>
+</tr>
+<tr>
+<td>42592</td>
+<td>42751</td>
+<td>A660</td>
+<td>A6FF</td>
+<td>160</td>
+<td>统一加拿大土著语音节补充</td>
+<td>Unified Canadian Aboriginal Syllabics Supplement</td>
+</tr>
+<tr>
+<td>42752</td>
+<td>42783</td>
+<td>A700</td>
+<td>A71F</td>
+<td>32</td>
+<td>声调修饰字母</td>
+<td>Modifier Tone Letters</td>
+</tr>
+<tr>
+<td>42784</td>
+<td>43007</td>
+<td>A720</td>
+<td>A7FF</td>
+<td>224</td>
+<td>拉丁文扩展-D</td>
+<td>Latin Extended-D</td>
+</tr>
+<tr>
+<td>43008</td>
+<td>43055</td>
+<td>A800</td>
+<td>A82F</td>
+<td>48</td>
+<td>Syloti Nagri</td>
+<td>Syloti Nagri</td>
+</tr>
+<tr>
+<td>43072</td>
+<td>43135</td>
+<td>A840</td>
+<td>A87F</td>
+<td>64</td>
+<td>八思巴字</td>
+<td>Phags-pa</td>
+</tr>
+<tr>
+<td>43136</td>
+<td>43231</td>
+<td>A880</td>
+<td>A8DF</td>
+<td>96</td>
+<td>Saurashtra</td>
+<td>Saurashtra</td>
+</tr>
+<tr>
+<td>43264</td>
+<td>43391</td>
+<td>A900</td>
+<td>A97F</td>
+<td>128</td>
+<td>爪哇语</td>
+<td>Javanese</td>
+</tr>
+<tr>
+<td>43392</td>
+<td>43487</td>
+<td>A980</td>
+<td>A9DF</td>
+<td>96</td>
+<td>Chakma</td>
+<td>Chakma</td>
+</tr>
+<tr>
+<td>43520</td>
+<td>43583</td>
+<td>AA00</td>
+<td>AA3F</td>
+<td>64</td>
+<td>Varang Kshiti</td>
+<td>Varang Kshiti</td>
+</tr>
+<tr>
+<td>43584</td>
+<td>43631</td>
+<td>AA40</td>
+<td>AA6F</td>
+<td>48</td>
+<td>Sorang Sompeng</td>
+<td>Sorang Sompeng</td>
+</tr>
+<tr>
+<td>43648</td>
+<td>43743</td>
+<td>AA80</td>
+<td>AADF</td>
+<td>96</td>
+<td>Newari</td>
+<td>Newari</td>
+</tr>
+<tr>
+<td>43776</td>
+<td>43871</td>
+<td>AB00</td>
+<td>AB5F</td>
+<td>96</td>
+<td>越南傣语</td>
+<td>Vi?t Thái</td>
+</tr>
+<tr>
+<td>43904</td>
+<td>43936</td>
+<td>AB80</td>
+<td>ABA0</td>
+<td>33</td>
+<td>Kayah Li</td>
+<td>Kayah Li</td>
+</tr>
+<tr>
+<td>44032</td>
+<td>55215</td>
+<td>AC00</td>
+<td>D7AF</td>
+<td>11184</td>
+<td>朝鲜文音节</td>
+<td>Hangul Syllables</td>
+</tr>
+<tr>
+<td>55296</td>
+<td>56319</td>
+<td>D800</td>
+<td>DBFF</td>
+<td>1024</td>
+<td>High-half zone of UTF-16</td>
+<td>High-half zone of UTF-16</td>
+</tr>
+<tr>
+<td>56320</td>
+<td>57343</td>
+<td>DC00</td>
+<td>DFFF</td>
+<td>1024</td>
+<td>Low-half zone of UTF-16</td>
+<td>Low-half zone of UTF-16</td>
+</tr>
+<tr>
+<td>57344</td>
+<td>63743</td>
+<td>E000</td>
+<td>F8FF</td>
+<td>6400</td>
+<td>自行使用區域</td>
+<td>Private Use Zone</td>
+</tr>
+<tr>
+<td>63744</td>
+<td>64255</td>
+<td>F900</td>
+<td>FAFF</td>
+<td>512</td>
+<td>CJK 兼容象形文字</td>
+<td>CJK Compatibility Ideographs</td>
+</tr>
+<tr>
+<td>64256</td>
+<td>64335</td>
+<td>FB00</td>
+<td>FB4F</td>
+<td>80</td>
+<td>字母表達形式</td>
+<td>Alphabetic Presentation Form</td>
+</tr>
+<tr>
+<td>64336</td>
+<td>65023</td>
+<td>FB50</td>
+<td>FDFF</td>
+<td>688</td>
+<td>阿拉伯表達形式A</td>
+<td>Arabic Presentation Form-A</td>
+</tr>
+<tr>
+<td>65024</td>
+<td>65039</td>
+<td>FE00</td>
+<td>FE0F</td>
+<td>16</td>
+<td>变量选择符</td>
+<td>Variation Selector</td>
+</tr>
+<tr>
+<td>65040</td>
+<td>65055</td>
+<td>FE10</td>
+<td>FE1F</td>
+<td>16</td>
+<td>竖排形式</td>
+<td>Vertical Forms</td>
+</tr>
+<tr>
+<td>65056</td>
+<td>65071</td>
+<td>FE20</td>
+<td>FE2F</td>
+<td>16</td>
+<td>组合用半符号</td>
+<td>Combining Half Marks</td>
+</tr>
+<tr>
+<td>65072</td>
+<td>65103</td>
+<td>FE30</td>
+<td>FE4F</td>
+<td>32</td>
+<td>CJK 兼容形式</td>
+<td>CJK Compatibility Forms</td>
+</tr>
+<tr>
+<td>65104</td>
+<td>65135</td>
+<td>FE50</td>
+<td>FE6F</td>
+<td>32</td>
+<td>小型变体形式</td>
+<td>Small Form Variants</td>
+</tr>
+<tr>
+<td>65136</td>
+<td>65279</td>
+<td>FE70</td>
+<td>FEFF</td>
+<td>144</td>
+<td>阿拉伯表達形式B</td>
+<td>Arabic Presentation Form-B</td>
+</tr>
+<tr>
+<td>65280</td>
+<td>65519</td>
+<td>FF00</td>
+<td>FFEF</td>
+<td>240</td>
+<td>半型及全型形式</td>
+<td>Halfwidth and Fullwidth Form</td>
+</tr>
+<tr>
+<td>65520</td>
+<td>65535</td>
+<td>FFF0</td>
+<td>FFFF</td>
+<td>16</td>
+<td>特殊</td>
+<td>Specials</td>
+</tr>
+</tbody></table>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://cryfeifei.top" rel="external nofollow noreferrer">张小飞</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                    </span>
+                <span class="reprint-info">
+                    <a href="https://cryfeifei.top/2020/06/27/unicode-zi-fu-fan-wei/">https://cryfeifei.top/2020/06/27/unicode-zi-fu-fan-wei/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY-NC-ND 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://cryfeifei.top" target="_blank">张小飞</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Unicode/">
+                                    <span class="chip bg-color">Unicode</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/06/27/ssh-read-connection-reset-by-peer-error/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="ssh  read: Connection reset by peer error">
+                        
+                        <span class="card-title">ssh  read: Connection reset by peer error</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            #error
+sshfs xxx 192.168.39.70
+read: Connection reset by peer
+slove
+ssh-keygen -R 192.168.39.70
+umout
+sudo umount -l /ho
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            张小飞
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/error/">
+                        <span class="chip bg-color">error</span>
+                    </a>
+                    
+                    <a href="/tags/ssh/">
+                        <span class="chip bg-color">ssh</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/27/qt-bian-ma-de-yi-ge-keng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Qt编码的一个坑">
+                        
+                        <span class="card-title">Qt编码的一个坑</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            编码编码虽说上班这么多年了，昨天修复一个bug的时候还是被屎一样的代码给坑了
+先说逻辑业务本质是想把 Unicode编码转成GBK编码
+    QTextCodec* codec = QTextCodec::codecForName("GB
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            张小飞
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BC%96%E7%A0%81/">
+                        <span class="chip bg-color">编码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 张小飞<br />'
+            + '文章作者: 张小飞<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://cryfeifei.top" target="_blank">张小飞</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">23.1k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "5";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/cryfeifei" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:zhangpf0313@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

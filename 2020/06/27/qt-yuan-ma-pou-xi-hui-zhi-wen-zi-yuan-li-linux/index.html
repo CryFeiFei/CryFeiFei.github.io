@@ -1,0 +1,1212 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Qt源码剖析绘制文字原理(Linux), Qt, C++">
+    <meta name="description" content="前言Qt在Linux绘制字体是使用的FreeType。
+
+FreeType是一个用C语言实现的一个字体光栅化库。它可以用来将字符栅格化并映射成位图以及提供其他字体相关业务的支持。FreeType并不提供API以运行更高级的功能，如文字布局或">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Qt源码剖析绘制文字原理(Linux) | 张小飞</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="张小飞" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">张小飞</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/2020/05/30/qt-ji-chu-jiao-cheng/" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>Qt基础教程</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">张小飞</div>
+        <div class="logo-desc">
+            
+            一个CPP开发的博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/2020/05/30/qt-ji-chu-jiao-cheng/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Qt基础教程
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Qt源码剖析绘制文字原理(Linux)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Qt/">
+                                <span class="chip bg-color">Qt</span>
+                            </a>
+                        
+                            <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
+                                <span class="chip bg-color">Qt源码</span>
+                            </a>
+                        
+                            <a href="/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
+                                <span class="chip bg-color">Qt源码剖析</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-06-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-06-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Qt在Linux绘制字体是使用的FreeType。</p>
+<blockquote>
+<p>FreeType是一个用C语言实现的一个字体光栅化库。它可以用来将字符栅格化并映射成位图以及提供其他字体相关业务的支持。<br>FreeType并不提供API以运行更高级的功能，如文字布局或图形处理（例如彩色文本渲染、“空洞化”等）。然而，它提供了一个简单、易用并统一的接口来访问字体文件的内容，从而极大地简化了这些任务。它支持各种字体格式，包括TrueType、Type 1、以及OpenType。<br>FreeType在两个自由软件许可证的许可下发布：GNU通用公共许可证或者以及一个类BSD许可证。因此这个库能够使用于任何类型的项目中，无论其是否是专有软件。同时也包括正在使用的主要自由桌面系统软件。 </p>
+</blockquote>
+<p>流程很简单，Qt在绘制字体时，首先将字体中的描述点以及字形信息保存到QPainterPath中。然后再绘制出来。</p>
+<p>下面的代码是我从Qt中扣出来了，这是Qt具体描点到Path的过程，Qt在绘制大号字体的时候会调用下面的逻辑</p>
+<p>下面上代码</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>pro文件中加</p>
+<pre class=" language-cpp"><code class="language-cpp">LIBS <span class="token operator">+</span><span class="token operator">=</span> <span class="token operator">-</span>lfreetype
+INCLUDEPATH <span class="token operator">+</span><span class="token operator">=</span> <span class="token operator">/</span>usr<span class="token operator">/</span>include<span class="token operator">/</span>freetype2</code></pre>
+<p>头文件</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;freetype2/ft2build.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;freetype2/freetype/freetype.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;freetype/freetype.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;freetype/ftoutln.h></span></span></code></pre>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">scaleOutline</span><span class="token punctuation">(</span>FT_Face face<span class="token punctuation">,</span> FT_GlyphSlot g<span class="token punctuation">,</span> FT_Fixed x_scale<span class="token punctuation">,</span> FT_Fixed y_scale<span class="token punctuation">,</span> QVector<span class="token operator">&lt;</span>QPoint<span class="token operator">></span><span class="token operator">&amp;</span> vectors<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    x_scale <span class="token operator">=</span> <span class="token function">FT_MulDiv</span><span class="token punctuation">(</span>x_scale<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token number">10</span><span class="token punctuation">,</span> face<span class="token operator">-</span><span class="token operator">></span>units_per_EM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    y_scale <span class="token operator">=</span> <span class="token function">FT_MulDiv</span><span class="token punctuation">(</span>y_scale<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token number">10</span><span class="token punctuation">,</span> face<span class="token operator">-</span><span class="token operator">></span>units_per_EM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    FT_Vector <span class="token operator">*</span>p <span class="token operator">=</span> g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> FT_Vector <span class="token operator">*</span>e <span class="token operator">=</span> p <span class="token operator">+</span> g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>n_points<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p <span class="token operator">&lt;</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        p<span class="token operator">-</span><span class="token operator">></span>x <span class="token operator">=</span> <span class="token function">FT_MulFix</span><span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token operator">></span>x<span class="token punctuation">,</span> x_scale<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        p<span class="token operator">-</span><span class="token operator">></span>y <span class="token operator">=</span> <span class="token function">FT_MulFix</span><span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token operator">></span>y<span class="token punctuation">,</span> y_scale<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        vectors<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token function">QPoint</span><span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token operator">></span>x<span class="token punctuation">,</span> p<span class="token operator">-</span><span class="token operator">></span>y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 将字形中的</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> GLYPH2PATH_DEBUG QT_NO_QDEBUG_MACRO </span><span class="token comment" spellcheck="true">// qDebug</span>
+<span class="token keyword">void</span> <span class="token function">addGlyphToPath</span><span class="token punctuation">(</span>FT_Face face<span class="token punctuation">,</span> FT_GlyphSlot g<span class="token punctuation">,</span> <span class="token keyword">const</span> QFixedPoint <span class="token operator">&amp;</span>point<span class="token punctuation">,</span> QPainterPath <span class="token operator">*</span>path<span class="token punctuation">,</span> FT_Fixed x_scale<span class="token punctuation">,</span> FT_Fixed y_scale<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> qreal factor <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">/</span><span class="token number">64</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
+    QVector<span class="token operator">&lt;</span>QPoint<span class="token operator">></span> vectors<span class="token punctuation">;</span>
+    <span class="token function">scaleOutline</span><span class="token punctuation">(</span>face<span class="token punctuation">,</span> g<span class="token punctuation">,</span> x_scale<span class="token punctuation">,</span> y_scale<span class="token punctuation">,</span> vectors<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//</span>
+    <span class="token keyword">int</span> xMin <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> xMax <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token function">foreach</span> <span class="token punctuation">(</span>QPoint point<span class="token punctuation">,</span> vectors<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>point<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> xMax<span class="token punctuation">)</span>
+            xMax <span class="token operator">=</span> point<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>point<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> xMin<span class="token punctuation">)</span>
+            xMin <span class="token operator">=</span> point<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">int</span> glyphWidth <span class="token operator">=</span> xMax <span class="token operator">-</span> xMin<span class="token punctuation">;</span>
+    QPointF cp <span class="token operator">=</span> point<span class="token punctuation">.</span><span class="token function">toPointF</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// convert the outline to a painter path</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>n_contours<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> last_point <span class="token operator">=</span> g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>contours<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"contour:"</span> <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">"to"</span> <span class="token operator">&lt;&lt;</span> last_point<span class="token punctuation">;</span>
+        QPointF start <span class="token operator">=</span> <span class="token function">QPointF</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token operator">*</span>factor<span class="token punctuation">,</span> <span class="token operator">-</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token operator">*</span>factor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>tags<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// start point is not on curve:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>tags<span class="token punctuation">[</span>last_point<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// end point is not on curve:</span>
+                <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" start and end point are not on curve"</span><span class="token punctuation">;</span>
+                start <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">QPointF</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>last_point<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token operator">*</span>factor<span class="token punctuation">,</span>
+                                <span class="token operator">-</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>last_point<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token operator">*</span>factor<span class="token punctuation">)</span> <span class="token operator">+</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" end point is on curve, start is not"</span><span class="token punctuation">;</span>
+                start <span class="token operator">=</span> <span class="token function">QPointF</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>last_point<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token operator">*</span>factor<span class="token punctuation">,</span>
+                               <span class="token operator">-</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>last_point<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token operator">*</span>factor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token operator">--</span>i<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// to use original start point as control point below</span>
+        <span class="token punctuation">}</span>
+        start <span class="token operator">+</span><span class="token operator">=</span> cp<span class="token punctuation">;</span>
+        <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" start at"</span> <span class="token operator">&lt;&lt;</span> start<span class="token punctuation">;</span>
+        path<span class="token operator">-</span><span class="token operator">></span><span class="token function">moveTo</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        QPointF c<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> start<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> last_point<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token operator">++</span>i<span class="token punctuation">;</span>
+            c<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> cp <span class="token operator">+</span> <span class="token function">QPointF</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token operator">*</span>factor<span class="token punctuation">,</span> <span class="token operator">-</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>points<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token operator">*</span>factor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"tag ="</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>tags<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                               <span class="token operator">&lt;&lt;</span> <span class="token string">": on curve ="</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span><span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>tags<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">++</span>n<span class="token punctuation">;</span>
+            <span class="token keyword">switch</span> <span class="token punctuation">(</span>g<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">.</span>tags<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
+                <span class="token comment" spellcheck="true">// cubic bezier element</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span>
+                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+                <span class="token operator">--</span>i<span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token number">0</span><span class="token operator">:</span>
+                <span class="token comment" spellcheck="true">// quadratic bezier element</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span>
+                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+                c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">;</span>
+                c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">;</span>
+                <span class="token operator">--</span>i<span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+            <span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" lineTo"</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    path<span class="token operator">-</span><span class="token operator">></span><span class="token function">lineTo</span><span class="token punctuation">(</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    n <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">;</span>
+                    c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" cubicTo"</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            path<span class="token operator">-</span><span class="token operator">></span><span class="token function">cubicTo</span><span class="token punctuation">(</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            n <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" closeSubpath"</span><span class="token punctuation">;</span>
+            path<span class="token operator">-</span><span class="token operator">></span><span class="token function">closeSubpath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> start<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">;</span>
+                c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token function">GLYPH2PATH_DEBUG</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" close cubicTo"</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            path<span class="token operator">-</span><span class="token operator">></span><span class="token function">cubicTo</span><span class="token punctuation">(</span>c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token operator">++</span>i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">///////////////////</span>
+
+    <span class="token comment" spellcheck="true">//这里是调用freetype相关的函数</span>
+
+    QPainterPath path<span class="token punctuation">;</span>
+    FT_Library library<span class="token punctuation">;</span>
+    FT_Face face<span class="token punctuation">;</span>
+    FT_Error error <span class="token operator">=</span> <span class="token function">FT_Init_FreeType</span><span class="token punctuation">(</span> <span class="token operator">&amp;</span>library <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    QString strFileName <span class="token operator">=</span> QString<span class="token operator">::</span><span class="token function">fromUtf8</span><span class="token punctuation">(</span><span class="token string">"/home/zhangpf/freeType/FZXBSJW_0.TTF"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>string strFile <span class="token operator">=</span> strFileName<span class="token punctuation">.</span><span class="token function">toStdString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> fileName <span class="token operator">=</span> strFile<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    error <span class="token operator">=</span> <span class="token function">FT_New_Face</span><span class="token punctuation">(</span>library<span class="token punctuation">,</span> fileName<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>face <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    uint ch <span class="token operator">=</span> <span class="token string">'h'</span><span class="token punctuation">;</span>
+    FT_UInt idxGlyph <span class="token operator">=</span> <span class="token function">FT_Get_Char_Index</span><span class="token punctuation">(</span>face<span class="token punctuation">,</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FT_Set_Char_Size</span><span class="token punctuation">(</span>face<span class="token punctuation">,</span> face<span class="token operator">-</span><span class="token operator">></span>units_per_EM <span class="token operator">&lt;&lt;</span> <span class="token number">6</span><span class="token punctuation">,</span> face<span class="token operator">-</span><span class="token operator">></span>units_per_EM <span class="token operator">&lt;&lt;</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 这是斜体</span>
+<span class="token comment" spellcheck="true">//    FT_Matrix matrix;</span>
+<span class="token comment" spellcheck="true">//    double angle = ( 25.0 / 360 ) * 3.14159 * 2; // 180/12=15 度</span>
+<span class="token comment" spellcheck="true">//    matrix.xx = (FT_Fixed)(cos(angle) * 0x10000);</span>
+<span class="token comment" spellcheck="true">//    matrix.xy = (FT_Fixed)(-sin(angle) * 0x10000);</span>
+<span class="token comment" spellcheck="true">//    matrix.yx = (FT_Fixed)(sin(angle) * 0x10000);</span>
+<span class="token comment" spellcheck="true">//    matrix.yy = (FT_Fixed)(cos(angle) * 0x10000);</span>
+<span class="token comment" spellcheck="true">//    FT_Set_Transform(face, &amp;matrix, 0); // 设置或重置旋转</span>
+    FT_Error err <span class="token operator">=</span> <span class="token function">FT_Load_Glyph</span> <span class="token punctuation">(</span>face<span class="token punctuation">,</span> idxGlyph<span class="token punctuation">,</span> FT_LOAD_NO_BITMAP<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    FT_BBox bbox <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token function">FT_Outline_Get_CBox</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>face<span class="token operator">-</span><span class="token operator">></span>glyph<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">,</span> <span class="token operator">&amp;</span>bbox<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/* only oblique outline glyphs */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> face<span class="token operator">-</span><span class="token operator">></span>glyph<span class="token operator">-</span><span class="token operator">></span>format <span class="token operator">!=</span> FT_GLYPH_FORMAT_OUTLINE <span class="token punctuation">)</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 用这个也可以缩放一半</span>
+<span class="token comment" spellcheck="true">//    FT_Outline* outline = &amp;(face->glyph->outline);</span>
+<span class="token comment" spellcheck="true">//    FT_Matrix transform;</span>
+<span class="token comment" spellcheck="true">//    transform.xx = 0x10000L * 0.5;</span>
+<span class="token comment" spellcheck="true">//    transform.yx = 0x00000L;</span>
+<span class="token comment" spellcheck="true">//    transform.xy = 0x00000L;</span>
+<span class="token comment" spellcheck="true">//    transform.yy = 0x10000L;</span>
+<span class="token comment" spellcheck="true">//    FT_Outline_Transform( outline, &amp;transform );</span>
+    QFixedPoint p<span class="token punctuation">;</span>
+    p<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    p<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">FT_IS_SCALABLE</span><span class="token punctuation">(</span>face<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"123"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+        <span class="token function">addGlyphToPath</span><span class="token punctuation">(</span>face<span class="token punctuation">,</span> face<span class="token operator">-</span><span class="token operator">></span>glyph<span class="token punctuation">,</span> p<span class="token punctuation">,</span> <span class="token operator">&amp;</span>path<span class="token punctuation">,</span> <span class="token punctuation">(</span>face<span class="token operator">-</span><span class="token operator">></span>units_per_EM <span class="token operator">&lt;&lt;</span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span> face<span class="token operator">-</span><span class="token operator">></span>units_per_EM <span class="token operator">&lt;&lt;</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//宽度缩放一半</span></code></pre>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>最后在paintevent中可以绘制出来，由于字形的point中有负数，painter需要transform一下</p>
+<pre class=" language-cpp"><code class="language-cpp">    QPainter <span class="token function">painter</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    QTransform transform<span class="token punctuation">;</span>
+    transform<span class="token punctuation">.</span><span class="token function">translate</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">,</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    painter<span class="token punctuation">.</span><span class="token function">setTransform</span><span class="token punctuation">(</span>transform<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    painter<span class="token punctuation">.</span><span class="token function">drawPath</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>这是Qt绘制文字的一部分逻辑，我扣出来Demo来给大家学习。主要是使用了QPainterPath来描述字体中的点，以及保存成字体中的贝塞尔曲线。生成QPainterPath来描述具体的字形。代码中我还添加了缩放的变形，实际上字体的绘制变形有很多方法。就拿缩放来讲，就有这么几种</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// 用这个也可以缩放一半</span>
+FT_Outline<span class="token operator">*</span> outline <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token punctuation">(</span>face<span class="token operator">-</span><span class="token operator">></span>glyph<span class="token operator">-</span><span class="token operator">></span>outline<span class="token punctuation">)</span><span class="token punctuation">;</span>
+FT_Matrix transform<span class="token punctuation">;</span>
+transform<span class="token punctuation">.</span>xx <span class="token operator">=</span> <span class="token number">0x10000L</span> <span class="token operator">*</span> <span class="token number">0.5</span><span class="token punctuation">;</span>
+transform<span class="token punctuation">.</span>yx <span class="token operator">=</span> <span class="token number">0x00000L</span><span class="token punctuation">;</span>
+transform<span class="token punctuation">.</span>xy <span class="token operator">=</span> <span class="token number">0x00000L</span><span class="token punctuation">;</span>
+transform<span class="token punctuation">.</span>yy <span class="token operator">=</span> <span class="token number">0x10000L</span><span class="token punctuation">;</span>
+ <span class="token function">FT_Outline_Transform</span><span class="token punctuation">(</span> outline<span class="token punctuation">,</span> <span class="token operator">&amp;</span>transform <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 这是斜体实现，matrix.xx * 0.5 可以缩放 0.5倍</span>
+FT_Matrix matrix<span class="token punctuation">;</span>
+<span class="token keyword">double</span> angle <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token number">25.0</span> <span class="token operator">/</span> <span class="token number">360</span> <span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">3.14159</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 25 度</span>
+matrix<span class="token punctuation">.</span>xx <span class="token operator">=</span> <span class="token punctuation">(</span>FT_Fixed<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token function">cos</span><span class="token punctuation">(</span>angle<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0x10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+matrix<span class="token punctuation">.</span>xy <span class="token operator">=</span> <span class="token punctuation">(</span>FT_Fixed<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token function">sin</span><span class="token punctuation">(</span>angle<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0x10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+matrix<span class="token punctuation">.</span>yx <span class="token operator">=</span> <span class="token punctuation">(</span>FT_Fixed<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token function">sin</span><span class="token punctuation">(</span>angle<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0x10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+matrix<span class="token punctuation">.</span>yy <span class="token operator">=</span> <span class="token punctuation">(</span>FT_Fixed<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token function">cos</span><span class="token punctuation">(</span>angle<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0x10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">FT_Set_Transform</span><span class="token punctuation">(</span>face<span class="token punctuation">,</span> <span class="token operator">&amp;</span>matrix<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 设置或重置旋转</span>
+
+<span class="token comment" spellcheck="true">//甚至可以在 点->path这一步来做   (face->units_per_EM &lt;&lt; 6) / 2,</span>
+ <span class="token comment" spellcheck="true">//addGlyphToPath(face, face->glyph, p, &amp;path, (face->units_per_EM &lt;&lt; 6) / 2, face->units_per_EM &lt;&lt; 6);  //宽度缩放一半</span>
+ <span class="token punctuation">(</span>face<span class="token operator">-</span><span class="token operator">></span>units_per_EM <span class="token operator">&lt;&lt;</span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span></code></pre>
+<p>所以大部分UI库都有自己的实现方法。这也是freetype灵活的地方.</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://cryfeifei.top" rel="external nofollow noreferrer">张小飞</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                    </span>
+                <span class="reprint-info">
+                    <a href="https://cryfeifei.top/2020/06/27/qt-yuan-ma-pou-xi-hui-zhi-wen-zi-yuan-li-linux/">https://cryfeifei.top/2020/06/27/qt-yuan-ma-pou-xi-hui-zhi-wen-zi-yuan-li-linux/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY-NC-ND 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://cryfeifei.top" target="_blank">张小飞</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Qt/">
+                                    <span class="chip bg-color">Qt</span>
+                                </a>
+                            
+                                <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
+                                    <span class="chip bg-color">Qt源码</span>
+                                </a>
+                            
+                                <a href="/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
+                                    <span class="chip bg-color">Qt源码剖析</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/06/27/qt-zai-linux-xia-wayland-zhuo-mian-shang-zhua-qu-zhuo-mian-de-yi-ge-keng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Qt在Linux下Wayland桌面上抓取桌面的一个坑">
+                        
+                        <span class="card-title">Qt在Linux下Wayland桌面上抓取桌面的一个坑</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言最近WPS在适配了下Wayland的桌面环境，不得不说Gnome下的wayland比KDE的wayland的要稳定的多，然而，还是遇到了一些小坑，这里记录下。
+
+Wayland只是一个协议（Protocol），就像X Window当前的
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            张小飞
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Wayland/">
+                        <span class="chip bg-color">Wayland</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/27/qfilesystemwatcher-wu-fa-shi-fang-de-wen-ti/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="QFileSystemWatcher无法释放的问题">
+                        
+                        <span class="card-title">QFileSystemWatcher无法释放的问题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            QFileSystemWatcher 在单例类中，不能指定父类，不能用智能指针，否则会释放不掉，发生资源竞争。要这样释放。
+    QObject::connect(qApp, SIGNAL(aboutToQuit()), m_pCupsF
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            张小飞
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                    <a href="/tags/QFileSystemWatcher/">
+                        <span class="chip bg-color">QFileSystemWatcher</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 张小飞<br />'
+            + '文章作者: 张小飞<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://cryfeifei.top" target="_blank">张小飞</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">23.1k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "5";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/cryfeifei" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:zhangpf0313@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
