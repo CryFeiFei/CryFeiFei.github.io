@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-27T06:26:06.010Z</updated>
+  <updated>2020-06-27T08:26:22.854Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,442 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>QFileSystemWatcher无法释放的问题</title>
+    <link href="https://cryfeifei.top/2020/06/27/qfilesystemwatcher-wu-fa-shi-fang-de-wen-ti/"/>
+    <id>https://cryfeifei.top/2020/06/27/qfilesystemwatcher-wu-fa-shi-fang-de-wen-ti/</id>
+    <published>2020-06-27T08:25:16.000Z</published>
+    <updated>2020-06-27T08:26:22.854Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;QFileSystemWatcher 在单例类中，不能指定父类，不能用智能指针，否则会释放不掉，发生资源竞争。&lt;br&gt;要这样释放。&lt;/p&gt;
+&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code class=&quot;language-cpp&quot;&gt;   
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="QFileSystemWatcher" scheme="https://cryfeifei.top/tags/QFileSystemWatcher/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux网速测试方法</title>
+    <link href="https://cryfeifei.top/2020/06/27/linux-wang-su-ce-shi-fang-fa/"/>
+    <id>https://cryfeifei.top/2020/06/27/linux-wang-su-ce-shi-fang-fa/</id>
+    <published>2020-06-27T08:19:17.000Z</published>
+    <updated>2020-06-27T08:20:34.363Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;pre class=&quot; language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;pip install
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="Python" scheme="https://cryfeifei.top/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>lp指令</title>
+    <link href="https://cryfeifei.top/2020/06/27/lp-zhi-ling/"/>
+    <id>https://cryfeifei.top/2020/06/27/lp-zhi-ling/</id>
+    <published>2020-06-27T08:16:43.000Z</published>
+    <updated>2020-06-27T08:18:19.683Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;lp指令详解&quot;&gt;&lt;a href=&quot;#lp指令详解&quot; class=&quot;headerlink&quot; title=&quot;lp指令详解&quot;&gt;&lt;/a&gt;lp指令详解&lt;/h2&gt;&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="lp" scheme="https://cryfeifei.top/tags/lp/"/>
+    
+      <category term="打印机" scheme="https://cryfeifei.top/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pro工程转vs工程</title>
+    <link href="https://cryfeifei.top/2020/06/27/pro-gong-cheng-zhuan-vs-gong-cheng/"/>
+    <id>https://cryfeifei.top/2020/06/27/pro-gong-cheng-zhuan-vs-gong-cheng/</id>
+    <published>2020-06-27T08:08:11.000Z</published>
+    <updated>2020-06-27T08:14:52.778Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;ul&gt;
+&lt;li&gt;找到vs的x86 native tool&lt;/li&gt;
+&lt;li&gt;qmake添加到系统环境变量&lt;/li&gt;
+&lt;li&gt;进入pro文件目录&lt;/li&gt;
+&lt;li&gt;qmake -tp vc
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="qmake" scheme="https://cryfeifei.top/tags/qmake/"/>
+    
+      <category term="pro" scheme="https://cryfeifei.top/tags/pro/"/>
+    
+      <category term="vs" scheme="https://cryfeifei.top/tags/vs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>QImage 增加 Format_Grayscale8 枚举值</title>
+    <link href="https://cryfeifei.top/2020/06/27/qimage-zeng-jia-format-grayscale8-mei-ju-zhi/"/>
+    <id>https://cryfeifei.top/2020/06/27/qimage-zeng-jia-format-grayscale8-mei-ju-zhi/</id>
+    <published>2020-06-27T07:51:00.000Z</published>
+    <updated>2020-06-27T08:06:46.364Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Qt5.5之后才支持这个东西。所以我一直推荐使用高版本的Qt。&lt;/p&gt;
+&lt;p&gt;Qt中的commit记录 &lt;/p&gt;
+&lt;pre class=&quot; language-shell&quot;&gt;&lt;code
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="QImage" scheme="https://cryfeifei.top/tags/QImage/"/>
+    
+      <category term="Format_Grayscale8" scheme="https://cryfeifei.top/tags/Format-Grayscale8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scp的使用方法</title>
+    <link href="https://cryfeifei.top/2020/06/27/scp-de-shi-yong-fang-fa/"/>
+    <id>https://cryfeifei.top/2020/06/27/scp-de-shi-yong-fang-fa/</id>
+    <published>2020-06-27T07:44:31.000Z</published>
+    <updated>2020-06-27T07:45:20.112Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;每次往服务器传patch都有点小忘（主要是传的少=。=）&lt;/p&gt;
+&lt;p&gt;从服务器往下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;scp -P 端口号 服务器地址 本地地址&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;从本地上传到服务器&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;scp -P 26399
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="scp" scheme="https://cryfeifei.top/tags/scp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt元对象(Meta-Object)系统</title>
+    <link href="https://cryfeifei.top/2020/06/27/qt-yuan-dui-xiang-meta-object-xi-tong/"/>
+    <id>https://cryfeifei.top/2020/06/27/qt-yuan-dui-xiang-meta-object-xi-tong/</id>
+    <published>2020-06-27T07:42:58.000Z</published>
+    <updated>2020-06-27T07:43:52.579Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;反射&quot;&gt;&lt;a href=&quot;#反射&quot; class=&quot;headerlink&quot; title=&quot;反射&quot;&gt;&lt;/a&gt;反射&lt;/h2&gt;&lt;p&gt; -在计算机科学中，反射是指计算机程序在运行时（Run
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="元对象" scheme="https://cryfeifei.top/tags/%E5%85%83%E5%AF%B9%E8%B1%A1/"/>
+    
+      <category term="反射" scheme="https://cryfeifei.top/tags/%E5%8F%8D%E5%B0%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CPP lambda表达式</title>
+    <link href="https://cryfeifei.top/2020/06/27/cpp-lambda-biao-da-shi/"/>
+    <id>https://cryfeifei.top/2020/06/27/cpp-lambda-biao-da-shi/</id>
+    <published>2020-06-27T07:34:43.000Z</published>
+    <updated>2020-06-27T07:42:29.959Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;其实一直有个疑问，就是lambda表达式捕获this变量的时候是不是引用传递。想用代码测试下是不是引用传递。生怕有拷贝构造函数啊！&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    m_test1 = 1;  //成员便来嗯
+    auto fTest = [this]()
+   
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="cpp" scheme="https://cryfeifei.top/tags/cpp/"/>
+    
+      <category term="lambda" scheme="https://cryfeifei.top/tags/lambda/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux安装系统出现错误failed to load ldlinux.c32</title>
+    <link href="https://cryfeifei.top/2020/06/27/linux-an-zhuang-xi-tong-chu-xian-cuo-wu-failed-to-load-ldlinux-c32/"/>
+    <id>https://cryfeifei.top/2020/06/27/linux-an-zhuang-xi-tong-chu-xian-cuo-wu-failed-to-load-ldlinux-c32/</id>
+    <published>2020-06-27T07:31:46.000Z</published>
+    <updated>2020-06-27T07:32:29.930Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;UltraISO
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>QApplication::setGraphicsSystem</title>
+    <link href="https://cryfeifei.top/2020/06/27/qapplication-setgraphicssystem/"/>
+    <id>https://cryfeifei.top/2020/06/27/qapplication-setgraphicssystem/</id>
+    <published>2020-06-27T07:29:03.000Z</published>
+    <updated>2020-06-27T07:30:41.480Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;QApplication-setGraphicsSystem-QString&quot;&gt;&lt;a href=&quot;#QApplication-setGraphicsSystem-QString&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>oh-my-zsh git 慢/卡顿问题解决</title>
+    <link href="https://cryfeifei.top/2020/06/27/oh-my-zsh-git-man-qia-dun-wen-ti-jie-jue/"/>
+    <id>https://cryfeifei.top/2020/06/27/oh-my-zsh-git-man-qia-dun-wen-ti-jie-jue/</id>
+    <published>2020-06-27T07:19:07.000Z</published>
+    <updated>2020-06-27T07:19:57.155Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;快一点&quot;&gt;&lt;a href=&quot;#快一点&quot; class=&quot;headerlink&quot; title=&quot;快一点&quot;&gt;&lt;/a&gt;快一点&lt;/h2&gt;&lt;p&gt;进入git的目录&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --add oh-my-zsh.hide-dirty
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="git" scheme="https://cryfeifei.top/tags/git/"/>
+    
+      <category term="oh-my-zsh" scheme="https://cryfeifei.top/tags/oh-my-zsh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt中报错error: allocation of incomplete type &#39;Ui::‘</title>
+    <link href="https://cryfeifei.top/2020/06/27/qt-zhong-bao-cuo-error-allocation-of-incomplete-type-ui/"/>
+    <id>https://cryfeifei.top/2020/06/27/qt-zhong-bao-cuo-error-allocation-of-incomplete-type-ui/</id>
+    <published>2020-06-27T07:17:43.000Z</published>
+    <updated>2020-06-27T07:18:38.844Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;每次在Qt中单独添加UI文件的时候，都会遇到这个问题。需要注意这么几点&lt;br&gt;切记要与类名保持一致&lt;br&gt;举个栗子我的类名叫&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CMainWidget&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;那我的文件名就叫&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cmainwid
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="error" scheme="https://cryfeifei.top/tags/error/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下sh终端启动代理</title>
+    <link href="https://cryfeifei.top/2020/06/27/linux-xia-sh-zhong-duan-qi-dong-dai-li/"/>
+    <id>https://cryfeifei.top/2020/06/27/linux-xia-sh-zhong-duan-qi-dong-dai-li/</id>
+    <published>2020-06-27T07:10:04.000Z</published>
+    <updated>2020-06-27T07:17:14.376Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;pre&gt;&lt;code&gt;export
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>manjaro18 gnome KDE xfce 基础配置流程</title>
+    <link href="https://cryfeifei.top/2020/06/27/manjaro18-gnome-kde-xfce-ji-chu-pei-zhi-liu-cheng/"/>
+    <id>https://cryfeifei.top/2020/06/27/manjaro18-gnome-kde-xfce-ji-chu-pei-zhi-liu-cheng/</id>
+    <published>2020-06-27T06:59:31.000Z</published>
+    <updated>2020-06-27T07:00:57.377Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;首先更换国内源&quot;&gt;&lt;a href=&quot;#首先更换国内源&quot; class=&quot;headerlink&quot; title=&quot;首先更换国内源&quot;&gt;&lt;/a&gt;首先更换国内源&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;sudo pacman -Syy
+sudo pacman-mirrors -i
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="KDE" scheme="https://cryfeifei.top/tags/KDE/"/>
+    
+      <category term="manjaro" scheme="https://cryfeifei.top/tags/manjaro/"/>
+    
+      <category term="gnome" scheme="https://cryfeifei.top/tags/gnome/"/>
+    
+      <category term="xfce" scheme="https://cryfeifei.top/tags/xfce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>QFontDatabase: Cannot find font directory</title>
+    <link href="https://cryfeifei.top/2020/06/27/qfontdatabase-cannot-find-font-directory/"/>
+    <id>https://cryfeifei.top/2020/06/27/qfontdatabase-cannot-find-font-directory/</id>
+    <published>2020-06-27T06:54:45.000Z</published>
+    <updated>2020-06-27T06:58:32.781Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;QFontDatabase: Cannot find font directory qt5 &lt;/p&gt;
+&lt;p&gt;按照提示，在安装目录中 lib文件夹下新建个fonts文件夹，把字体拷贝进去就行。&lt;/p&gt;
+&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="QFontDatabase" scheme="https://cryfeifei.top/tags/QFontDatabase/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt打印机原理源码剖析_Linux</title>
@@ -155,427 +591,6 @@
       <category term="KDE" scheme="https://cryfeifei.top/tags/KDE/"/>
     
       <category term="kubuntu" scheme="https://cryfeifei.top/tags/kubuntu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>QFileSystemWatcher源码剖析(Linux)_1</title>
-    <link href="https://cryfeifei.top/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux-1/"/>
-    <id>https://cryfeifei.top/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux-1/</id>
-    <published>2020-06-27T04:39:52.000Z</published>
-    <updated>2020-06-27T04:41:16.845Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;上一篇讲了QFileSystemWatcher来检测文件夹的变化，里边的实现有两个&lt;/p&gt;
-&lt;pre class=&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
-    
-      <category term="Qt源码剖析" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>QFileSystemWatcher源码剖析(Linux)</title>
-    <link href="https://cryfeifei.top/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux/"/>
-    <id>https://cryfeifei.top/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux/</id>
-    <published>2020-06-27T04:25:45.000Z</published>
-    <updated>2020-06-27T04:37:37.292Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;QFileSystemWatcher的作用是监视本地文件夹的变化以及文件的变化。&lt;/p&gt;
-&lt;h2 id=&quot;概述&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
-    
-      <category term="Qt源码剖析" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt源码之魔改QFileDialog之路-2 移动介质的处理</title>
-    <link href="https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/"/>
-    <id>https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/</id>
-    <published>2020-06-26T07:13:36.000Z</published>
-    <updated>2020-06-26T07:14:56.818Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;移动介质，一般就是指当前Linux系统下的 &lt;strong&gt;U 盘 / 挂载硬盘&lt;/strong&gt;。
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt源码之魔改QFileDialog之路-1</title>
-    <link href="https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/"/>
-    <id>https://cryfeifei.top/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/</id>
-    <published>2020-06-26T07:10:29.000Z</published>
-    <updated>2020-06-26T07:12:55.089Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>error: &#39;this&#39; cannot be implicitly captured in this context</title>
-    <link href="https://cryfeifei.top/2020/06/26/error-this-cannot-be-implicitly-captured-in-this-context/"/>
-    <id>https://cryfeifei.top/2020/06/26/error-this-cannot-be-implicitly-captured-in-this-context/</id>
-    <published>2020-06-26T04:01:07.000Z</published>
-    <updated>2020-06-26T04:02:31.975Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;讲真，使用Qt反射 + 元对象 + C++11 的特性，写c++代码简直不要太爽，代码优雅的不是一丁半点。&lt;/p&gt;
-&lt;p&gt;今天使用lambda表达式的时候，发现报了个编译错误&lt;/p&gt;
-&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="cpp" scheme="https://cryfeifei.top/tags/cpp/"/>
-    
-      <category term="lambda" scheme="https://cryfeifei.top/tags/lambda/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>QFileDialog中的tips</title>
-    <link href="https://cryfeifei.top/2020/06/26/qfiledialog-zhong-de-tips/"/>
-    <id>https://cryfeifei.top/2020/06/26/qfiledialog-zhong-de-tips/</id>
-    <published>2020-06-26T03:56:25.000Z</published>
-    <updated>2020-06-26T03:57:36.277Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
-    
-      <category term="QFileDialog" scheme="https://cryfeifei.top/tags/QFileDialog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux更换difftool为meld</title>
-    <link href="https://cryfeifei.top/2020/06/26/linux-geng-huan-difftool-wei-meld/"/>
-    <id>https://cryfeifei.top/2020/06/26/linux-geng-huan-difftool-wei-meld/</id>
-    <published>2020-06-26T03:43:01.000Z</published>
-    <updated>2020-06-26T03:44:08.268Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;meld&quot;&gt;&lt;a href=&quot;#meld&quot; class=&quot;headerlink&quot; title=&quot;meld&quot;&gt;&lt;/a&gt;meld&lt;/h3&gt;&lt;pre class=&quot; language-shell&quot;&gt;&lt;code
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="git" scheme="https://cryfeifei.top/tags/git/"/>
-    
-      <category term="meld" scheme="https://cryfeifei.top/tags/meld/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用QtCteator编译QtCreator</title>
-    <link href="https://cryfeifei.top/2020/06/26/shi-yong-qtcteator-bian-yi-qtcreator/"/>
-    <id>https://cryfeifei.top/2020/06/26/shi-yong-qtcteator-bian-yi-qtcreator/</id>
-    <published>2020-06-26T02:41:13.000Z</published>
-    <updated>2020-06-26T03:37:53.887Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu16.04下pip3的安装，升级，卸载</title>
-    <link href="https://cryfeifei.top/2020/06/26/ubuntu16-04-xia-pip3-de-an-zhuang-sheng-ji-xie-zai/"/>
-    <id>https://cryfeifei.top/2020/06/26/ubuntu16-04-xia-pip3-de-an-zhuang-sheng-ji-xie-zai/</id>
-    <published>2020-06-26T02:39:45.000Z</published>
-    <updated>2020-06-26T02:41:38.655Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;最近开发机换了Ubuntu16.04，来记录下。&lt;/p&gt;
-&lt;p&gt;Python2与Python3是可以共存的，Ubuntu默认装好了。&lt;br&gt;命令python就是Python2&lt;br&gt;命令python3一般是Python3.5&lt;/p&gt;
-&lt;p&gt;以下命令适用于Python2，把p
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="Python" scheme="https://cryfeifei.top/tags/Python/"/>
-    
-      <category term="pip3" scheme="https://cryfeifei.top/tags/pip3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Poppler在Windows下编译</title>
-    <link href="https://cryfeifei.top/2020/06/26/poppler-zai-windows-xia-bian-yi/"/>
-    <id>https://cryfeifei.top/2020/06/26/poppler-zai-windows-xia-bian-yi/</id>
-    <published>2020-06-25T17:36:04.000Z</published>
-    <updated>2020-06-26T02:35:48.703Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;windows库（已经编译好了。）&quot;&gt;&lt;a href=&quot;#windows库（已经编译好了。）&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="poppler" scheme="https://cryfeifei.top/tags/poppler/"/>
-    
-      <category term="windows" scheme="https://cryfeifei.top/tags/windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Poppler在Mac OS下编译</title>
-    <link href="https://cryfeifei.top/2020/06/26/poppler-zai-mac-os-xia-bian-yi/"/>
-    <id>https://cryfeifei.top/2020/06/26/poppler-zai-mac-os-xia-bian-yi/</id>
-    <published>2020-06-25T17:11:05.000Z</published>
-    <updated>2020-06-25T17:28:51.512Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;#前言&lt;br&gt;众所周知，Poppler-qt5是跨平台的，但是目前Poppler在Mac
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="poppler" scheme="https://cryfeifei.top/tags/poppler/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt在Linux下获取当前系统用户名</title>
-    <link href="https://cryfeifei.top/2020/06/26/qt-zai-linux-xia-huo-qu-dang-qian-xi-tong-yong-hu-ming/"/>
-    <id>https://cryfeifei.top/2020/06/26/qt-zai-linux-xia-huo-qu-dang-qian-xi-tong-yong-hu-ming/</id>
-    <published>2020-06-25T16:50:14.000Z</published>
-    <updated>2020-06-26T02:35:40.405Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt; Qt没有直接的接口去获取到当前系统用户名，只能够间接的通过现有的接口去获取。（比如下边的例子通过获取home路径）&lt;/p&gt;
-&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;token
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>poppler-data(Windows)编译</title>
-    <link href="https://cryfeifei.top/2020/06/26/poppler-data-windows-bian-yi/"/>
-    <id>https://cryfeifei.top/2020/06/26/poppler-data-windows-bian-yi/</id>
-    <published>2020-06-25T16:25:42.000Z</published>
-    <updated>2020-06-25T16:32:20.401Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;以Windows平台举例&lt;/p&gt;
-&lt;p&gt;下载 poppler-data ，进入目录&lt;/p&gt;
-&lt;p&gt;下载链接&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://poppler.freedesktop.org/&quot; target=&quot;_blank&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="poppler" scheme="https://cryfeifei.top/tags/poppler/"/>
-    
-      <category term="poppler-data" scheme="https://cryfeifei.top/tags/poppler-data/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt线程基础</title>
-    <link href="https://cryfeifei.top/2020/06/14/qt-xian-cheng-ji-chu/"/>
-    <id>https://cryfeifei.top/2020/06/14/qt-xian-cheng-ji-chu/</id>
-    <published>2020-06-14T02:32:26.000Z</published>
-    <updated>2020-06-14T02:50:59.676Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;线程的概念&quot;&gt;&lt;a href=&quot;#线程的概念&quot; class=&quot;headerlink&quot; title=&quot;线程的概念&quot;&gt;&lt;/a&gt;线程的概念&lt;/h1&gt;&lt;h2 id=&quot;WIKI：&quot;&gt;&lt;a href=&quot;#WIKI：&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Qt多线程" scheme="https://cryfeifei.top/tags/Qt%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="Qt基础教程" scheme="https://cryfeifei.top/tags/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt基础教程</title>
-    <link href="https://cryfeifei.top/2020/05/30/qt-ji-chu-jiao-cheng/"/>
-    <id>https://cryfeifei.top/2020/05/30/qt-ji-chu-jiao-cheng/</id>
-    <published>2020-05-30T05:18:13.000Z</published>
-    <updated>2020-05-30T05:45:33.699Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
     
   </entry>
   

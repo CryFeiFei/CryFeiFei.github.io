@@ -484,25 +484,21 @@ $(function () {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/27/qt-da-yin-ji-yuan-li-yuan-ma-pou-xi-linux/">
+                    <a href="/2020/06/27/qfilesystemwatcher-wu-fa-shi-fang-de-wen-ti/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Qt打印机原理源码剖析_Linux">
+                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="QFileSystemWatcher无法释放的问题">
                             
-                            <span class="card-title">Qt打印机原理源码剖析_Linux</span>
+                            <span class="card-title">QFileSystemWatcher无法释放的问题</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简介Qt在Linux下打印机的原理以及源码相关知识。下边我就详细的讲一下Linux下的打印机原理。
-流程Linux下简单的流程就是这样
-
-
-
-CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来维护。算了我还是粘一下wik
+                                QFileSystemWatcher 在单例类中，不能指定父类，不能用智能指针，否则会释放不掉，发生资源竞争。要这样释放。
+    QObject::connect(qApp, SIGNAL(aboutToQuit()), m_pCupsF
                             
                         </div>
                         <div class="publish-info">
@@ -525,12 +521,8 @@ CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来�
                             <span class="chip bg-color">Qt</span>
                         </a>
                         
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">Qt源码</span>
-                        </a>
-                        
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
-                            <span class="chip bg-color">Qt源码剖析</span>
+                        <a href="/tags/QFileSystemWatcher/">
+                            <span class="chip bg-color">QFileSystemWatcher</span>
                         </a>
                         
                     </div>
@@ -540,22 +532,21 @@ CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/27/git-pei-zhi-geng-huan-quan-ju-yong-hu-ming/">
+                    <a href="/2020/06/27/linux-wang-su-ce-shi-fang-fa/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="git配置更换全局用户名">
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux网速测试方法">
                             
-                            <span class="card-title">git配置更换全局用户名</span>
+                            <span class="card-title">Linux网速测试方法</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                吐嘈每次在github上提交代码，都发现是默认我原来的git的那个用户名，原来写了globle，现在得在当前git目录下再多设置一下，要不然还是得用默认的用户名
-git config user.name "xxx"
-git config u
+                                pip install speedtest-cli
+
                             
                         </div>
                         <div class="publish-info">
@@ -574,8 +565,12 @@ git config u
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/git/">
-                            <span class="chip bg-color">git</span>
+                        <a href="/tags/Linux/">
+                            <span class="chip bg-color">Linux</span>
+                        </a>
+                        
+                        <a href="/tags/Python/">
+                            <span class="chip bg-color">Python</span>
                         </a>
                         
                     </div>
@@ -585,20 +580,22 @@ git config u
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/27/gtk-widget-yu-qt-widget-de-xiang-hu-qian-tao/">
+                    <a href="/2020/06/27/lp-zhi-ling/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Gtk widget 与 Qt Widget的相互嵌套">
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="lp指令">
                             
-                            <span class="card-title">Gtk widget 与 Qt Widget的相互嵌套</span>
+                            <span class="card-title">lp指令</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简述gtk qt窗口的相互嵌套。主要是使用了Gtk中的socket跟plug的模式，与Qt中的QX11EmbedContainer。这是两个不同的UI库的相互嵌套的方法。google了下发现有个老哥写出来了，但是gtk嵌入到Qt的代码中是有
+                                lp指令详解https://www.computerhope.com/unix/ulp.htm#co   
+举例暂时用这个来
+lp -o copies=2 -o collate=false -o sides=two-sided-long-e
                             
                         </div>
                         <div class="publish-info">
@@ -617,65 +614,16 @@ git config u
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Qt/">
-                            <span class="chip bg-color">Qt</span>
+                        <a href="/tags/Linux/">
+                            <span class="chip bg-color">Linux</span>
                         </a>
                         
-                        <a href="/tags/GTK/">
-                            <span class="chip bg-color">GTK</span>
+                        <a href="/tags/lp/">
+                            <span class="chip bg-color">lp</span>
                         </a>
                         
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/27/ubuntu18-04-bian-yi-kde-dolphin-wen-jian-guan-li-qi/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="ubuntu18.04编译KDE dolphin文件管理器">
-                            
-                            <span class="card-title">ubuntu18.04编译KDE dolphin文件管理器</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                简述首先最近在研究（填坑）文件管理器，其中Qt实现的文件管理器做的最好的就是KDE实现的dolphin.所以特意装了个Ubuntu18.04的操作系统装了KDE的环境。来编译一下dolphin。
-环境ubuntu的kde环境
-sudo ap
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                张小飞
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/ubuntu/">
-                            <span class="chip bg-color">ubuntu</span>
-                        </a>
-                        
-                        <a href="/tags/kde/">
-                            <span class="chip bg-color">kde</span>
-                        </a>
-                        
-                        <a href="/tags/dolphin/">
-                            <span class="chip bg-color">dolphin</span>
+                        <a href="/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/">
+                            <span class="chip bg-color">打印机</span>
                         </a>
                         
                     </div>
@@ -685,20 +633,26 @@ sudo ap
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/27/ubuntu16-04-an-zhuang-kubuntu-zhuo-mian/">
+                    <a href="/2020/06/27/pro-gong-cheng-zhuan-vs-gong-cheng/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Ubuntu16.04 安装 kubuntu桌面">
+                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="pro工程转vs工程">
                             
-                            <span class="card-title">Ubuntu16.04 安装 kubuntu桌面</span>
+                            <span class="card-title">pro工程转vs工程</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简述最近想看看kde下的文件管理器是怎么实现的，因为发现Qt自带的文件管理器是有性能bug的,而且并没有ui线程上的交互处理，如果改的话，只能去更改Qt源码（但是这样改也太蛋疼了，哪有一言不合就去改Qt源码的）。所以想看看同样是Qt写的kd
+                                
+找到vs的x86 native tool
+qmake添加到系统环境变量
+进入pro文件目录
+qmake -tp vc xxxx.pro
+
+
                             
                         </div>
                         <div class="publish-info">
@@ -721,16 +675,16 @@ sudo ap
                             <span class="chip bg-color">Qt</span>
                         </a>
                         
-                        <a href="/tags/Ubuntu/">
-                            <span class="chip bg-color">Ubuntu</span>
+                        <a href="/tags/qmake/">
+                            <span class="chip bg-color">qmake</span>
                         </a>
                         
-                        <a href="/tags/KDE/">
-                            <span class="chip bg-color">KDE</span>
+                        <a href="/tags/pro/">
+                            <span class="chip bg-color">pro</span>
                         </a>
                         
-                        <a href="/tags/kubuntu/">
-                            <span class="chip bg-color">kubuntu</span>
+                        <a href="/tags/vs/">
+                            <span class="chip bg-color">vs</span>
                         </a>
                         
                     </div>
@@ -740,22 +694,23 @@ sudo ap
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux-1/">
+                    <a href="/2020/06/27/qimage-zeng-jia-format-grayscale8-mei-ju-zhi/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="QFileSystemWatcher源码剖析(Linux)_1">
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="QImage 增加 Format_Grayscale8 枚举值">
                             
-                            <span class="card-title">QFileSystemWatcher源码剖析(Linux)_1</span>
+                            <span class="card-title">QImage 增加 Format_Grayscale8 枚举值</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言上一篇讲了QFileSystemWatcher来检测文件夹的变化，里边的实现有两个
-// 这个用于检测文件类型的变化
-class QInotifyFileSystemWatcherEngine : public QFileSystemW
+                                Qt5.5之后才支持这个东西。所以我一直推荐使用高版本的Qt。
+Qt中的commit记录 
+d84a6eab5129ba29951a7ba6d82820b21cc9872e
+Add Grayscale8 and Alpha8 formats
                             
                         </div>
                         <div class="publish-info">
@@ -778,12 +733,12 @@ class QInotifyFileSystemWatcherEngine : public QFileSystemW
                             <span class="chip bg-color">Qt</span>
                         </a>
                         
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">Qt源码</span>
+                        <a href="/tags/QImage/">
+                            <span class="chip bg-color">QImage</span>
                         </a>
                         
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
-                            <span class="chip bg-color">Qt源码剖析</span>
+                        <a href="/tags/Format-Grayscale8/">
+                            <span class="chip bg-color">Format_Grayscale8</span>
                         </a>
                         
                     </div>
@@ -793,21 +748,71 @@ class QInotifyFileSystemWatcherEngine : public QFileSystemW
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/27/qfilesystemwatcher-yuan-ma-pou-xi-linux/">
+                    <a href="/2020/06/27/scp-de-shi-yong-fang-fa/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="QFileSystemWatcher源码剖析(Linux)">
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="scp的使用方法">
                             
-                            <span class="card-title">QFileSystemWatcher源码剖析(Linux)</span>
+                            <span class="card-title">scp的使用方法</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简介QFileSystemWatcher的作用是监视本地文件夹的变化以及文件的变化。
-概述QFileSystemWatcher的实现类是QFileSystemWatcherPrivate。 其中QFileSystemWatcherPriva
+                                每次往服务器传patch都有点小忘（主要是传的少=。=）
+从服务器往下
+scp -P 端口号 服务器地址 本地地址从本地上传到服务器
+scp -P 26399 本地地址 服务器地址
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                张小飞
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Linux/">
+                            <span class="chip bg-color">Linux</span>
+                        </a>
+                        
+                        <a href="/tags/scp/">
+                            <span class="chip bg-color">scp</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/06/27/qt-yuan-dui-xiang-meta-object-xi-tong/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Qt元对象(Meta-Object)系统">
+                            
+                            <span class="card-title">Qt元对象(Meta-Object)系统</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                反射 -在计算机科学中，反射是指计算机程序在运行时（Run time）可以访问、检测和修改它本身状态或行为的一种能力。[1]用比喻来说，反射就是程序在运行的时候能够“观察”并且修改自己的行为。
+要注意术语“反射”和“内省”（type int
                             
                         </div>
                         <div class="publish-info">
@@ -830,59 +835,12 @@ class QInotifyFileSystemWatcherEngine : public QFileSystemW
                             <span class="chip bg-color">Qt</span>
                         </a>
                         
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">Qt源码</span>
+                        <a href="/tags/%E5%85%83%E5%AF%B9%E8%B1%A1/">
+                            <span class="chip bg-color">元对象</span>
                         </a>
                         
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
-                            <span class="chip bg-color">Qt源码剖析</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-2-yi-dong-jie-zhi-de-chu-li/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Qt源码之魔改QFileDialog之路-2 移动介质的处理">
-                            
-                            <span class="card-title">Qt源码之魔改QFileDialog之路-2 移动介质的处理</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                前言移动介质，一般就是指当前Linux系统下的 U 盘 / 挂载硬盘。 这两个移动介质都是挂载在/media/yourusername下来做的处理。（fhs2.4）（实际上fhs3.0的标准已经改到/run/media/username下了
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                张小飞
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Qt/">
-                            <span class="chip bg-color">Qt</span>
-                        </a>
-                        
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">Qt源码</span>
+                        <a href="/tags/%E5%8F%8D%E5%B0%84/">
+                            <span class="chip bg-color">反射</span>
                         </a>
                         
                     </div>
@@ -892,74 +850,28 @@ class QInotifyFileSystemWatcherEngine : public QFileSystemW
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/26/qt-yuan-ma-zhi-mo-gai-qfiledialog-zhi-lu-1/">
+                    <a href="/2020/06/27/cpp-lambda-biao-da-shi/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Qt源码之魔改QFileDialog之路-1">
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="CPP lambda表达式">
                             
-                            <span class="card-title">Qt源码之魔改QFileDialog之路-1</span>
+                            <span class="card-title">CPP lambda表达式</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言之前着急发Linux社区版本的WPS，所以这里都没有好好的去更改打开本地文件对话框那里的逻辑。由于这里的代码是从其它平台迁移过来的，所以这里的逻辑就没有动。对于用户交互来讲可以说是非常恶心心了。因为我们是做产品的，产品驱动技术。这次呢，
+                                其实一直有个疑问，就是lambda表达式捕获this变量的时候是不是引用传递。想用代码测试下是不是引用传递。生怕有拷贝构造函数啊！
+    m_test1 = 1;  //成员便来嗯
+    auto fTest = [this]()
+  
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                张小飞
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Qt/">
-                            <span class="chip bg-color">Qt</span>
-                        </a>
-                        
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">Qt源码</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/26/error-this-cannot-be-implicitly-captured-in-this-context/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="error: 'this' cannot be implicitly captured in this context">
-                            
-                            <span class="card-title">error: 'this' cannot be implicitly captured in this context</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                讲真，使用Qt反射 + 元对象 + C++11 的特性，写c++代码简直不要太爽，代码优雅的不是一丁半点。
-今天使用lambda表达式的时候，发现报了个编译错误
-error: 'this' cannot be implicitly capt
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
                             </span>
                             <span class="publish-author">
                                 
@@ -988,81 +900,26 @@ error: 'this' cannot be implicitly capt
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/26/qfiledialog-zhong-de-tips/">
+                    <a href="/2020/06/27/linux-an-zhuang-xi-tong-chu-xian-cuo-wu-failed-to-load-ldlinux-c32/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="QFileDialog中的tips">
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux安装系统出现错误failed to load ldlinux.c32">
                             
-                            <span class="card-title">QFileDialog中的tips</span>
+                            <span class="card-title">Linux安装系统出现错误failed to load ldlinux.c32</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简述最近看QFileDialog的实现比较多，也对比了几家操作系统厂商跟Qt的QFileDialog中的实现，也自己造了个小轮子。也学到了一些东西，特意来分享下。
-正则表达式可以将类型诸如这种的格式
-WPS文字 文件(*.wps)  提取成
+                                UltraISO 刻录映像时写入方式选择”RAW”
+
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                张小飞
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Qt/">
-                            <span class="chip bg-color">Qt</span>
-                        </a>
-                        
-                        <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">Qt源码</span>
-                        </a>
-                        
-                        <a href="/tags/QFileDialog/">
-                            <span class="chip bg-color">QFileDialog</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/26/linux-geng-huan-difftool-wei-meld/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Linux更换difftool为meld">
-                            
-                            <span class="card-title">Linux更换difftool为meld</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                meld#设置默认的git diff的比较工具
-#配置比较工具.可以用git difftool 调用.
-git config --global diff.tool meld
-git config --global difftool.prom
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
                             </span>
                             <span class="publish-author">
                                 
@@ -1080,12 +937,151 @@ git config --global difftool.prom
                             <span class="chip bg-color">Linux</span>
                         </a>
                         
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/06/27/qapplication-setgraphicssystem/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="QApplication::setGraphicsSystem">
+                            
+                            <span class="card-title">QApplication::setGraphicsSystem</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                QApplication::setGraphicsSystem(QString )这个函数是整个application全局的设置，主要是设置全局文字，图像的绘制引擎。
+绘制引擎大家都知道，选择好的绘制引擎对于程序的提升是非常大的。
+其中有三
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                张小飞
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Qt/">
+                            <span class="chip bg-color">Qt</span>
+                        </a>
+                        
+                        <a href="/tags/Linux/">
+                            <span class="chip bg-color">Linux</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/06/27/oh-my-zsh-git-man-qia-dun-wen-ti-jie-jue/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="oh-my-zsh git 慢/卡顿问题解决">
+                            
+                            <span class="card-title">oh-my-zsh git 慢/卡顿问题解决</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                快一点进入git的目录
+git config --add oh-my-zsh.hide-dirty 1再快一点git config --add oh-my-zsh.hide-status 1
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                张小飞
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
                         <a href="/tags/git/">
                             <span class="chip bg-color">git</span>
                         </a>
                         
-                        <a href="/tags/meld/">
-                            <span class="chip bg-color">meld</span>
+                        <a href="/tags/oh-my-zsh/">
+                            <span class="chip bg-color">oh-my-zsh</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/06/27/qt-zhong-bao-cuo-error-allocation-of-incomplete-type-ui/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Qt中报错error: allocation of incomplete type 'Ui::‘">
+                            
+                            <span class="card-title">Qt中报错error: allocation of incomplete type 'Ui::‘</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                每次在Qt中单独添加UI文件的时候，都会遇到这个问题。需要注意这么几点切记要与类名保持一致举个栗子我的类名叫
+CMainWidget那我的文件名就叫
+cmainwidget.h
+cmainwidget.cpp那需要在cmainwidget.
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                张小飞
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Qt/">
+                            <span class="chip bg-color">Qt</span>
+                        </a>
+                        
+                        <a href="/tags/error/">
+                            <span class="chip bg-color">error</span>
                         </a>
                         
                     </div>
@@ -1109,7 +1105,7 @@ git config --global difftool.prom
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">1 / 2</div>
+            <div class="center-align b-text-gray">1 / 4</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -1136,7 +1132,7 @@ git config --global difftool.prom
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16k</span>&nbsp;字
+                class="white-color">18.6k</span>&nbsp;字
             
             
             
