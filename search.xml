@@ -5194,4 +5194,25 @@ nmake install</code></pre>
         <tag>编译</tag>
       </tags>
   </entry>
+  <entry>
+    <title>QImage转QByteArray</title>
+    <url>/2020/06/28/qimage-zhuan-qbytearray/</url>
+    <content><![CDATA[<pre class=" language-cpp"><code class="language-cpp">
+QImage img_enrll<span class="token punctuation">;</span>
+QByteArray arr<span class="token punctuation">;</span>
+QBuffer <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+buffer<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>QIODevice<span class="token operator">::</span>WriteOnly<span class="token punctuation">)</span><span class="token punctuation">;</span>
+img_enrll<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>buffer<span class="token punctuation">,</span> <span class="token string">"yourformat"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>或者</p>
+<pre class=" language-cpp"><code class="language-cpp">QByteArray arr <span class="token operator">=</span> QByteArray<span class="token operator">::</span><span class="token function">fromRawData</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>img<span class="token punctuation">.</span><span class="token function">bits</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> img<span class="token punctuation">.</span><span class="token function">byteCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>QImage</tag>
+      </tags>
+  </entry>
 </search>

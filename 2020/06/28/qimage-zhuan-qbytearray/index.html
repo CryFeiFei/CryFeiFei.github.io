@@ -4,16 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Windows下VS2019编译Qt5.13.2源码, Qt, C++">
-    <meta name="description" content="编译条件
-Python2.7.5 or later；
-VS2019；
-Qt5.13.2源码；
-pure
-ruby
-
-下载源码
-http://mirror.bit.edu.cn/qtproject/official_releases/qt/5">
+    <meta name="keywords" content="QImage转QByteArray, Qt, C++">
+    <meta name="description" content="
+QImage img_enrll;
+QByteArray arr;
+QBuffer buffer(&amp;amp;arr);
+buffer.open(QIODevice::WriteOnly);
+img_enrll.save(&amp;amp;buff">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +18,7 @@ http://mirror.bit.edu.cn/qtproject/official_releases/qt/5">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Windows下VS2019编译Qt5.13.2源码 | 张小飞</title>
+    <title>QImage转QByteArray | 张小飞</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -249,13 +246,13 @@ http://mirror.bit.edu.cn/qtproject/official_releases/qt/5">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Windows下VS2019编译Qt5.13.2源码
+                        QImage转QByteArray
                     </div>
                 </div>
             </div>
@@ -371,8 +368,8 @@ http://mirror.bit.edu.cn/qtproject/official_releases/qt/5">
                                 <span class="chip bg-color">Qt</span>
                             </a>
                         
-                            <a href="/tags/%E7%BC%96%E8%AF%91/">
-                                <span class="chip bg-color">编译</span>
+                            <a href="/tags/QImage/">
+                                <span class="chip bg-color">QImage</span>
                             </a>
                         
                     </div>
@@ -410,7 +407,7 @@ http://mirror.bit.edu.cn/qtproject/official_releases/qt/5">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    274
+                    29
                 </div>
                 
 
@@ -433,42 +430,15 @@ http://mirror.bit.edu.cn/qtproject/official_releases/qt/5">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="编译条件"><a href="#编译条件" class="headerlink" title="编译条件"></a>编译条件</h1><ul>
-<li>Python2.7.5 or later；</li>
-<li>VS2019；</li>
-<li>Qt5.13.2源码；</li>
-<li>pure</li>
-<li>ruby</li>
-</ul>
-<h1 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h1><blockquote>
-<p><a href="http://mirror.bit.edu.cn/qtproject/official_releases/qt/5.14/5.14.2/" target="_blank" rel="noopener" title="http://mirror.bit.edu.cn/qtproject/official_releases/qt/5.14/5.14.2/">http://mirror.bit.edu.cn/qtproject/official_releases/qt/5.14/5.14.2/</a></p>
-</blockquote>
-<p><a href="https://mirrors.tuna.tsinghua.edu.cn/qt/official_releases/qt/5.13/5.13.2/single/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/qt/official_releases/qt/5.13/5.13.2/single/</a></p>
-<p><img src="/2020/06/28/qt-compile-windows/windows_build_qt_source_debug2.jpg" alt> </p>
-<h1 id="解压到文件夹"><a href="#解压到文件夹" class="headerlink" title="解压到文件夹"></a>解压到文件夹</h1><p>创建文件夹 qt5.13_build_mt</p>
-<p>现在目录是这样</p>
-<p><img src="/2020/06/28/qt-compile-windows/windows_build_qt_source_debug1.jpg" alt> </p>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><h2 id="打开VS2019的命令行工具"><a href="#打开VS2019的命令行工具" class="headerlink" title="打开VS2019的命令行工具"></a>打开VS2019的命令行工具</h2><ul>
-<li>tips，这样configure不用指定编译器了</li>
-</ul>
-<p><img src="/2020/06/28/qt-compile-windows/windows_build_qt_source_debug4.jpg" alt> </p>
-<h3 id="进入解压的Qt源码目录"><a href="#进入解压的Qt源码目录" class="headerlink" title="进入解压的Qt源码目录"></a>进入解压的Qt源码目录</h3><p>tips</p>
-<ul>
-<li>直接终端 <code>D:</code> 就是进入D盘。</li>
-<li>进入文件夹命令是<code>cd</code></li>
-<li>返回上一级目录是<code>cd ..</code></li>
-<li>列出当前目录所有文件是 <code>dir</code></li>
-</ul>
-<p><img src="/2020/06/28/qt-compile-windows/windows_build_qt_source_debug3.jpg" alt> </p>
-<h3 id="输入编译脚本"><a href="#输入编译脚本" class="headerlink" title="输入编译脚本"></a>输入编译脚本</h3><p>在当前终端输入脚本 configure Qt</p>
-<pre class=" language-shell"><code class="language-shell">configure -confirm-license -opensource -debug -prefix "D:\QtVersion\Qt5.13_Build_MT_X64\qt5.13_build_mt" -qt-sqlite -qt-zlib -qt-libpng -qt-libjpeg -nomake tests -no-compile-examples -nomake examples </code></pre>
-<p>别忘记自己改下 prefix的位置</p>
-<p>configure完成之后直接</p>
-<pre class=" language-shell"><code class="language-shell">nmake
-nmake install</code></pre>
-<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>进入prefix的目录<br><img src="/2020/06/28/qt-compile-windows/windows_build_qt_source_debug5.jpg" alt> </p>
-<p>编译成功，不管是configure还是nmake都没有啥错。</p>
-<p>PS。我看还有jom编译Qt的方法，原谅我对windows的编译不熟悉。有大佬可以补充下，或者给个完成的链接，我补充上。</p>
+                <pre class=" language-cpp"><code class="language-cpp">
+QImage img_enrll<span class="token punctuation">;</span>
+QByteArray arr<span class="token punctuation">;</span>
+QBuffer <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+buffer<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>QIODevice<span class="token operator">::</span>WriteOnly<span class="token punctuation">)</span><span class="token punctuation">;</span>
+img_enrll<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>buffer<span class="token punctuation">,</span> <span class="token string">"yourformat"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>或者</p>
+<pre class=" language-cpp"><code class="language-cpp">QByteArray arr <span class="token operator">=</span> QByteArray<span class="token operator">::</span><span class="token function">fromRawData</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>img<span class="token punctuation">.</span><span class="token function">bits</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> img<span class="token punctuation">.</span><span class="token function">byteCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 
             </div>
             <hr/>
@@ -494,7 +464,7 @@ nmake install</code></pre>
                     </i>
                     </span>
                 <span class="reprint-info">
-                    <a href="https://cryfeifei.top/2020/06/28/qt-compile-windows/">https://cryfeifei.top/2020/06/28/qt-compile-windows/</a>
+                    <a href="https://cryfeifei.top/2020/06/28/qimage-zhuan-qbytearray/">https://cryfeifei.top/2020/06/28/qimage-zhuan-qbytearray/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -536,8 +506,8 @@ nmake install</code></pre>
                                     <span class="chip bg-color">Qt</span>
                                 </a>
                             
-                                <a href="/tags/%E7%BC%96%E8%AF%91/">
-                                    <span class="chip bg-color">编译</span>
+                                <a href="/tags/QImage/">
+                                    <span class="chip bg-color">QImage</span>
                                 </a>
                             
                         </div>
@@ -578,9 +548,10 @@ nmake install</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/06/28/qimage-zhuan-qbytearray/">
                     <div class="card-image">
@@ -603,9 +574,9 @@ img_enrll.save(&amp;buff
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -618,6 +589,7 @@ img_enrll.save(&amp;buff
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -640,29 +612,41 @@ img_enrll.save(&amp;buff
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/27/linux-inotify/">
+                <a href="/2020/06/28/qt-compile-windows/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Linux下使用inotify监控文件动作">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Windows下VS2019编译Qt5.13.2源码">
                         
-                        <span class="card-title">Linux下使用inotify监控文件动作</span>
+                        <span class="card-title">Windows下VS2019编译Qt5.13.2源码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux下使用inotify监控文件动作序在日常应用中，常常会遇到以下场景，监控文件夹A，若文件夹中的B文件发生变化，则执行C命令。Linux下可以通过inotify完成该功能。自从Linux kernel 2.6.13起，inotify
+                            编译条件
+Python2.7.5 or later；
+VS2019；
+Qt5.13.2源码；
+pure
+ruby
+
+下载源码
+http://mirror.bit.edu.cn/qtproject/official_releases/qt/5
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -670,12 +654,12 @@ img_enrll.save(&amp;buff
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
-                    <a href="/tags/inotify/">
-                        <span class="chip bg-color">inotify</span>
+                    <a href="/tags/%E7%BC%96%E8%AF%91/">
+                        <span class="chip bg-color">编译</span>
                     </a>
                     
                 </div>
