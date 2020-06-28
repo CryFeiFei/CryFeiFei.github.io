@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-28T13:02:10.324Z</updated>
+  <updated>2020-06-28T13:44:15.597Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>qt_compile_linux</title>
+    <link href="https://cryfeifei.top/2020/06/28/qt-compile-linux/"/>
+    <id>https://cryfeifei.top/2020/06/28/qt-compile-linux/</id>
+    <published>2020-06-28T13:37:06.000Z</published>
+    <updated>2020-06-28T13:44:15.597Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;0&quot;&gt;&lt;a href=&quot;#0&quot; class=&quot;headerlink&quot; title=&quot;0&quot;&gt;&lt;/a&gt;0&lt;/h1&gt;&lt;p&gt;如果你英文够好，可以直接去官方wiki看教程&lt;br&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>QImage转QByteArray</title>
@@ -545,35 +574,6 @@ sshfs xxx
       <category term="windows" scheme="https://cryfeifei.top/tags/windows/"/>
     
       <category term="bat" scheme="https://cryfeifei.top/tags/bat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt在Linux下Wayland桌面上抓取桌面的一个坑</title>
-    <link href="https://cryfeifei.top/2020/06/27/qt-zai-linux-xia-wayland-zhuo-mian-shang-zhua-qu-zhuo-mian-de-yi-ge-keng/"/>
-    <id>https://cryfeifei.top/2020/06/27/qt-zai-linux-xia-wayland-zhuo-mian-shang-zhua-qu-zhuo-mian-de-yi-ge-keng/</id>
-    <published>2020-06-27T09:57:10.000Z</published>
-    <updated>2020-06-27T10:00:00.582Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="Wayland" scheme="https://cryfeifei.top/tags/Wayland/"/>
     
   </entry>
   
