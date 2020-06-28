@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-27T15:04:04.336Z</updated>
+  <updated>2020-06-28T12:28:26.141Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -17,11 +17,41 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Windows下VS2019编译Qt5.13.2源码</title>
+    <link href="https://cryfeifei.top/2020/06/28/qt-compile-windows/"/>
+    <id>https://cryfeifei.top/2020/06/28/qt-compile-windows/</id>
+    <published>2020-06-28T12:08:40.000Z</published>
+    <updated>2020-06-28T12:28:26.141Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;编译条件&quot;&gt;&lt;a href=&quot;#编译条件&quot; class=&quot;headerlink&quot; title=&quot;编译条件&quot;&gt;&lt;/a&gt;编译条件&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;Python2.7.5 or
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="编译" scheme="https://cryfeifei.top/tags/%E7%BC%96%E8%AF%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Linux下使用inotify监控文件动作</title>
     <link href="https://cryfeifei.top/2020/06/27/linux-inotify/"/>
     <id>https://cryfeifei.top/2020/06/27/linux-inotify/</id>
     <published>2020-06-27T15:03:06.000Z</published>
-    <updated>2020-06-27T15:04:04.336Z</updated>
+    <updated>2020-06-28T12:23:51.823Z</updated>
     
     <summary type="html">
     
@@ -542,34 +572,6 @@ sshfs xxx
       <category term="Qt源码" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81/"/>
     
       <category term="Qt源码剖析" scheme="https://cryfeifei.top/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>QFileSystemWatcher无法释放的问题</title>
-    <link href="https://cryfeifei.top/2020/06/27/qfilesystemwatcher-wu-fa-shi-fang-de-wen-ti/"/>
-    <id>https://cryfeifei.top/2020/06/27/qfilesystemwatcher-wu-fa-shi-fang-de-wen-ti/</id>
-    <published>2020-06-27T08:25:16.000Z</published>
-    <updated>2020-06-27T08:26:22.854Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;QFileSystemWatcher 在单例类中，不能指定父类，不能用智能指针，否则会释放不掉，发生资源竞争。&lt;br&gt;要这样释放。&lt;/p&gt;
-&lt;pre class=&quot; language-cpp&quot;&gt;&lt;code class=&quot;language-cpp&quot;&gt;   
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="QFileSystemWatcher" scheme="https://cryfeifei.top/tags/QFileSystemWatcher/"/>
     
   </entry>
   

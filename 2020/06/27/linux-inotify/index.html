@@ -386,21 +386,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    925
+                    843
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 				
@@ -425,8 +425,15 @@
 <li><p>inotify_rm_watch(int fd, int wd) – 移除一个watcher</p>
 </li>
 </ul>
-<h4 id="相关结构"><a href="#相关结构" class="headerlink" title="相关结构"></a>相关结构</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">inotify_event</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span>      wd;       <span class="comment">/* Watch descriptor */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> mask;     <span class="comment">/* Mask of events */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> cookie;   <span class="comment">/* Unique cookie associating related</span></span><br><span class="line"><span class="comment">                                     events (for rename(2)) */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> len;      <span class="comment">/* Size of name field */</span></span><br><span class="line">    <span class="keyword">char</span>     name[];   <span class="comment">/* Optional null-terminated name */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<h4 id="相关结构"><a href="#相关结构" class="headerlink" title="相关结构"></a>相关结构</h4><pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> inotify_event <span class="token punctuation">{</span>
+    <span class="token keyword">int</span>      wd<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">/* Watch descriptor */</span>
+    uint32_t mask<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">/* Mask of events */</span>
+    uint32_t cookie<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">/* Unique cookie associating related
+                                     events (for rename(2)) */</span>
+    uint32_t len<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">/* Size of name field */</span>
+    <span class="token keyword">char</span>     name<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">/* Optional null-terminated name */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
 <h4 id="3-Mask"><a href="#3-Mask" class="headerlink" title="3 Mask"></a>3 Mask</h4><p>适用于 inotify_add_watch mask 与 read 返回的inotify_event中mask</p>
 <table>
 <thead>
@@ -550,11 +557,130 @@
 </tr>
 </tbody></table>
 <h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>用途：监测指定文件或目录（或不指定则为当前目录）的一切动作。<br>使用：inotify </p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/inotify.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;error.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;  </span></span></span><br><span class="line">  </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR(text) <span class="meta-keyword">error</span>(1, errno, <span class="meta-string">"%s"</span>, text)  </span></span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EventMask</span> &#123;</span>  </span><br><span class="line">    <span class="keyword">int</span>        flag;  </span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;  </span><br><span class="line">  </span><br><span class="line">&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">freadsome</span><span class="params">(<span class="keyword">void</span> *dest, <span class="keyword">size_t</span> remain, FILE *file)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> *offset = (<span class="keyword">char</span>*)dest;  </span><br><span class="line">    <span class="keyword">while</span> (remain) &#123;  </span><br><span class="line">        <span class="keyword">int</span> n = fread(offset, <span class="number">1</span>, remain, file);  </span><br><span class="line">        <span class="keyword">if</span> (n==<span class="number">0</span>) &#123;  </span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        remain -= n;  </span><br><span class="line">        offset += n;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *target;  </span><br><span class="line">    <span class="keyword">if</span> (argc == <span class="number">1</span>) &#123;  </span><br><span class="line">        target = <span class="string">"."</span>;  </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        target = argv[<span class="number">1</span>];  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    EventMask event_masks[] = &#123;  </span><br><span class="line">           &#123;IN_ACCESS        , <span class="string">"IN_ACCESS"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_ATTRIB        , <span class="string">"IN_ATTRIB"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_CLOSE_WRITE   , <span class="string">"IN_CLOSE_WRITE"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_CLOSE_NOWRITE , <span class="string">"IN_CLOSE_NOWRITE"</span>&#125; ,    </span><br><span class="line">           &#123;IN_CREATE        , <span class="string">"IN_CREATE"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_DELETE        , <span class="string">"IN_DELETE"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_DELETE_SELF   , <span class="string">"IN_DELETE_SELF"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_MODIFY        , <span class="string">"IN_MODIFY"</span>&#125;        ,    </span><br><span class="line">           &#123;IN_MOVE_SELF     , <span class="string">"IN_MOVE_SELF"</span>&#125;     ,    </span><br><span class="line">           &#123;IN_MOVED_FROM    , <span class="string">"IN_MOVED_FROM"</span>&#125;    ,    </span><br><span class="line">           &#123;IN_MOVED_TO      , <span class="string">"IN_MOVED_TO"</span>&#125;      ,    </span><br><span class="line">           &#123;IN_OPEN          , <span class="string">"IN_OPEN"</span>&#125;          ,    </span><br><span class="line">  </span><br><span class="line">           &#123;IN_DONT_FOLLOW   , <span class="string">"IN_DONT_FOLLOW"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_EXCL_UNLINK   , <span class="string">"IN_EXCL_UNLINK"</span>&#125;   ,    </span><br><span class="line">           &#123;IN_MASK_ADD      , <span class="string">"IN_MASK_ADD"</span>&#125;      ,    </span><br><span class="line">           &#123;IN_ONESHOT       , <span class="string">"IN_ONESHOT"</span>&#125;       ,    </span><br><span class="line">           &#123;IN_ONLYDIR       , <span class="string">"IN_ONLYDIR"</span>&#125;       ,    </span><br><span class="line">  </span><br><span class="line">           &#123;IN_IGNORED       , <span class="string">"IN_IGNORED"</span>&#125;       ,    </span><br><span class="line">           &#123;IN_ISDIR         , <span class="string">"IN_ISDIR"</span>&#125;         ,    </span><br><span class="line">           &#123;IN_Q_OVERFLOW    , <span class="string">"IN_Q_OVERFLOW"</span>&#125;    ,    </span><br><span class="line">           &#123;IN_UNMOUNT       , <span class="string">"IN_UNMOUNT"</span>&#125;       ,    </span><br><span class="line">    &#125;;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> monitor = inotify_init();  </span><br><span class="line">    <span class="keyword">if</span> ( <span class="number">-1</span> == monitor ) &#123;  </span><br><span class="line">        ERROR(<span class="string">"monitor"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> watcher = inotify_add_watch(monitor, target, IN_ALL_EVENTS);  </span><br><span class="line">    <span class="keyword">if</span> ( <span class="number">-1</span> == watcher  ) &#123;  </span><br><span class="line">        ERROR(<span class="string">"inotify_add_watch"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    FILE *monitor_file = fdopen(monitor, <span class="string">"r"</span>);  </span><br><span class="line">    <span class="keyword">char</span> last_name[<span class="number">1024</span>];  </span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">1024</span>];  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/* event:inotify_event -&gt; name:char[event.len] */</span>  </span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;  </span><br><span class="line">        inotify_event event;  </span><br><span class="line">        <span class="keyword">if</span> ( <span class="number">-1</span> == freadsome(&amp;event, <span class="keyword">sizeof</span>(event), monitor_file) ) &#123;  </span><br><span class="line">            ERROR(<span class="string">"freadsome"</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">if</span> (event.len) &#123;  </span><br><span class="line">            freadsome(name, event.len, monitor_file);  </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="built_in">sprintf</span>(name, <span class="string">"FD: %d\n"</span>, event.wd);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(name, last_name) != <span class="number">0</span>) &#123;  </span><br><span class="line">            <span class="built_in">puts</span>(name);  </span><br><span class="line">            <span class="built_in">strcpy</span>(last_name, name);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">/* 显示event的mask的含义 */</span>  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="keyword">sizeof</span>(event_masks)/<span class="keyword">sizeof</span>(EventMask); ++i) &#123;  </span><br><span class="line">            <span class="keyword">if</span> (event.mask &amp; event_masks[i].flag) &#123;  </span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"\t%s\n"</span>, event_masks[i].name);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/inotify.h></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;error.h></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;errno.h></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span>  </span>
 
+<span class="token macro property">#<span class="token directive keyword">define</span> ERROR(text) error(1, errno, "%s", text)  </span>
+
+<span class="token keyword">struct</span> EventMask <span class="token punctuation">{</span>  
+    <span class="token keyword">int</span>        flag<span class="token punctuation">;</span>  
+    <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>  
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span>  
+
+<span class="token keyword">int</span> <span class="token function">freadsome</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>dest<span class="token punctuation">,</span> size_t remain<span class="token punctuation">,</span> FILE <span class="token operator">*</span>file<span class="token punctuation">)</span>  
+<span class="token punctuation">{</span>  
+    <span class="token keyword">char</span> <span class="token operator">*</span>offset <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>dest<span class="token punctuation">;</span>  
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>remain<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token function">fread</span><span class="token punctuation">(</span>offset<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> remain<span class="token punctuation">,</span> file<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+
+        remain <span class="token operator">-</span><span class="token operator">=</span> n<span class="token punctuation">;</span>  
+        offset <span class="token operator">+</span><span class="token operator">=</span> n<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>  
+<span class="token punctuation">{</span>  
+    <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>target<span class="token punctuation">;</span>  
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        target <span class="token operator">=</span> <span class="token string">"."</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>  
+        target <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+
+    EventMask event_masks<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>  
+           <span class="token punctuation">{</span>IN_ACCESS        <span class="token punctuation">,</span> <span class="token string">"IN_ACCESS"</span><span class="token punctuation">}</span>        <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_ATTRIB        <span class="token punctuation">,</span> <span class="token string">"IN_ATTRIB"</span><span class="token punctuation">}</span>        <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_CLOSE_WRITE   <span class="token punctuation">,</span> <span class="token string">"IN_CLOSE_WRITE"</span><span class="token punctuation">}</span>   <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_CLOSE_NOWRITE <span class="token punctuation">,</span> <span class="token string">"IN_CLOSE_NOWRITE"</span><span class="token punctuation">}</span> <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_CREATE        <span class="token punctuation">,</span> <span class="token string">"IN_CREATE"</span><span class="token punctuation">}</span>        <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_DELETE        <span class="token punctuation">,</span> <span class="token string">"IN_DELETE"</span><span class="token punctuation">}</span>        <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_DELETE_SELF   <span class="token punctuation">,</span> <span class="token string">"IN_DELETE_SELF"</span><span class="token punctuation">}</span>   <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_MODIFY        <span class="token punctuation">,</span> <span class="token string">"IN_MODIFY"</span><span class="token punctuation">}</span>        <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_MOVE_SELF     <span class="token punctuation">,</span> <span class="token string">"IN_MOVE_SELF"</span><span class="token punctuation">}</span>     <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_MOVED_FROM    <span class="token punctuation">,</span> <span class="token string">"IN_MOVED_FROM"</span><span class="token punctuation">}</span>    <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_MOVED_TO      <span class="token punctuation">,</span> <span class="token string">"IN_MOVED_TO"</span><span class="token punctuation">}</span>      <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_OPEN          <span class="token punctuation">,</span> <span class="token string">"IN_OPEN"</span><span class="token punctuation">}</span>          <span class="token punctuation">,</span>    
+
+           <span class="token punctuation">{</span>IN_DONT_FOLLOW   <span class="token punctuation">,</span> <span class="token string">"IN_DONT_FOLLOW"</span><span class="token punctuation">}</span>   <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_EXCL_UNLINK   <span class="token punctuation">,</span> <span class="token string">"IN_EXCL_UNLINK"</span><span class="token punctuation">}</span>   <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_MASK_ADD      <span class="token punctuation">,</span> <span class="token string">"IN_MASK_ADD"</span><span class="token punctuation">}</span>      <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_ONESHOT       <span class="token punctuation">,</span> <span class="token string">"IN_ONESHOT"</span><span class="token punctuation">}</span>       <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_ONLYDIR       <span class="token punctuation">,</span> <span class="token string">"IN_ONLYDIR"</span><span class="token punctuation">}</span>       <span class="token punctuation">,</span>    
+
+           <span class="token punctuation">{</span>IN_IGNORED       <span class="token punctuation">,</span> <span class="token string">"IN_IGNORED"</span><span class="token punctuation">}</span>       <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_ISDIR         <span class="token punctuation">,</span> <span class="token string">"IN_ISDIR"</span><span class="token punctuation">}</span>         <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_Q_OVERFLOW    <span class="token punctuation">,</span> <span class="token string">"IN_Q_OVERFLOW"</span><span class="token punctuation">}</span>    <span class="token punctuation">,</span>    
+           <span class="token punctuation">{</span>IN_UNMOUNT       <span class="token punctuation">,</span> <span class="token string">"IN_UNMOUNT"</span><span class="token punctuation">}</span>       <span class="token punctuation">,</span>    
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>  
+
+    <span class="token keyword">int</span> monitor <span class="token operator">=</span> <span class="token function">inotify_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">==</span> monitor <span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token function">ERROR</span><span class="token punctuation">(</span><span class="token string">"monitor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+
+    <span class="token keyword">int</span> watcher <span class="token operator">=</span> <span class="token function">inotify_add_watch</span><span class="token punctuation">(</span>monitor<span class="token punctuation">,</span> target<span class="token punctuation">,</span> IN_ALL_EVENTS<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">==</span> watcher  <span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token function">ERROR</span><span class="token punctuation">(</span><span class="token string">"inotify_add_watch"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+
+    FILE <span class="token operator">*</span>monitor_file <span class="token operator">=</span> <span class="token function">fdopen</span><span class="token punctuation">(</span>monitor<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token keyword">char</span> last_name<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  
+    <span class="token keyword">char</span> name<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  
+
+    <span class="token comment" spellcheck="true">/* event:inotify_event -> name:char[event.len] */</span>  
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>true<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        inotify_event event<span class="token punctuation">;</span>  
+        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">==</span> <span class="token function">freadsome</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>event<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">,</span> monitor_file<span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token function">ERROR</span><span class="token punctuation">(</span><span class="token string">"freadsome"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>len<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token function">freadsome</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> event<span class="token punctuation">.</span>len<span class="token punctuation">,</span> monitor_file<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>  
+            <span class="token function">sprintf</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token string">"FD: %d\n"</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>wd<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> last_name<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token function">puts</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token function">strcpy</span><span class="token punctuation">(</span>last_name<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+
+        <span class="token comment" spellcheck="true">/* 显示event的mask的含义 */</span>  
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>event_masks<span class="token punctuation">)</span><span class="token operator">/</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>EventMask<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>mask <span class="token operator">&amp;</span> event_masks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>flag<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\t%s\n"</span><span class="token punctuation">,</span> event_masks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token punctuation">}</span>  
+        <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>  
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  </code></pre>
 <p>运行结果： vim 中 对监测目录中的 inotify.cc 进行保存</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4913</span></span><br><span class="line">    IN_CREATE</span><br><span class="line">    IN_OPEN</span><br><span class="line">    IN_ATTRIB</span><br><span class="line">    IN_CLOSE_WRITE</span><br><span class="line">    IN_DELETE</span><br><span class="line">inotify.cc</span><br><span class="line">    IN_MOVED_FROM</span><br><span class="line">inotify.cc~</span><br><span class="line">    IN_MOVED_TO</span><br><span class="line">inotify.cc</span><br><span class="line">    IN_CREATE</span><br><span class="line">    IN_OPEN</span><br><span class="line">    IN_MODIFY</span><br><span class="line">    IN_CLOSE_WRITE</span><br><span class="line">    IN_ATTRIB</span><br><span class="line">inotify.cc~</span><br><span class="line">    IN_DELETE</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-c"><code class="language-c"><span class="token number">4913</span>
+    IN_CREATE
+    IN_OPEN
+    IN_ATTRIB
+    IN_CLOSE_WRITE
+    IN_DELETE
+inotify<span class="token punctuation">.</span>cc
+    IN_MOVED_FROM
+inotify<span class="token punctuation">.</span>cc<span class="token operator">~</span>
+    IN_MOVED_TO
+inotify<span class="token punctuation">.</span>cc
+    IN_CREATE
+    IN_OPEN
+    IN_MODIFY
+    IN_CLOSE_WRITE
+    IN_ATTRIB
+inotify<span class="token punctuation">.</span>cc<span class="token operator">~</span>
+    IN_DELETE</code></pre>
 <p>可以看到，vim保存文件的流程为<br>创建一个4913文件用于检测vim对目录的控制权限<br>把inotify.cc更名为inotify.cc~<br>新建inotify.cc，并写入buffer<br>删除inotify.cc</p>
 <h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><a href="http://man7.org/linux/man-pages/man7/inotify.7.html" target="_blank" rel="noopener" title="http://man7.org/linux/man-pages/man7/inotify.7.html">http://man7.org/linux/man-pages/man7/inotify.7.html</a></p>
 
@@ -666,48 +792,58 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/27/linux-inotify/">
+                <a href="/2020/06/28/qt-compile-windows/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Linux下使用inotify监控文件动作">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Windows下VS2019编译Qt5.13.2源码">
                         
-                        <span class="card-title">Linux下使用inotify监控文件动作</span>
+                        <span class="card-title">Windows下VS2019编译Qt5.13.2源码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux下使用inotify监控文件动作序在日常应用中，常常会遇到以下场景，监控文件夹A，若文件夹中的B文件发生变化，则执行C命令。Linux下可以通过inotify完成该功能。自从Linux kernel 2.6.13起，inotify
+                            编译条件
+Python2.7.5 or later；
+VS2019；
+Qt5.13.2源码；
+pure
+ruby
+
+下载源码
+http://mirror.bit.edu.cn/qtproject/official_releases/qt/5
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
-                    <a href="/tags/inotify/">
-                        <span class="chip bg-color">inotify</span>
+                    <a href="/tags/%E7%BC%96%E8%AF%91/">
+                        <span class="chip bg-color">编译</span>
                     </a>
                     
                 </div>
@@ -946,7 +1082,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">28.9k</span>&nbsp;字
+                class="white-color">29.1k</span>&nbsp;字
             
             
             
