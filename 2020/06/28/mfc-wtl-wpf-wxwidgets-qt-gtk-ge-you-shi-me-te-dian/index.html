@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Qt元对象(Meta-Object)系统, Qt, C++">
-    <meta name="description" content="反射 -在计算机科学中，反射是指计算机程序在运行时（Run time）可以访问、检测和修改它本身状态或行为的一种能力。[1]用比喻来说，反射就是程序在运行的时候能够“观察”并且修改自己的行为。
-要注意术语“反射”和“内省”（type int">
+    <meta name="keywords" content="MFC、WTL、WPF、wxWidgets、Qt、GTK 各有什么特点, Qt, C++">
+    <meta name="description" content="作者：姚冬链接：https://www.zhihu.com/question/23480014/answer/24809080来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+谢邀（终于用上这个高大上的词汇了，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Qt元对象(Meta-Object)系统 | 张小飞</title>
+    <title>MFC、WTL、WPF、wxWidgets、Qt、GTK 各有什么特点 | 张小飞</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -242,13 +242,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Qt元对象(Meta-Object)系统
+                        MFC、WTL、WPF、wxWidgets、Qt、GTK 各有什么特点
                     </div>
                 </div>
             </div>
@@ -364,18 +364,19 @@
                                 <span class="chip bg-color">Qt</span>
                             </a>
                         
-                            <a href="/tags/%E5%85%83%E5%AF%B9%E8%B1%A1/">
-                                <span class="chip bg-color">元对象</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%8F%8D%E5%B0%84/">
-                                <span class="chip bg-color">反射</span>
-                            </a>
-                        
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Qt/" class="post-category">
+                                Qt
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -384,28 +385,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-28
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    2.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 				
@@ -421,148 +422,17 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p> -在计算机科学中，反射是指计算机程序在运行时（Run time）可以访问、检测和修改它本身状态或行为的一种能力。[1]用比喻来说，反射就是程序在运行的时候能够“观察”并且修改自己的行为。</p>
-<p>要注意术语“反射”和“内省”（type introspection）的关系。内省（或称“自省”）机制仅指程序在运行时对自身信息（称为元数据）的检测；反射机制不仅包括要能在运行时对程序自身信息进行检测，还要求程序能进一步根据这些信息改变程序状态或结构。</p>
-<h2 id="C-的反射"><a href="#C-的反射" class="headerlink" title="C++的反射"></a>C++的反射</h2><p>C++的标准语法是不提供反射的特性的，不过随着C++17的定稿，估计这个关键词不会加到标准中了。不过这个我们可以用template来实现，这次就不写template了。今天主要是讲的是Qt。</p>
-<h2 id="Qt的反射"><a href="#Qt的反射" class="headerlink" title="Qt的反射"></a>Qt的反射</h2><p>Qt最大的特点就是增加了moc的过程，个人理解，Qt扩展了C++的语法，以及增强了自己的基本库。</p>
-<blockquote>
-<p>Meta Object System is a part of Qt framework core provided to support Qt extensions to C++ like signals/slots for inter-object communication, run-time type information, and the dynamic property system.[1]<br>Architecture<br>The Meta object system consists of 3 things: QObject class, Q_OBJECT macro and a tool called moc (Meta-Object Compiler). QObject is the base class for all Qt classes, Q_OBJECT macro is used to enable meta-object features in classes and finally moc is a preprocessor that changes Q_OBJECT macro instances to C++ source code to enable meta object system mechanism in the class in which it is used.[2]<br>Using the meta object system has brought some criticism. In Qt documentation, several reasons have been given for the use of the meta object system, including benefits of code generation, dynamism of GUIs, automatic binding to scripting languages, not adding limitations and also reasonable performance in signal/slot implementation with moc.[3] There are some efforts to make Qt needless of a preprocessor. These efforts include re-implementing Qt moc using libclang.[4] </p>
-</blockquote>
-<p>moc可以理解将Qt中的一些关键词，比如Q_Object ，Q_PROPERTY等转化为c++的基本语法，所以我们在编译Qt的工程时，首先要qmake-&gt;make。</p>
-<p>个人认为Qt有两个我比较看重的特点。</p>
-<ul>
-<li>STL基础库的扩展。</li>
-<li>C++基本语法与特性的扩展。</li>
-</ul>
-<p>尤其是基本语法的扩展，比如信号槽，元对象系统，让C++一个静态语言有了动态语言的特性（当然你也可以用template来实现，但是这玩意儿一般人又用不起，而且写起来也比较恶心）。这一点我就可以吹爆了。</p>
-<p>下边开始讲Qt的反射。Qt的反射是基于Qt的元对象系统的。当然Qt还不能做到像java那样通过类名来创建一个对象，这个需要我们自己写一个工厂模式。个人认为，除了这一点，与java中的反射没有啥区别了。都可以动态的去访问其成员变量，成员函数，以及设置属性。当然必须加上Qt自己的语法。</p>
-<p>举个栗子</p>
-<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//1 .继承 QObject </span>
-<span class="token keyword">class</span> <span class="token class-name">TestObject</span> <span class="token operator">:</span> <span class="token keyword">public</span> QObject
-<span class="token punctuation">{</span>
-    Q_OBJECT <span class="token comment" spellcheck="true">// 2.声明Q_OBJECT</span>
-    <span class="token function">Q_PROPERTY</span><span class="token punctuation">(</span>QString text READ text WRITE setText NOTIFY textChange<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//3. Q_PROPERTY 注册成员变量</span>
-    <span class="token function">Q_PROPERTY</span><span class="token punctuation">(</span>QString text MEMBER m_text NOTIFY textChange<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//4. 注册的成员变量能够响应自定义的signals textChange</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">TestObject</span><span class="token punctuation">(</span>QObject<span class="token operator">*</span> parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">~</span><span class="token function">TestObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//------</span>
-    Q_INVOKABLE QString <span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//5.注册类的成员函数</span>
-    Q_INVOKABLE <span class="token keyword">void</span> <span class="token function">setText</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> strText<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//5.注册类的成员函数</span>
-    QString m_text<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//类的成员变量</span>
-signals<span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">textChange</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//自定义的signals</span>
-<span class="token keyword">public</span> slots<span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">textslot</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"textslot"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">//自定义的signals响应的槽函数</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">//cpp</span>
-TestObject<span class="token operator">::</span><span class="token function">TestObject</span><span class="token punctuation">(</span>QObject<span class="token operator">*</span> parent<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">QObject</span> <span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">setObjectName</span><span class="token punctuation">(</span><span class="token string">"TestObject"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">connect</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token function">SIGNAL</span><span class="token punctuation">(</span><span class="token function">textChange</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">textslot</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-TestObject<span class="token operator">::</span><span class="token operator">~</span><span class="token function">TestObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">void</span> TestObject<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"*********************"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
-    <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"init"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-QString TestObject<span class="token operator">::</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">return</span> m_text<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">void</span> TestObject<span class="token operator">::</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString<span class="token operator">&amp;</span> strText<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_text <span class="token operator">==</span> strText<span class="token punctuation">)</span>
-        <span class="token keyword">return</span><span class="token punctuation">;</span>
-    m_text <span class="token operator">=</span> strText<span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//    emit textChange(); //有了第四条这个语句已经不需要了。</span>
-<span class="token punctuation">}</span></code></pre>
-<p>这里看调用方法</p>
-<pre><code>    TestObject* obj = new TestObject(this);  // new一个对象
-
-    qDebug()&lt;&lt;obj-&gt;objectName()&lt;&lt;endl; //输出对象的名字
-    // custom object property
-    obj-&gt;setProperty(&quot;text&quot;, &quot;hahaha&quot;);    //设置对象的属性
-    qDebug()&lt;&lt;obj-&gt;property(&quot;text&quot;).toString()&lt;&lt;endl; //输出对象的属性
-
-    //得到注册的类成员函数
-    qDebug()&lt;&lt;&quot;begin--------------------custom class method&quot;&lt;&lt;endl;
-    const QMetaObject* mobj = obj-&gt;metaObject();
-
-    qDebug()&lt;&lt;mobj-&gt;methodCount()&lt;&lt;endl;
-    for(int i = 0; i &lt; mobj-&gt;methodCount(); i++)
-    {
-        QMetaMethod mMethod = mobj-&gt;method(i);
-        QByteArray byteArray = mMethod.name();
-        //输出函数类型与函数名称
-        qDebug()&lt;&lt;mMethod.typeName()&lt;&lt;&quot;-&gt;&quot;&lt;&lt;QString(byteArray)&lt;&lt;endl; 
-    }
-    qDebug()&lt;&lt;&quot;end----------------------custom class method&quot;&lt;&lt;endl;
-
-    //调用注册的成员函数，通过Q_RETURN_ARG来获取返回值
-    qDebug()&lt;&lt;&quot;begin    QMetaObject::invokeMethod&quot;&lt;&lt;endl;
-    QString invokeString;
-    //调用类的成员函数
-    QMetaObject::invokeMethod(obj, &quot;text&quot;, Qt::DirectConnection, Q_RETURN_ARG(QString, invokeString));
-    qDebug()&lt;&lt;invokeString&lt;&lt;endl;
-    qDebug()&lt;&lt;&quot;end            QMetaObject::invokeMethod&quot;&lt;&lt;endl;
-
-    // 再次设置text值，可以响应这个信号，可以参考4
-    obj-&gt;setProperty(&quot;text&quot;, &quot;luelueluelue&quot;);</code></pre><p>看上边的代码，C++能够随时获取当前类的成员变量与成员函数以及调用。(并不是通过C++的type id)这就是反射。反射在写GUI的时候是非常有用的。也就是我们可以随时获取当前对象的任何我们想要的属性以及想要调用的函数。静态语言有了动态语言的特性。这就是Qt强大的地方。</p>
-<h2 id="Qt通过类名来实现真正的反射"><a href="#Qt通过类名来实现真正的反射" class="headerlink" title="Qt通过类名来实现真正的反射"></a>Qt通过类名来实现真正的反射</h2><pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QByteArray></span></span>
-<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QMetaObject></span></span>
-<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QHash></span></span>
-
-<span class="token macro property">#<span class="token directive keyword">ifndef</span> OBJECTFACTORY_H</span>
-<span class="token macro property">#<span class="token directive keyword">define</span> OBJECTFACTORY_H</span>
-
-<span class="token keyword">class</span> <span class="token class-name">ObjectFactory</span>
-<span class="token punctuation">{</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>
-    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">registerClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token function">constructors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span> T<span class="token operator">::</span>staticMetaObject<span class="token punctuation">.</span><span class="token function">className</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>constructorHelper<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">static</span> QObject<span class="token operator">*</span> <span class="token function">createObject</span><span class="token punctuation">(</span> <span class="token keyword">const</span> QByteArray<span class="token operator">&amp;</span> className<span class="token punctuation">,</span> QObject<span class="token operator">*</span> parent <span class="token operator">=</span> <span class="token constant">NULL</span> <span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        Constructor constructor <span class="token operator">=</span> <span class="token function">constructors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span> className <span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span> constructor <span class="token operator">==</span> <span class="token constant">NULL</span> <span class="token punctuation">)</span>
-            <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">*</span>constructor<span class="token punctuation">)</span><span class="token punctuation">(</span> parent <span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">typedef</span> QObject<span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">*</span>Constructor<span class="token punctuation">)</span><span class="token punctuation">(</span> QObject<span class="token operator">*</span> parent <span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>
-    <span class="token keyword">static</span> QObject<span class="token operator">*</span> <span class="token function">constructorHelper</span><span class="token punctuation">(</span> QObject<span class="token operator">*</span> parent <span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">T</span><span class="token punctuation">(</span> parent <span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">static</span> QHash<span class="token operator">&lt;</span>QByteArray<span class="token punctuation">,</span> Constructor<span class="token operator">></span><span class="token operator">&amp;</span> <span class="token function">constructors</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">static</span> QHash<span class="token operator">&lt;</span>QByteArray<span class="token punctuation">,</span> Constructor<span class="token operator">></span> instance<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment" spellcheck="true">// OBJECTFACTORY_H</span></code></pre>
-<p>下边是使用方法。todo ，这个东西应该写成单例模式的。</p>
-<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//使用方法</span>
-    ObjectFactory fac<span class="token punctuation">;</span>
-    fac<span class="token punctuation">.</span>registerClass<span class="token operator">&lt;</span>TestObject<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"begin-------------------------------"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
-    TestObject<span class="token operator">*</span> object <span class="token operator">=</span> qobject_cast<span class="token operator">&lt;</span>TestObject<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>fac<span class="token punctuation">.</span><span class="token function">createObject</span><span class="token punctuation">(</span> <span class="token string">"TestObject"</span> <span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    object<span class="token operator">-</span><span class="token operator">></span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"template factory"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>object<span class="token operator">-</span><span class="token operator">></span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span></code></pre>
+                <p>作者：姚冬<br>链接：<a href="https://www.zhihu.com/question/23480014/answer/24809080" target="_blank" rel="noopener">https://www.zhihu.com/question/23480014/answer/24809080</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>谢邀（终于用上这个高大上的词汇了，真的有点小激动呢）</p>
+<h1 id="WTL"><a href="#WTL" class="headerlink" title="WTL"></a>WTL</h1><p>WTL都算不上什么Framework，就是利用泛型特性对Win API做了层封装，设计思路也没摆脱MFC的影响，实际上用泛型做UI Framework也只能算是一次行为艺术，这个思路下继续发展就会变得没法用了，比如 代码过于复杂，编译太慢，出错不好调试等问题难以解决。<br>而且封装得也不完全，还是随处可见 HWND HDC之类的东西。<br>用途主要是写一些很小的程序，或者作为其他UI框架的后端实现部分，比如我写过一个小框架用来做安装卸载程序，非常小，其中创建管理窗口部分是用WTL的。</p>
+<h1 id="MFC"><a href="#MFC" class="headerlink" title="MFC"></a>MFC</h1><p>MFC是更高级点的Win API封装，比WTL封装彻底，很难见到HWND HDC了，也提供了不少实用工具类，比如高级控件，泛型容器，IO访问，网络协议等。除此之外，还提供了一些基本框架，比如 Document/View，这就是个MVC的简化版本，只有MV，但是对于数据的管理，消息的传递等又没有什么约束，导致Doc/View被用得乱七八糟。尤其是对事件处理的模型，消息映射是功能简陋，而且容易出错的方式，唯一优点是性能好。 从VC++ 1.X就有MFC了，那时整个UI界的设计思想都比较落后（除了Apple），MFC又背负了沉重的兼容性包袱，比如vc++ 1.52的MFC程序到了vc2003稍加修改都可以编译，导致MFC后期没有什么发展，就是沿着老的思路完善了些细节，添加了些组件，但是根本性的设计问题没有改进。</p>
+<h1 id="GTK"><a href="#GTK" class="headerlink" title="GTK"></a>GTK</h1><p>GTK，这个吃了语言的亏，用C写面向对象实在是痛苦，虽然在思想上比MFC要先进了些，但是写出来的代码比MFC要罗嗦很多了。相比MFC，多了Layout的概念，事件处理上有了Signal/slot，虽然用起来很麻烦。</p>
+<h1 id="wxWidget"><a href="#wxWidget" class="headerlink" title="wxWidget"></a>wxWidget</h1><p>wxWidgets，这个基本就是个跨平台的MFC，对各个平台的差异做了抽象，实际上后端大多还是用平台原生的API实现，好多控件都是直接用系统原生的。有wxWidgets for GTK+的版本，后端就是GTK+，wxWidgets就是一层壳。这也是wxWidgets的优点，它编译出来的程序发行包比较小，性能也不错。<br>以上这些就是上世纪90年代的UI Framework技术水平了，至今它们也依然没有太多进步。<br>下面来谈谈21世纪的技术。</p>
+<h1 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h1><p>Qt，虽然它也是上世纪90年代出现的，但是它在21世纪有了长足的进步。应该说它的起点就比较高，一开始就定位跨平台，而且不满足于简单封装系统API，而是要自己创造出一套完整的API和框架，甚至要代替系统API，所以不仅仅是做UI，而是涉及到了APP开发所用到的所有东西，包括网络，数据库，多媒体，脚本引擎等。signal/slot是Qt发明的，这是事件通知模型里C++语言的最佳实现了，甚至我都觉得这该写进C++标准，估计C++委员会的老顽固们是从不写GUI的。<br>早期的QT也是没有DirectUI的概念的，每一个QWidget都对应一个原生窗口，从Qt4.4开始，只有顶层QWidget才是原生窗口，而Child Widget是Alien Widget，只是个抽象的图层不对应原生窗口，这就实现了DirectUI的概念，很多图形效果也就变得可能了，比如窗口层叠透明效果。<br>在4.8后实现了QPA(Qt Platform Abstraction)，这就使移植Qt变得很容易，目前Qt是支持平台最多的框架没有之一。<br>由于早期授权的问题，Qt对于开源社区不是很友好，导致推广不太顺利，直到它改成了LGPL方式，如果Qt能早点想开了，恐怕就没有wxWidgets的生存空间了。<br>Qt的缺点也是有的，就是太大，不过可以自己剪裁，我可以把QT库剪裁到发行包压缩后2.5MB。<br>WPF，微软在Win Form的思路上走到死胡同后，终于痛下决心用正确的方法开发UI库了。21世纪的UI一定是定义出来的，绝对不能是代码写出来的，所以有了XAML这个强大的定义工具，不但可以定义UI布局，还包括图形动画效果，消息响应方式等。配合C#这种优秀的语言，更是如虎添翼。但是问题也很明显，就是过于庞大，不仅开发时要用到庞大的IDE和设计工具，发行的安装包也十分巨大，所以目前还是很少有人拿他写通用软件客户端的，大多是做企业项目时写专用客户端。<br>大概4-5年前吧疼讯曾经用WPF写了个QQ，但是只实现了基本功能就已经比C++客户端大好多了，而且运行缓慢，主要是太吃内存，而且那时WPF的优化还不充分。<br>最后我想补充下真正的UI库之王，cocoa。</p>
+<h1 id="cocoa"><a href="#cocoa" class="headerlink" title="cocoa"></a>cocoa</h1><p>Apple的成功有很多原因，其中之一就是cocoa，cocoa理念十分先进，而且出来得早，我都怀疑Qt和WPF有不少思想都是借鉴cocoa的。<br>定义式的UI，用xib就可以定义UI的绝大部分细节，而且提供所见即所得的可视化设计工具。<br>严格的MVC，而且定义非常清晰，分工明确。<br>signal/slot，虽然不叫这个名字，但思想就是，而且真的是拖动鼠标就能connect。<br>提供了ARC，闭包和反射，给UI开发带来巨大的便利性，当然这得益于Objective-C这个语言。<br>再补充下 Borland的OWL和VCL。<br>我是从Borland C++3.0和Delphi 1.0开始用的，那时的Borland看来很有前途的，可惜后来一系列决策失误导致现在这个公司几乎消失了，同学们不要再往这个坑里跳了。<br>OWL曾经和MFC是竞争对手，设计思想也差不多，个人感觉OWL的API设计更优雅一点，但是在市场上OWL被MFC彻底击败。</p>
+<h1 id="Delphi"><a href="#Delphi" class="headerlink" title="Delphi"></a>Delphi</h1><p>Delphi是神作，它在RAD（快速应用开发）领域长时间没有对手，直到BS架构取代CS架构。Delphi的特点就是简单、开发快，单纯就写个基本可用的应用来说，可能至今都没有比他更快的，但是缺点就是丑，基本大多数Delphi应用都是一大堆控件堆积在一起，很不美观，另外由于Pascal语言的限制无法和现有大量的C/C++代码融合。虽然后来有C++ Builder，但是Builder里简单和快的优点也消失了。Borland的C++编译器越做越差，导致后来开源项目都不太愿意兼容这个编译器了。</p>
+<h1 id="VLC"><a href="#VLC" class="headerlink" title="VLC"></a>VLC</h1><p>VCL准确地说不是UI库，而是一套组件接口规范，类似COM ActiveX。delphi和C++builder都是基于这个规范构建了基础库。<br>UI库是个很大的话题，够写好几本书来探讨的，我这里就是随便写点自己的感受。<br>单纯讨论每个库的优劣是没有意义的，而是要放到具体的应用场景里来看，每个库都有自己擅长的场景。</p>
+<h1 id="总计"><a href="#总计" class="headerlink" title="总计"></a>总计</h1><p>如果仅在Windows下，追求程序小巧，用WTL，不足的地方自己实现去吧，但是视觉效果就呵呵了。<br>如果可以大一点，还要好看点，那就Qt。<br>如果完全不在乎大小，只要视觉效果华丽，就用WPF，如果把开发工具价格也考虑进来，那么土豪才会选WPF呢。<br>MFC就是个鸡肋了，除非你现有的工程师不会用别的，或者有历史遗留代码要保持兼容。<br>如果要求跨平台，那么就用Qt，wxWidgets和GTK+跟现在的Qt比起来没有什么优势了。<br>如果是iOS Android，那么最好用原生UI库，除非你写游戏。</p>
 
             </div>
             <hr/>
@@ -588,7 +458,7 @@ QString TestObject<span class="token operator">::</span><span class="token funct
                     </i>
                     </span>
                 <span class="reprint-info">
-                    <a href="https://cryfeifei.top/2020/06/27/qt-yuan-dui-xiang-meta-object-xi-tong/">https://cryfeifei.top/2020/06/27/qt-yuan-dui-xiang-meta-object-xi-tong/</a>
+                    <a href="https://cryfeifei.top/2020/06/28/mfc-wtl-wpf-wxwidgets-qt-gtk-ge-you-shi-me-te-dian/">https://cryfeifei.top/2020/06/28/mfc-wtl-wpf-wxwidgets-qt-gtk-ge-you-shi-me-te-dian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -630,14 +500,6 @@ QString TestObject<span class="token operator">::</span><span class="token funct
                                     <span class="chip bg-color">Qt</span>
                                 </a>
                             
-                                <a href="/tags/%E5%85%83%E5%AF%B9%E8%B1%A1/">
-                                    <span class="chip bg-color">元对象</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%8F%8D%E5%B0%84/">
-                                    <span class="chip bg-color">反射</span>
-                                </a>
-                            
                         </div>
                     
                 </div>
@@ -676,49 +538,49 @@ QString TestObject<span class="token operator">::</span><span class="token funct
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/06/27/scp-de-shi-yong-fang-fa/">
+                <a href="/2020/06/28/mfc-wtl-wpf-wxwidgets-qt-gtk-ge-you-shi-me-te-dian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="scp的使用方法">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="MFC、WTL、WPF、wxWidgets、Qt、GTK 各有什么特点">
                         
-                        <span class="card-title">scp的使用方法</span>
+                        <span class="card-title">MFC、WTL、WPF、wxWidgets、Qt、GTK 各有什么特点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            每次往服务器传patch都有点小忘（主要是传的少=。=）
-从服务器往下
-scp -P 端口号 服务器地址 本地地址从本地上传到服务器
-scp -P 26399 本地地址 服务器地址
+                            作者：姚冬链接：https://www.zhihu.com/question/23480014/answer/24809080来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+谢邀（终于用上这个高大上的词汇了，
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/scp/">
-                        <span class="chip bg-color">scp</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
                 </div>
@@ -732,32 +594,34 @@ scp -P 26399 本地地址 服务器地址
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/27/cpp-lambda-biao-da-shi/">
+                <a href="/2020/06/28/guan-yu-qt-de-li-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="CPP lambda表达式">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="关于Qt的历史">
                         
-                        <span class="card-title">CPP lambda表达式</span>
+                        <span class="card-title">关于Qt的历史</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            其实一直有个疑问，就是lambda表达式捕获this变量的时候是不是引用传递。想用代码测试下是不是引用传递。生怕有拷贝构造函数啊！
-    m_test1 = 1;  //成员便来嗯
-    auto fTest = [this]()
-  
+                            版权声明版权声明：本文为博主原创文章，本文章遵循协议CC 4.0 BY-SA，转载请附上原文出处链接和本声明。本文链接：https://blog.csdn.net/u011012932/article/details/49826231
+什么
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -765,12 +629,8 @@ scp -P 26399 本地地址 服务器地址
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/cpp/">
-                        <span class="chip bg-color">cpp</span>
-                    </a>
-                    
-                    <a href="/tags/lambda/">
-                        <span class="chip bg-color">lambda</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
                 </div>
