@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-28T14:58:56.685Z</updated>
+  <updated>2020-06-28T15:05:08.122Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于Qt的历史</title>
+    <link href="https://cryfeifei.top/2020/06/28/guan-yu-qt-de-li-shi/"/>
+    <id>https://cryfeifei.top/2020/06/28/guan-yu-qt-de-li-shi/</id>
+    <published>2020-06-28T15:03:27.000Z</published>
+    <updated>2020-06-28T15:05:08.122Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;版权声明&quot;&gt;&lt;a href=&quot;#版权声明&quot; class=&quot;headerlink&quot; title=&quot;版权声明&quot;&gt;&lt;/a&gt;版权声明&lt;/h1&gt;&lt;p&gt;版权声明：本文为博主原创文章，本文章遵循协议&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt简介</title>
@@ -546,34 +573,6 @@ sshfs xxx
     
     
       <category term="Unicode" scheme="https://cryfeifei.top/tags/Unicode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt编码的一个坑</title>
-    <link href="https://cryfeifei.top/2020/06/27/qt-bian-ma-de-yi-ge-keng/"/>
-    <id>https://cryfeifei.top/2020/06/27/qt-bian-ma-de-yi-ge-keng/</id>
-    <published>2020-06-27T10:16:07.000Z</published>
-    <updated>2020-06-27T10:16:56.911Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;编码编码&quot;&gt;&lt;a href=&quot;#编码编码&quot; class=&quot;headerlink&quot; title=&quot;编码编码&quot;&gt;&lt;/a&gt;编码编码&lt;/h1&gt;&lt;p&gt;虽说上班这么多年了，昨天修复一个bug的时候还是被屎一样的代码给坑了&lt;/p&gt;
-&lt;p&gt;先说逻辑&lt;br&gt;业务本质是想把
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="编码" scheme="https://cryfeifei.top/tags/%E7%BC%96%E7%A0%81/"/>
     
   </entry>
   
