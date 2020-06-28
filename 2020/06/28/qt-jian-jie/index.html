@@ -4,14 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="pro工程转vs工程, Qt, C++">
-    <meta name="description" content="
-找到vs的x86 native tool
-qmake添加到系统环境变量
-进入pro文件目录
-qmake -tp vc xxxx.pro
-
-">
+    <meta name="keywords" content="Qt简介, Qt, C++">
+    <meta name="description" content="声明本文章遵循协议 原文链接 豆子
+知识共享署名-禁止演绎 3.0 未本地化版本许可协议
+Qt简介Qt 是一个著名的 C++ 应用程序框架。你并不能说它只是一个 GUI 库，因为 Qt 十分庞大，并不仅仅是 GUI 组件。使用 Qt，在一定">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +15,7 @@ qmake -tp vc xxxx.pro
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>pro工程转vs工程 | 张小飞</title>
+    <title>Qt简介 | 张小飞</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,13 +243,13 @@ qmake -tp vc xxxx.pro
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        pro工程转vs工程
+                        Qt简介
                     </div>
                 </div>
             </div>
@@ -369,22 +365,19 @@ qmake -tp vc xxxx.pro
                                 <span class="chip bg-color">Qt</span>
                             </a>
                         
-                            <a href="/tags/qmake/">
-                                <span class="chip bg-color">qmake</span>
-                            </a>
-                        
-                            <a href="/tags/pro/">
-                                <span class="chip bg-color">pro</span>
-                            </a>
-                        
-                            <a href="/tags/vs/">
-                                <span class="chip bg-color">vs</span>
-                            </a>
-                        
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Qt/" class="post-category">
+                                Qt
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -393,28 +386,28 @@ qmake -tp vc xxxx.pro
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-28
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    28
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 				
@@ -430,12 +423,16 @@ qmake -tp vc xxxx.pro
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li>找到vs的x86 native tool</li>
-<li>qmake添加到系统环境变量</li>
-<li>进入pro文件目录</li>
-<li>qmake -tp vc xxxx.pro</li>
-</ul>
+                <h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文章遵循协议 原文链接 <a href="https://www.devbean.net/2012/08/qt-study-road-2-qt-intro/" target="_blank" rel="noopener">豆子</a></p>
+<p><a href="https://creativecommons.org/licenses/by-nd/3.0/deed.zh" target="_blank" rel="noopener">知识共享署名-禁止演绎 3.0 未本地化版本许可协议</a></p>
+<h1 id="Qt简介"><a href="#Qt简介" class="headerlink" title="Qt简介"></a>Qt简介</h1><p>Qt 是一个著名的 C++ 应用程序框架。你并不能说它只是一个 GUI 库，因为 Qt 十分庞大，并不仅仅是 GUI 组件。使用 Qt，在一定程度上你获得的是一个“一站式”的解决方案：不再需要研究 STL，不再需要 C++ 的<string>，不再需要到处去找解析 XML、连接数据库、访问网络的各种第三方库，因为 Qt 自己内置了这些技术。 </string></p>
+<p>Qt 是一个跨平台的框架。跨平台 GUI 通常有三种实现策略：</p>
+<p>API 映射：API 映射是说，界面库使用同一套 API，将其映射到不同的底层平台上面。大体相当于将不同平台的 API 提取公共部分。比如说，将 Windows 平台上的按钮控件和 Mac OS 上的按钮组件都取名为 Button。当你使用 Button 时，如果在 Windows 平台上，则编译成按钮控件；如果在 Mac OS 上，则编译成按钮组件。这么做的好处是，所有组件都是原始平台自有的，外观和原生平台一致；缺点是，编写库代码的时候需要大量工作用于适配不同平台，并且，只能提取相同部分的 API。比如 Mac OS 的文本框自带拼写检测，但是 Windows 上面没有，则不能提供该功能。这种策略的典型代表是 wxWidgets。这也是一个标准的 C++ 库，和 Qt 一样庞大。它的语法看上去和 MFC 类似，有大量的宏。据说，一个 MFC 程序员可以很容易的转换到 wxWidgets 上面来。</p>
+<p>API 模拟：前面提到，API 映射会“缺失”不同平台的特定功能，而 API 模拟则是解决这一问题。不同平台的有差异 API，将使用工具库自己的代码用于模拟出来。按照前面的例子，Mac OS 上的文本框有拼写检测，但是 Windows 的没有。那么，工具库自己提供一个拼写检测算法，让 Windows 的文本框也有相同的功能。API 模拟的典型代表是 wine —— 一个 Linux 上面的 Windows 模拟器。它将大部分 Win32 API 在 Linux 上面模拟了出来，让 Linux 可以通过 wine 运行 Windows 程序。由此可以看出，API 模拟最大优点是，应用程序无需重新编译，即可运行到特定平台上。另外一个例子是微软提供的 DirectX，这个开发库将屏蔽掉不同显卡硬件所提供的具体功能。使用这个库，你无需担心硬件之间的差异，如果有的显卡没有提供该种功能，SDK 会使用软件的方式加以实现。（关于举例，可以参考文末一段精彩的讨论。）</p>
+<p>GUI 模拟：任何平台都提供了图形绘制函数，例如画点、画线、画面等。有些工具库利用这些基本函数，在不同绘制出自己的组件，这就是 GUI 模拟。GUI 模拟的工作量无疑是很大的，因为需要使用最基本的绘图函数将所有组件画出来；并且这种绘制很难保证和原生组件一模一样。但是，这一代价带来的优势是，可以很方便的修改组件的外观——只要修改组件绘制函数即可。很多跨平台的 GUI 库都是使用的这种策略，例如 gtk+（这是一个 C 语言的图形界面库。使用 C 语言很优雅地实现了面向对象程序设计。不过，这也同样带来了一个问题——使用大量的类型转换的宏来模拟多态，并且它的函数名一般都比较长，使用下划线分割单词，看上去和 Linux 如出一辙。gtk+ 并不是模拟的原生界面，而有它自己的风格，所以有时候就会和操作系统的界面格格不入。），Swing 以及我们的 Qt。</p>
+<p>Qt 和 wxWidgets 一样，也是一个标准的 C++ 库。但是它的语法类似于 Java 的 Swing，十分清晰，而且使用信号槽（signal/slot）机制，让程序看起来很明白——这也是很多人优先选择 Qt 的一个很重要的原因。不过，所谓“成也萧何，败也萧何”。这种机制虽然很清楚，但是它所带来的后果是你需要使用 Qt 的 moc 对程序进行预处理，才能够再使用标准的 make 或者 nmake 进行正常的编译，并且信号槽的调用要比普通的函数调用慢大约一个数量级（Qt 4 文档中说明该数据，但 Qt 5 尚未有官方说明）。Qt 的界面也不是原生风格的，尽管 Qt 使用 style 机制十分巧妙地模拟了原生界面。另外值得一提的是，Qt 不仅仅能够运行在桌面环境中，还可以运行在嵌入式平台以及手机平台。</p>
+<p>Qt 第一版于 1991 年由 Trolltech （奇趣科技）发布。后来在 2008 年，Nokia 斥资 1.5 亿美元收购 TrollTech，将 Qt 应用于 Symbian 程序开发。2012 年 8 月 9 日，Nokia 将 Qt 以 400 万欧元的价格出售给 Digia。</p>
+<p>伴随着 Qt，一直有两种授权协议：商业授权以及开源授权。在 Qt 的早期版本，商业授权包含一些开源授权不提供的组件，但是在近期版本则不存在这个问题。以往人们对 Qt 的开源授权多有诟病。早期版本的 Qt 使用与 GPL 不兼容的协议授权，这直接导致了 KDE 与 GNOME 的战争（由于 Linux 使用 GPL 协议发布，GPL 协议具有传染性，作为 Linux 桌面环境的 KDE 却是基于与 GPL 不兼容的 Qt 开发，这就不遵守 GPL 协议）。不过，现在 Qt 的开源版本使用的是 GPLv3 以及 LGPL 协议。这意味着，你可以将 Qt 作为一个库连接到一个闭源软件里面。可以说，Qt 协议的争议已经不存在了。</p>
 
             </div>
             <hr/>
@@ -461,7 +458,7 @@ qmake -tp vc xxxx.pro
                     </i>
                     </span>
                 <span class="reprint-info">
-                    <a href="https://cryfeifei.top/2020/06/27/pro-gong-cheng-zhuan-vs-gong-cheng/">https://cryfeifei.top/2020/06/27/pro-gong-cheng-zhuan-vs-gong-cheng/</a>
+                    <a href="https://cryfeifei.top/2020/06/28/qt-jian-jie/">https://cryfeifei.top/2020/06/28/qt-jian-jie/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -503,18 +500,6 @@ qmake -tp vc xxxx.pro
                                     <span class="chip bg-color">Qt</span>
                                 </a>
                             
-                                <a href="/tags/qmake/">
-                                    <span class="chip bg-color">qmake</span>
-                                </a>
-                            
-                                <a href="/tags/pro/">
-                                    <span class="chip bg-color">pro</span>
-                                </a>
-                            
-                                <a href="/tags/vs/">
-                                    <span class="chip bg-color">vs</span>
-                                </a>
-                            
                         </div>
                     
                 </div>
@@ -553,52 +538,50 @@ qmake -tp vc xxxx.pro
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/06/27/lp-zhi-ling/">
+                <a href="/2020/06/28/qt-jian-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="lp指令">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Qt简介">
                         
-                        <span class="card-title">lp指令</span>
+                        <span class="card-title">Qt简介</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            lp指令详解https://www.computerhope.com/unix/ulp.htm#co   
-举例暂时用这个来
-lp -o copies=2 -o collate=false -o sides=two-sided-long-e
+                            声明本文章遵循协议 原文链接 豆子
+知识共享署名-禁止演绎 3.0 未本地化版本许可协议
+Qt简介Qt 是一个著名的 C++ 应用程序框架。你并不能说它只是一个 GUI 库，因为 Qt 十分庞大，并不仅仅是 GUI 组件。使用 Qt，在一定
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/lp/">
-                        <span class="chip bg-color">lp</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/">
-                        <span class="chip bg-color">打印机</span>
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
                     </a>
                     
                 </div>
@@ -612,32 +595,35 @@ lp -o copies=2 -o collate=false -o sides=two-sided-long-e
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/27/qimage-zeng-jia-format-grayscale8-mei-ju-zhi/">
+                <a href="/2020/06/28/qt-compile-linux/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="QImage 增加 Format_Grayscale8 枚举值">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Linux下编译Qt5.14源码">
                         
-                        <span class="card-title">QImage 增加 Format_Grayscale8 枚举值</span>
+                        <span class="card-title">Linux下编译Qt5.14源码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Qt5.5之后才支持这个东西。所以我一直推荐使用高版本的Qt。
-Qt中的commit记录 
-d84a6eab5129ba29951a7ba6d82820b21cc9872e
-Add Grayscale8 and Alpha8 formats
+                            0如果你英文够好，可以直接去官方wiki看教程https://wiki.qt.io/Building_Qt_5_from_Git
+懒得话，还是看我的吧（逃
+下载源码首先下载这个文件https://mirrors.tuna.tsinghua.
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -649,12 +635,8 @@ Add Grayscale8 and Alpha8 formats
                         <span class="chip bg-color">Qt</span>
                     </a>
                     
-                    <a href="/tags/QImage/">
-                        <span class="chip bg-color">QImage</span>
-                    </a>
-                    
-                    <a href="/tags/Format-Grayscale8/">
-                        <span class="chip bg-color">Format_Grayscale8</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>
