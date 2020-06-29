@@ -5687,4 +5687,302 @@ sudo apt-get install gcc g++ </code></pre>
         <tag>Qt</tag>
       </tags>
   </entry>
+  <entry>
+    <title>[转]Deepin开发解决系统字体bug的过程</title>
+    <url>/2020/06/29/zhuan-deepin-kai-fa-jie-jue-xi-tong-zi-ti-bug-de-guo-cheng/</url>
+    <content><![CDATA[<p>今天又被 fontconfig 坑到了……仔细想想，半年到一年前我还对 fontconfig 狗屁不通呢，而现在我已经被 fontconfit 坑了有几次了，这印证了一个真理：“只要你足够迟钝，世界就是美好的，一旦你有了某种能力，麻烦就会找到你”——这只是个玩笑，事实上不管你有没有能力，现实都不会让你好过 😈</p>
+<p>在这些坑里面，有两个是跟今天主题相关的，也就是关于WPS中字体名称的两个问题：</p>
+<ul>
+<li>WPS 字体列表中中文字体在中文环境下不显示中文名（比如系统里面有宋体，列表里面显示 SimSun）；</li>
+<li>WPS 设置段落字体（中文字体）后，工具栏显示的字体为英文名（比如你设置一段文字是宋体，但是标题栏显示的仍然是SimSun）</li>
+</ul>
+<p>这两个问题有点像，但是却不是同一个问题（也不只是WPS有问题，而是WPS对字体的需求比较多）：</p>
+<p>第一个问题原先是 论坛用户报告 的（实际上刘老大也报过，不过被自动忽略了😂），论坛用户又报过来以后，大家看用户的报告太详细了，感动得一塌糊涂，顿时解决问题的动力都有了。我也折腾了大半天，不过脑袋里面一直有一个同事的声音：那是字体有问题！我也挺赞同的：盗版的字体，不靠谱很正常……所以，我就考虑能不能给字体做一些别名啥的，比如 SimSun 就叫 宋体……当然了最后就是玩了一下 fontconfig 的配置以后，默默就放弃了。</p>
+<p>最后经过 @felixonmars 同学的排查，发现是上游的一个 bug ，而且已经修复，所以赶紧更了一波，解决了这个问题。</p>
+<p>本以为皆大欢喜了，今天又有客户报过来 bug，说 Windows 上写好的文档，调整好的字体，跑到deepin下字体就不对了，废了老大的劲儿才又调好，其中就提到了选择方正字库里面的字体，显示的不是中文字体名称的问题。</p>
+<p>怎么说呢，幸亏我脑子不好，不记得之前已经解决过中文字体名显示为英文的问题，要不然得跟客户和老板掰扯一会儿，我只记得字体的中英文名字好像是有点问题，所以默默赶紧去看了一下，还真真的有问题。</p>
+<p>因为 DDE 并没有设置过多的 fontconfig 配置，所以我相信这不是 DDE 的问题，但是又觉得对于一个文字处理软件来说，如果这么重要的功能都有 BUG，我真不信 WPS 的人还能坐得住，所以就想试一下在 Ubuntu 下 WPS 的这个行为是否正确。刚好年前 ElementryOS 发新版的时候尝鲜装了一个在测试机器上，所以很快切进去下了一个 WPS 安装上，从一个正版的网站上下载了一个盗版的宋体，试了一下，果然踏马的是好的……</p>
+<p>理性的我用事实证明了感性的我是错误的，气氛一度很尴尬。</p>
+<p>更让人尴尬的是，我也不知道这是怎么回事。但是，无巧不成书，就在这种尴尬氛围的笼罩下，我鬼使神差地在 ElementryOS （太长了，下面简称 EOS ）上运行了 fc-match 宋体 这个命令，而且很神奇的发现输出的 simsun.ttf: “宋体” “Regular” 跟 deepin 下同样命令输出的 simsun.ttf: “SimSun” “Regular” 不太一样，这可把我乐坏了——要知道一个稍微复杂点的图形软件，打开 fontconfig 的调试以后，输出就是很可怕的，更别说 WPS！别问我是怎么知道的，回忆起来都是泪。但是现在使用 fc-match 就能重现的问题（我打心底认为这俩是同一个问题），调试起来就比较简单了。</p>
+<p>fontconfig 本身为了方便程序调试，内建了一些调试项，可以通过环境变量 FC_DEBUG 控制：</p>
+<pre class=" language-cpp"><code class="language-cpp">Name Value Meaning
+  <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  MATCH <span class="token number">1</span> Brief information about font matching
+  MATCHV <span class="token number">2</span> Extensive font matching information
+  EDIT <span class="token number">4</span> Monitor match<span class="token operator">/</span>test<span class="token operator">/</span>edit execution
+  FONTSET <span class="token number">8</span> Track loading of font information at startup
+  CACHE <span class="token number">16</span> Watch cache files being written
+  CACHEV <span class="token number">32</span> Extensive cache file writing information
+  PARSE <span class="token function">64</span> <span class="token punctuation">(</span>no longer in use<span class="token punctuation">)</span>
+  SCAN <span class="token number">128</span> Watch font files being scanned to build caches
+  SCANV <span class="token number">256</span> Verbose font file scanning information
+  MEMORY <span class="token number">512</span> Monitor fontconfig memory usage
+  CONFIG <span class="token number">1024</span> Monitor which config files are loaded
+  LANGSET <span class="token number">2048</span> Dump <span class="token keyword">char</span> sets used to construct lang values
+  MATCH2 <span class="token number">4096</span> Display font<span class="token operator">-</span>matching transformation in patterns</code></pre>
+<p>我们只需要最简略的匹配信息就可以了，所以：</p>
+<pre class=" language-cpp"><code class="language-cpp">$ FC_DEBUG<span class="token operator">=</span><span class="token number">1</span> fc<span class="token operator">-</span>match 宋体
+FC_DEBUG<span class="token operator">=</span><span class="token number">1</span>
+Match Pattern has <span class="token number">25</span> <span class="token function">elts</span> <span class="token punctuation">(</span>size <span class="token number">32</span><span class="token punctuation">)</span>
+    family<span class="token operator">:</span> <span class="token string">"宋体"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"Noto Sans CJK SC"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"Noto Sans"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    familylang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"en-us"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    stylelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"en-us"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fullnamelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"en-us"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    slant<span class="token operator">:</span> <span class="token function">0</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    weight<span class="token operator">:</span> <span class="token function">80</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    width<span class="token operator">:</span> <span class="token function">100</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    size<span class="token operator">:</span> <span class="token function">12</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    pixelsize<span class="token operator">:</span> <span class="token number">12</span><span class="token punctuation">.</span><span class="token function">5</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    hintstyle<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    hinting<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    verticallayout<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    autohint<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    globaladvance<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    dpi<span class="token operator">:</span> <span class="token function">75</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    scale<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    lang<span class="token operator">:</span> <span class="token string">"zh-CN"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fontversion<span class="token operator">:</span> <span class="token function">2147483647</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    embeddedbitmap<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    decorative<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    lcdfilter<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    namelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    prgname<span class="token operator">:</span> <span class="token string">"fc-match"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    symbol<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    variable<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+Best score <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">1e+99</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">2.14735e+12</span>
+Pattern has <span class="token number">25</span> <span class="token function">elts</span> <span class="token punctuation">(</span>size <span class="token number">25</span><span class="token punctuation">)</span>
+    family<span class="token operator">:</span> <span class="token string">"SimSun"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token string">"宋体"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    familylang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token string">"zh-cn"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    style<span class="token operator">:</span> <span class="token string">"Regular"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    stylelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fullname<span class="token operator">:</span> <span class="token string">"SimSun"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token string">"宋体"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fullnamelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token string">"zh-cn"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    slant<span class="token operator">:</span> <span class="token function">0</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    weight<span class="token operator">:</span> <span class="token function">80</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    width<span class="token operator">:</span> <span class="token function">100</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    spacing<span class="token operator">:</span> <span class="token function">90</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    foundry<span class="token operator">:</span> <span class="token string">"ZYEC"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    file<span class="token operator">:</span> <span class="token string">"/home/hualet/.fonts/simsun.ttf"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    index<span class="token operator">:</span> <span class="token function">0</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    outline<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    scalable<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    charset<span class="token operator">:</span> 
+    <span class="token number">0000</span><span class="token operator">:</span> <span class="token number">00000000</span> ffffffff ffffffff ffffffff <span class="token number">00000000</span> ffffffff ffffffff ffffffff
+    <span class="token number">0001</span><span class="token operator">:</span> <span class="token number">08080002</span> <span class="token number">00000800</span> 000c2110 <span class="token number">01000803</span> <span class="token number">00040000</span> <span class="token number">00000000</span> <span class="token number">15554000</span> <span class="token number">00000000</span>
+    <span class="token number">0002</span><span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00020000</span> <span class="token number">00000002</span> <span class="token number">00000000</span> <span class="token number">00000000</span> 12000ec0 <span class="token number">00000000</span>
+    <span class="token number">0003</span><span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> fffe0000 fffe03fb 000003fb <span class="token number">00000000</span>
+    <span class="token number">0004</span><span class="token operator">:</span> ffff0002 ffffffff <span class="token number">0002ffff</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0020</span><span class="token operator">:</span> <span class="token number">77790000</span> 0e2d0067 <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00001000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0021</span><span class="token operator">:</span> <span class="token number">00400228</span> <span class="token number">00000006</span> <span class="token number">00000000</span> 03ff0fff 03cf0000 <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0022</span><span class="token operator">:</span> e4228100 20f04fa9 <span class="token number">00041100</span> 0000c0f3 <span class="token number">02200000</span> <span class="token number">80000020</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0023</span><span class="token operator">:</span> <span class="token number">00040000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0024</span><span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> fff003ff <span class="token number">0fffffff</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0025</span><span class="token operator">:</span> ffffffff ffffffff ffff0fff <span class="token number">000fffff</span> 0038fffe 300c0003 0000c8c0 0000003c
+    <span class="token number">0026</span><span class="token operator">:</span> <span class="token number">00000260</span> <span class="token number">00000000</span> <span class="token number">00000005</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0030</span><span class="token operator">:</span> 60ffffef 000003fe fffffffe ffffffff <span class="token number">780fffff</span> fffffffe ffffffff <span class="token number">707fffff</span>
+    <span class="token number">0031</span><span class="token operator">:</span> ffffffe0 <span class="token number">000003ff</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0032</span><span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">000203ff</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000008</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">0033</span><span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> 7000c000 <span class="token number">00000002</span> <span class="token number">00264010</span> <span class="token number">00000000</span>
+    004e<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">004f</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0050</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0051</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0052</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0053</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0054</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0055</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0056</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0057</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0058</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0059</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    005a<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    005b<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    005c<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    005d<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    005e<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">005f</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0060</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0061</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0062</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0063</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0064</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0065</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0066</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0067</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0068</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0069</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    006a<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    006b<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    006c<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    006d<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    006e<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">006f</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0070</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0071</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0072</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0073</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0074</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0075</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0076</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0077</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0078</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0079</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    007a<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    007b<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    007c<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    007d<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    007e<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">007f</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0080</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0081</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0082</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0083</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0084</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0085</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0086</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0087</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0088</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0089</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    008a<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    008b<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    008c<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    008d<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    008e<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">008f</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0090</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0091</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0092</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0093</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0094</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0095</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0096</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0097</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0098</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">0099</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    009a<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    009b<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    009c<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    009d<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    009e<span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+    <span class="token number">009f</span><span class="token operator">:</span> ffffffff ffffffff ffffffff ffffffff ffffffff <span class="token number">0000003f</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">00e7</span><span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000180</span> 000fff80
+    <span class="token number">00e8</span><span class="token operator">:</span> ffe00000 ffffffff ffffffff <span class="token number">0000001f</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    00f9<span class="token operator">:</span> <span class="token number">00000000</span> <span class="token number">00001000</span> <span class="token number">00000000</span> <span class="token number">02000000</span> <span class="token number">00200000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00020080</span>
+    00fa<span class="token operator">:</span> 811af000 0000039b <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    00fe<span class="token operator">:</span> <span class="token number">00000000</span> fffb0000 fef7fe1f 00000f7f <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span>
+    <span class="token number">00ff</span><span class="token operator">:</span> fffffffe ffffffff <span class="token number">7fffffff</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token number">00000000</span> <span class="token function">0000003f</span>
+<span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    lang<span class="token operator">:</span> aa<span class="token operator">|</span>ay<span class="token operator">|</span>bg<span class="token operator">|</span>bi<span class="token operator">|</span>br<span class="token operator">|</span>ch<span class="token operator">|</span>co<span class="token operator">|</span>da<span class="token operator">|</span>de<span class="token operator">|</span>en<span class="token operator">|</span>es<span class="token operator">|</span>eu<span class="token operator">|</span>fj<span class="token operator">|</span>fo<span class="token operator">|</span>fr<span class="token operator">|</span>fur<span class="token operator">|</span>fy<span class="token operator">|</span>gd<span class="token operator">|</span>gl<span class="token operator">|</span>gv<span class="token operator">|</span>ho<span class="token operator">|</span>ia<span class="token operator">|</span>id<span class="token operator">|</span>ie<span class="token operator">|</span>io<span class="token operator">|</span>is<span class="token operator">|</span>it<span class="token operator">|</span>kum<span class="token operator">|</span>lb<span class="token operator">|</span>mg<span class="token operator">|</span>nb<span class="token operator">|</span>nds<span class="token operator">|</span>nl<span class="token operator">|</span>nn<span class="token operator">|</span>no<span class="token operator">|</span>nr<span class="token operator">|</span>nso<span class="token operator">|</span>oc<span class="token operator">|</span>om<span class="token operator">|</span>os<span class="token operator">|</span>pt<span class="token operator">|</span>rm<span class="token operator">|</span>ru<span class="token operator">|</span>sel<span class="token operator">|</span>sma<span class="token operator">|</span>smj<span class="token operator">|</span>so<span class="token operator">|</span>sq<span class="token operator">|</span>ss<span class="token operator">|</span>st<span class="token operator">|</span>sv<span class="token operator">|</span>sw<span class="token operator">|</span>tl<span class="token operator">|</span>tn<span class="token operator">|</span>ts<span class="token operator">|</span>uz<span class="token operator">|</span>vo<span class="token operator">|</span>wa<span class="token operator">|</span>xh<span class="token operator">|</span>yap<span class="token operator">|</span>zh<span class="token operator">-</span>cn<span class="token operator">|</span>zh<span class="token operator">-</span>sg<span class="token operator">|</span>zu<span class="token operator">|</span>an<span class="token operator">|</span>fil<span class="token operator">|</span>ht<span class="token operator">|</span>jv<span class="token operator">|</span>kj<span class="token operator">|</span>kwm<span class="token operator">|</span>li<span class="token operator">|</span>ms<span class="token operator">|</span>ng<span class="token operator">|</span>pap<span class="token operator">-</span>an<span class="token operator">|</span>pap<span class="token operator">-</span>aw<span class="token operator">|</span>rn<span class="token operator">|</span>rw<span class="token operator">|</span>sc<span class="token operator">|</span>sg<span class="token operator">|</span>sn<span class="token operator">|</span>su<span class="token operator">|</span><span class="token function">za</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fontversion<span class="token operator">:</span> <span class="token function">131072</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    capability<span class="token operator">:</span> <span class="token string">"otlayout:hani"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fontformat<span class="token operator">:</span> <span class="token string">"TrueType"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    decorative<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    postscriptname<span class="token operator">:</span> <span class="token string">"SimSun"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    color<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    symbol<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    variable<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+simsun<span class="token punctuation">.</span>ttf<span class="token operator">:</span> <span class="token string">"SimSun"</span> <span class="token string">"Regular"</span></code></pre>
+<p>因为以前调 fontconfig 的经验，我模模糊糊知道那个 familylang 是控制 family 也就是字体名显示的语言的，所以看到</p>
+<pre class=" language-shell"><code class="language-shell">familylang: "en"(s) "en-us"(w)</code></pre>
+<p>这行以后，大致能确定应该是系统某个配置出了问题让 fontconfig 误以为语言环境是英文。看了一下环境变量，没发现哪个是设置英文的，所以只能去看代码了。<br>下了 fontconfig 的源码，搜了一下关键字 familylang ，猜测这个属性应该是通过操纵 FC_FAMILYLANG_OBJECT ，再次搜索：</p>
+<pre class=" language-shell"><code class="language-shell"> $ rg -i FC_FAMILYLANG_OBJECT
+src/fcmatch.c
+380: case FC_FAMILYLANG_OBJECT:
+551: if (fe->object == FC_FAMILYLANG_OBJECT ||
+565: FC_ASSERT_STATIC ((FC_FAMILY_OBJECT + 1) == FC_FAMILYLANG_OBJECT);
+695: pe->object != FC_FAMILYLANG_OBJECT &&
+src/fclist.c
+430: familyidx = FcGetDefaultObjectLangIndex (font, FC_FAMILYLANG_OBJECT, lang);
+src/fcfreetype.c
+1671: while (FcPatternObjectGetString (pat, FC_FAMILYLANG_OBJECT, n, &familylang) == FcResultMatch)
+src/fcdefault.c
+316: if (!FcPatternFindObjectIter (pattern, &iter, FC_FAMILYLANG_OBJECT))
+318: FcPatternObjectAdd (pattern, FC_FAMILYLANG_OBJECT, namelang, FcTrue);
+319: FcPatternObjectAddWithBinding (pattern, FC_FAMILYLANG_OBJECT, v2, FcValueBindingWeak, FcTrue);</code></pre>
+<p>发现其中只有 fcdefault.c 里面有执行 FcPatternObjectAdd 这个操作像是在修改这个属性，其他地方明显都只是读取，刚好 fc-match/fc-match.c 里面也有调用这个函数，所以仔细看了一下这个函数，从逻辑上看意思是 familylang 如果没有设置，就会从 namelang 属性继承，然后我忽然发现 fc-match 的帮助里面写得位置参数概念上叫 pattern ，难道就对应 FcPattern，那它应该也可以指定 familylang 咯？网上搜寻了一番，发现可以 fc-match 宋体:familylang=zh-cn，果然输出正常的中文名。这算是一个小插曲吧。</p>
+<p>接着 namelang 属性说，这个属性是从一个叫 FcGetDefaultLang 的函数处获取，我心想总算是要到头了，然而发现从函数的实现来看，这个函数会从 FC_LANG、LC_ALL、LC_CTYPE和LANG这些环境变量里面挨个读取默认的语言（后来发现直接 man FcGetDefaultlangs 就可以看到），看起来没毛病呀。</p>
+<p>写了个测试程序：</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;fontconfig/fontconfig.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    FcStrSet <span class="token operator">*</span>langs <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    langs <span class="token operator">=</span> <span class="token function">FcGetDefaultLangs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>langs<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        FcChar8 <span class="token operator">*</span>lang <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+        FcStrList <span class="token operator">*</span>lang_list <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+        lang_list <span class="token operator">=</span> <span class="token function">FcStrListCreate</span><span class="token punctuation">(</span>langs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">FcStrListFirst</span><span class="token punctuation">(</span>lang_list<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>lang <span class="token operator">=</span> <span class="token function">FcStrListNext</span><span class="token punctuation">(</span>lang_list<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">,</span> lang<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>编译执行，输出 zh-CN ，666</p>
+<p>中间尝试了使用 gdb 在 fc-match.c中调用 FcDefaultSubstitute 的部分加断点，但是死活无法跳入函数体里面，直接在函数里面响应的行数处断点，直接无效……撞鬼了</p>
+<p>没办法了，只能改代码了，找了找代码里面的 log 模块叫 fcdbg.c ，我本来还说从 FcPattern 里面读取属性有点麻烦，又不熟悉代码，但是意外地找到一个 FcPatternPrint ，这下连继续研究下去的动力都没有了，赶紧加代码打印，分别在 FcConfigSubstitute 和 FcDefaultSubstitute 前后加了打印看对 pat 的代码：</p>
+<pre class=" language-cpp"><code class="language-cpp">    <span class="token function">FcPatternPrint</span><span class="token punctuation">(</span>pat<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FcConfigSubstitute</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> pat<span class="token punctuation">,</span> FcMatchPattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FcPatternPrint</span><span class="token punctuation">(</span>pat<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FcDefaultSubstitute</span> <span class="token punctuation">(</span>pat<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FcPatternPrint</span><span class="token punctuation">(</span>pat<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>输入</p>
+<pre class=" language-cpp"><code class="language-cpp">$ <span class="token punctuation">.</span><span class="token operator">/</span>fc<span class="token operator">-</span>match 宋体
+Pattern has <span class="token number">1</span> <span class="token function">elts</span> <span class="token punctuation">(</span>size <span class="token number">16</span><span class="token punctuation">)</span>
+    family<span class="token operator">:</span> <span class="token string">"宋体"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+Pattern has <span class="token number">6</span> <span class="token function">elts</span> <span class="token punctuation">(</span>size <span class="token number">16</span><span class="token punctuation">)</span>
+    family<span class="token operator">:</span> <span class="token string">"宋体"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"Noto Sans CJK SC"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"Noto Sans"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    hintstyle<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    lang<span class="token operator">:</span> <span class="token string">"zh-CN"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    lcdfilter<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    namelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    prgname<span class="token operator">:</span> <span class="token string">"fc-match"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+Pattern has <span class="token number">25</span> <span class="token function">elts</span> <span class="token punctuation">(</span>size <span class="token number">32</span><span class="token punctuation">)</span>
+    family<span class="token operator">:</span> <span class="token string">"宋体"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"Noto Sans CJK SC"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"Noto Sans"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    familylang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"en-us"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    stylelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"en-us"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fullnamelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token string">"en-us"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    slant<span class="token operator">:</span> <span class="token function">0</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    weight<span class="token operator">:</span> <span class="token function">80</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    width<span class="token operator">:</span> <span class="token function">100</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    size<span class="token operator">:</span> <span class="token function">12</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    pixelsize<span class="token operator">:</span> <span class="token number">12</span><span class="token punctuation">.</span><span class="token function">5</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    hintstyle<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    hinting<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    verticallayout<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    autohint<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    globaladvance<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    dpi<span class="token operator">:</span> <span class="token function">75</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    scale<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    lang<span class="token operator">:</span> <span class="token string">"zh-CN"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    fontversion<span class="token operator">:</span> <span class="token function">2147483647</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    embeddedbitmap<span class="token operator">:</span> <span class="token function">True</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    decorative<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    lcdfilter<span class="token operator">:</span> <span class="token function">1</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    namelang<span class="token operator">:</span> <span class="token string">"en"</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+    prgname<span class="token operator">:</span> <span class="token string">"fc-match"</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    symbol<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    variable<span class="token operator">:</span> <span class="token function">False</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+simsun<span class="token punctuation">.</span>ttf<span class="token operator">:</span> <span class="token string">"SimSun"</span> <span class="token string">"Regular"</span></code></pre>
+<p>可以确认是 FcConfigSubstitute 函数里面给 pat 设置了 en 的 namelang，那之后在 FcDefaultSubstitute 中 familylang 就从 namelang 继承了 en ，又加上了 en-us ，变成了我们看到的 “en”，”en-us” 。看函数名， FcConfigSubstitute 应该就是读取了配置文件，然后做了什么修改，至于怎么改的我也不知道。</p>
+<p>这时候我偷懒症犯了，没有去看代码了（看着略复杂），我发现新版 fontconfig 多了一个工具叫 fc-conflist 能列出来 fontconfig 加载的所有配置文件列表，通过这个命令我发现系统里面的配置文件主要放在 /etc/fonts 和 /usr/share/fontconfig ，然后就用 rg 去里面搜关键字 lang 了，排除其中 <test> 的行，还真发现一个叫 /usr/share/conf.avail/15-assign-lang-en.conf 的文件里面有 edit namelang 这个属性，在此之前，我都不知道还有 edit 这种操作……我也更不信这个问题会出在 fontconfig 的配置上。</test></p>
+<pre class=" language-shell"><code class="language-shell">$ dpkg -S conf.avail/15-assign-lang-en.conf
+deepin-default-settings: /usr/share/fontconfig/conf.avail/15-assign-lang-en.conf</code></pre>
+<p>事实证明，这个配置文件还真是 deepin 提供的……</p>
+<p>本来想搞清楚之前为什么要做这个的，但是提交信息太简单了，没有提供相关线索，猜测应该是以前有些字体名称会乱码——字体名称需要特殊字体的支持，然而系统（终端）的字体不支持这种字体的字体名，为了解决乱码，默认使用英文输出字体名称 😅</p>
+<p>不过有了 Noto 这种问题应该就很少了，所以狠心删掉了这个配置：提交。</p>
+<p>结合这两个问题，猜测 WPS 字体设置分两个部分，一部分是从系统获取字体列表，这个部分是从 Qt 拿的，用的 Qt 提供的字体名（中文），第二部分是从这个字体名拿到系统中匹配度最高的字体，应该是通过 libfontconfig 直接做得（deepin下英文），然后再把这个字体设置给实际的文档，工具栏中显示的也就是这个名字。总之，人家又不开源，瞎猜一下图个开心咯。</p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>deepin</tag>
+        <tag>freetype</tag>
+      </tags>
+  </entry>
 </search>
