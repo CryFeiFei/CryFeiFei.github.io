@@ -5522,7 +5522,7 @@ make install //安装到prefix的目录</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>qt_linux_lazy</title>
+    <title>Linux搭建Qt5.14开发环境-傻瓜式</title>
     <url>/2020/06/29/qt-linux-lazy/</url>
     <content><![CDATA[<h1 id="0-安装c-开发环境"><a href="#0-安装c-开发环境" class="headerlink" title="0 安装c++开发环境"></a>0 安装c++开发环境</h1><p>一般的系统应该都默认装了=。=</p>
 <pre class=" language-shell"><code class="language-shell">sudo apt-get update
