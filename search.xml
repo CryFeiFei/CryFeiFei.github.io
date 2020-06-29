@@ -212,16 +212,22 @@ TimerThread<span class="token operator">::</span><span class="token operator">~<
 </ul>
 <p>引读</p>
 <blockquote>
-<p><a href="https://www.cryfeifei.cn/541.html" target="_blank" rel="noopener" title="Qt简介">Qt简介</a><br><a href="https://www.cryfeifei.cn/545.html" target="_blank" rel="noopener" title="关于Qt">关于Qt</a><br><a href="https://www.cryfeifei.cn/542.html" target="_blank" rel="noopener" title="姚冬对Qt的看法">姚冬对Qt的看法</a></p>
+<p><a href="https://www.cryfeifei.top/2020/06/28/qt-jian-jie/" target="_blank" rel="noopener" title="Qt简介">Qt简介</a><br><a href="https://www.cryfeifei.top/2020/06/28/guan-yu-qt-de-li-shi/" target="_blank" rel="noopener" title="关于Qt的历史">关于Qt的历史</a><br><a href="https://cryfeifei.top/2020/06/28/mfc-wtl-wpf-wxwidgets-qt-gtk-ge-you-shi-me-te-dian/" title="姚冬对Qt的看法">姚冬对Qt的看法</a></p>
 </blockquote>
 <h1 id="开发环境的搭建"><a href="#开发环境的搭建" class="headerlink" title="开发环境的搭建"></a>开发环境的搭建</h1><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><ul>
-<li><a href="https://www.cryfeifei.cn/620.html" target="_blank" rel="noopener" title="Windows下VS2019编译Qt5.13.2源码">Windows下VS2019编译Qt5.13.2源码</a></li>
+<li><a href="https://www.cryfeifei.top/2020/06/28/qt-compile-windows/" target="_blank" rel="noopener" title="Windows下VS2019编译Qt5.13.2源码">Windows下VS2019编译Qt5.13.2源码</a></li>
 </ul>
 <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ul>
-<li><a href="https://www.cryfeifei.cn/577.html" target="_blank" rel="noopener" title="Linux搭建Qt5.14开发环境">Linux搭建Qt5.14开发环境-傻瓜式</a>;</li>
-<li><a href="https://www.cryfeifei.cn/611.html" target="_blank" rel="noopener" title="Linux搭建Qt5.14开发环境-源码编译">Linux搭建Qt5.14开发环境-源码编译</a></li>
+<li><a href="https://www.cryfeifei.top/2020/06/29/qt-linux-lazy/" target="_blank" rel="noopener" title="Linux搭建Qt5.14开发环境">Linux搭建Qt5.14开发环境-傻瓜式</a>;</li>
+<li><a href="https://www.cryfeifei.top/2020/06/28/qt-compile-linux/" target="_blank" rel="noopener" title="Linux搭建Qt5.14开发环境-源码编译">Linux搭建Qt5.14开发环境-源码编译</a></li>
 </ul>
-<h1 id="Qt-比较重要的概念"><a href="#Qt-比较重要的概念" class="headerlink" title="Qt 比较重要的概念"></a>Qt 比较重要的概念</h1><h1 id="Qt-容器类"><a href="#Qt-容器类" class="headerlink" title="Qt 容器类"></a>Qt 容器类</h1><h1 id="Qt-MVC"><a href="#Qt-MVC" class="headerlink" title="Qt MVC"></a>Qt MVC</h1><h1 id="Qt-Widget"><a href="#Qt-Widget" class="headerlink" title="Qt Widget"></a>Qt Widget</h1><h1 id="Qt-Core"><a href="#Qt-Core" class="headerlink" title="Qt Core"></a>Qt Core</h1><h1 id="Qt多线程"><a href="#Qt多线程" class="headerlink" title="Qt多线程"></a>Qt多线程</h1><h1 id="Qt网络"><a href="#Qt网络" class="headerlink" title="Qt网络"></a>Qt网络</h1><h1 id="Qt打印"><a href="#Qt打印" class="headerlink" title="Qt打印"></a>Qt打印</h1>]]></content>
+<h1 id="Qt-比较重要的概念"><a href="#Qt-比较重要的概念" class="headerlink" title="Qt 比较重要的概念"></a>Qt 比较重要的概念</h1><ul>
+<li><p><a href="https://www.cryfeifei.top/2020/06/27/shen-ru-liao-jie-qt-xiao-xi-xun-huan-ji-xian-cheng-xiang-guan-xing/" target="_blank" rel="noopener" title="深入了解QT消息循环及线程相关性_Windows">深入了解QT消息循环及线程相关性_Windows</a></p>
+</li>
+<li><p><a href="https://www.cryfeifei.top/2020/06/27/qt-yuan-dui-xiang-meta-object-xi-tong/" target="_blank" rel="noopener" title="Qt元对象系统">Qt元对象系统</a></p>
+</li>
+</ul>
+<h1 id="Qt-容器类"><a href="#Qt-容器类" class="headerlink" title="Qt 容器类"></a>Qt 容器类</h1><h1 id="Qt-MVC"><a href="#Qt-MVC" class="headerlink" title="Qt MVC"></a>Qt MVC</h1><h1 id="Qt-Widget"><a href="#Qt-Widget" class="headerlink" title="Qt Widget"></a>Qt Widget</h1><h1 id="Qt-Core"><a href="#Qt-Core" class="headerlink" title="Qt Core"></a>Qt Core</h1><h1 id="Qt多线程"><a href="#Qt多线程" class="headerlink" title="Qt多线程"></a>Qt多线程</h1><h1 id="Qt网络"><a href="#Qt网络" class="headerlink" title="Qt网络"></a>Qt网络</h1><h1 id="Qt打印"><a href="#Qt打印" class="headerlink" title="Qt打印"></a>Qt打印</h1>]]></content>
   </entry>
   <entry>
     <title>Qt线程基础</title>
@@ -5592,6 +5598,85 @@ sudo apt-get install gcc g++ </code></pre>
 <p><img src="/2020/06/29/qt-linux-lazy/linux_qt25.jpg" alt> </p>
 <p><img src="/2020/06/29/qt-linux-lazy/linux_qt26.jpg" alt> </p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>至此，Linux上的Qt环境的搭建已经完成，这个是方式是相当简单的，基本上一直下一步就可以了。</p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+        <category>Qt基础教程</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt的基本概念-WIKI</title>
+    <url>/2020/06/29/qt-de-ji-ben-gai-nian-wiki/</url>
+    <content><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><h2 id="wiki"><a href="#wiki" class="headerlink" title="wiki"></a>wiki</h2><p>Qt（/ˈkjuːt/，发音同“cute”[4][5][6]）是一个跨平台的C++应用程序开发框架。广泛用于开发GUI程序，这种情况下又被称为部件工具箱。也可用于开发非GUI程序，比如控制台工具和服务器。Qt使用于OPIE、Skype、VLC media player、Adobe Photoshop Elements、VirtualBox与Mathematica[7]以及被Autodesk [8][9]、欧洲空间局[10]、梦工厂[11][12]、Google、HP[13]、KDE、卢卡斯影业[14]、西门子公司[15]、沃尔沃集团[16], 华特迪士尼动画制作公司[17]、三星集团[18]、飞利浦[19]、Panasonic [20]所使用。</p>
+<p>它是Digia公司的产品。Qt使用标准的C++和特殊的代码生成扩展（称为元对象编译器（Meta Object Compiler, moc））以及一些宏。通过语言绑定，其他的编程语言也可以使用Qt。</p>
+<p>Qt是自由且开放源代码的软件，在GNU宽通用公共许可证（LGPL）条款下发布。所有版本都支持广泛的编译器，包括GCC的C++编译器和Visual Studio。</p>
+<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>Haavard Nord和Eirik Chambe-Eng于1991年开始开发“Qt”，1994年3月4日创立公司，最早名为Quasar Technologies，然后更名为Troll Tech，然后再改为Trolltech，中文名是“奇趣科技”，2008年6月17日被NOKIA公司收购，以增强该公司在跨平台软件研发方面的实力，更名Qt Software。</p>
+<p>该工具包名为Qt是因为字母Q在Haavard的Emacs字体特别漂亮，而“t”代表“toolkit”，灵感来自Xt，X toolkit[21]。</p>
+<p>2009年5月11日，诺基亚Qt Software宣布Qt源代码管理系统面向公众开放，Qt开发人员可通过为Qt以及与Qt相关的项目贡献代码、翻译、示例以及其他内容，协助引导和塑造Qt未来的发展。为了便于这些内容的管理，Qt Software启用了基于Git和Gitorious开源项目的Web源代码管理系统。</p>
+<p>在推出开放式Qt代码库的同时，Qt Software在其网站发布了其产品规划（Roadmap）。其中概述了研发项目中的最新功能，展现了现阶段对Qt未来发展方向的观点，以期鼓励社区提供反馈和贡献代码，共同引导和塑造Qt的未来。2012年8月9日，Digia宣布已完成对诺基亚Qt业务及软件技术的全面收购，并计划将Qt应用到Android、iOS及Windows 8平台上。[22]</p>
+<h2 id="支持平台"><a href="#支持平台" class="headerlink" title="支持平台"></a>支持平台</h2><p>使用Qt开发的软件，相同的代码可以在任何支持的平台上编译与运行，而不需要修改源代码。会自动依平台的不同，表现平台特有的图形界面风格。</p>
+<ul>
+<li>Linux/X11：用于X Window System（如Solaris、AIX、HP-UX、Linux、BSD）。支持KDevelop和Eclipse IDE集成</li>
+<li>Mac：用于Apple Mac OS X。基于Cocoa框架。支持Universal Binary。支持以Xcode编辑、编译和测试。</li>
+<li>Windows：用于Microsoft Windows。支持Visual Studio集成，也可以使用MinGW编译</li>
+<li>Embedded Linux：用于嵌入式Linux。可以透过编译移除不常使用的组件与功能。透过自己的视窗系统QWS，不需依赖X Window System，直接写入Linux帧缓冲。可以减少存储器消耗。并提供虚拟帧缓冲QVFb，方便在桌面系统上进行嵌入式测试。</li>
+<li>Windows CE / Mobile ：用于Windows CE</li>
+<li>Symbian：用于Symbian platform</li>
+<li>Maemo/MeeGo：用于Maemo</li>
+<li>Wayland –用于Wayland显示服务器，Qt应用程序可以在运行时切换图形后端，如X与Wayland。[23][24]</li>
+</ul>
+<h2 id="授权模式"><a href="#授权模式" class="headerlink" title="授权模式"></a>授权模式</h2><p>Qt开放源代码，并且提供自由软件的用户协议。使得它可以被广泛地应用在各平台上的开放源代码软件开发中。</p>
+<p>Qt提供三种授权方式。三种授权方式的功能、性能都没有区别，仅在于授权协议的不同。LGPL和GPL是免费发布，商业版则需收取授权费。[33]：</p>
+<ul>
+<li><p>Qt商业版 - Qt商业授权适用于开发专属和/或商业软件。此版本适用于不希望与他人共享源代码，或者遵循GNU宽通用公共许可证（LGPL）2.1版或GNU GPL 3.0版条款的开发人员。提供了技术支持服务。可以任意的修改Qt的源代码，而不需要公开。</p>
+</li>
+<li><p>GNU LGPL v. 2.1- Qt 4.5.0及以后的版本开始遵循GNU LGPL。LGPL允许链接到它的软件使用任意的许可证，可以被专属软件作为类库引用、发布和销售。可以购买支持服务。</p>
+</li>
+<li><p>GNU GPL v. 3.0 - 如果您希望将Qt应用程序与受GNU通用公共许可证（GPL）3.0版本条款限制的软件一同使用，或者您希望Qt应用程序遵循该GNU许可证版本的条款，则此版本Qt适用于开发此类Qt应用程序。可以购买支持服务。</p>
+</li>
+</ul>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>Qt经过多年发展，Qt不但拥有了完善的C++图形库，而且近年来的版本逐渐集成了数据库、OpenGL库、多媒体库、网络、脚本库、XML库、WebKit库等等，其核心库也加入了进程间通信、多线程等模块，极大的丰富了Qt开发大规模复杂跨平台应用程序的能力，真正意义上实现了其研发宗旨“Code Less; Create More; Deploy Anywhere.”。</p>
+<p>由于各家编译器规格不同，Qt本身为了跨平台兼容性，只能以“最低兼容规格”来设计。因此Qt必须具备RTTI、动态创建、Persistence/Serialization的基础建设，以及建构出自己的容器组件。</p>
+<p>下列模块提供一般的软件开发</p>
+<ul>
+<li>QtCore—QtCore模块是所有基于Qt的应用程序的基础，提供信号与槽的对象间通信机制、IO、事件和对象处理、多线程</li>
+<li>QtGui—包含了开发图形用户界面应用程序所需的功能。使用其支持的各个平台的原生图形API。支持反锯齿、向量形变。支持ARGB顶层widget</li>
+<li>QtMultimedia—提供了用于多媒体内容处理的QML类型集和C++类集。同时提供访问摄像头及音频功能的API。包含的Qt音频引擎支持三维音频回放及管理。</li>
+<li>QtNetwork—提供了网络程序设计功能。支持通用协议，如HTTP、FTP和DNS，包括对异步HTTP 1.1的支持。与较低层的TCP/IP和UDP协议，如QTcpSocket、QTcpServer和QUdpSocket</li>
+<li>QtOpenGL—提供在应用程序中使用OpenGL和OpenGL ES加入3D图形。在Windows平台上亦支持Direct3D</li>
+<li>QtOpenVG-提供OpenVG绘图支持的一个插件</li>
+<li>QtScript—包含完全集成的ECMA标准脚本引擎。提供信号与槽机制简化对象间通信和QtScript调试器。</li>
+<li>QtScriptTools—额外的Qt Script组件</li>
+<li>QtSql—将数据库集成至应用程序。支持所有主要的数据库驱动包括ODBC、MySQL、PSQL、SQLite、ibase、Oracle、Sybase、DB2。</li>
+<li>QtSvg—支持SVG格式</li>
+<li>QtWebKit—集成WebKit，提供了HTML浏览器引擎，便于在原生应用程序中嵌入网络内容和服务。</li>
+<li>QtXml—提供了XML文档的阅读器和编写器、支持SAX和DOM。</li>
+<li>QtXmlPatternsl—提供了XQuery和XPath引擎支持。</li>
+<li>Phonon—集成Phonon，支持跨平台应用程序播放音频和视频内容。Qt5开始不支持Phonon。</li>
+<li>Qt3Support—模块提供兼容Qt 3.х.х版本的程序库</li>
+<li>QtDeclarative [34] - engine for declaratively building fluid user interfaces in QML</li>
+</ul>
+<p>作业于Qt附带工具的模块</p>
+<ul>
+<li>QtDesigner—提供扩展Qt Designer的类别。</li>
+<li>QtUiTools</li>
+<li>QtHelp—协助集成在线文件到应用程序中。</li>
+<li>QtTest—提供单元测试框架和鼠标和键盘模拟功能。集成Visual Studio和KDevelop。</li>
+</ul>
+<p>下列模块用于Unix开发</p>
+<ul>
+<li>QtDBus</li>
+</ul>
+<p>下列模块用于Windows开发</p>
+<ul>
+<li>QAxContainer</li>
+<li>QAxServer</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容全部摘自wiki，原文链接地址<a href="https://zh.wikipedia.org/zh/Qt。" target="_blank" rel="noopener">https://zh.wikipedia.org/zh/Qt。</a></p>
+<p>我就是懒得打那么多字介绍了。下面开始正式讲解Qt了</p>
 ]]></content>
       <categories>
         <category>Qt</category>
