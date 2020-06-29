@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-29T13:52:22.047Z</updated>
+  <updated>2020-06-29T14:29:30.233Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,68 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu 20.04的镜像</title>
+    <link href="https://cryfeifei.top/2020/06/29/ubuntu-20-04-de-jing-xiang/"/>
+    <id>https://cryfeifei.top/2020/06/29/ubuntu-20-04-de-jing-xiang/</id>
+    <published>2020-06-29T14:28:36.000Z</published>
+    <updated>2020-06-29T14:29:30.233Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://mirror.bjtu.edu.cn/ubuntu-releases/20.04/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="Ubuntu" scheme="https://cryfeifei.top/tags/Ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下Qt关于fctix输入法的问题</title>
+    <link href="https://cryfeifei.top/2020/06/29/linux-xia-qt-guan-yu-fctix-shu-ru-fa-de-wen-ti/"/>
+    <id>https://cryfeifei.top/2020/06/29/linux-xia-qt-guan-yu-fctix-shu-ru-fa-de-wen-ti/</id>
+    <published>2020-06-29T14:11:41.000Z</published>
+    <updated>2020-06-29T14:28:17.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://cryfeifei.top/categories/Linux/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
+    
+      <category term="输入法" scheme="https://cryfeifei.top/tags/%E8%BE%93%E5%85%A5%E6%B3%95/"/>
+    
+      <category term="fctix" scheme="https://cryfeifei.top/tags/fctix/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt中 UI文件是如何转成C++文件的—UIC工程(Qt源码剖析)</title>
@@ -527,61 +589,6 @@ QByteArray arr&lt;span
       <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
     
       <category term="shell" scheme="https://cryfeifei.top/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树莓派搭建wordpress</title>
-    <link href="https://cryfeifei.top/2020/06/27/shu-mei-pai-da-jian-wordpress/"/>
-    <id>https://cryfeifei.top/2020/06/27/shu-mei-pai-da-jian-wordpress/</id>
-    <published>2020-06-27T11:10:40.000Z</published>
-    <updated>2020-06-27T11:15:30.479Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;跟Ubuntu是差不多的。&lt;br&gt;把mysql换成了mariadb&lt;/p&gt;
-&lt;pre class=&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="树莓派" scheme="https://cryfeifei.top/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-      <category term="wordpress" scheme="https://cryfeifei.top/tags/wordpress/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>md转化为微信公众号格式</title>
-    <link href="https://cryfeifei.top/2020/06/27/md-zhuan-hua-wei-wei-xin-gong-zhong-hao-ge-shi/"/>
-    <id>https://cryfeifei.top/2020/06/27/md-zhuan-hua-wei-wei-xin-gong-zhong-hao-ge-shi/</id>
-    <published>2020-06-27T11:08:44.000Z</published>
-    <updated>2020-06-27T11:09:27.008Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;markdown&quot;&gt;&lt;a href=&quot;#markdown&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="markdown" scheme="https://cryfeifei.top/tags/markdown/"/>
-    
-      <category term="微信" scheme="https://cryfeifei.top/tags/%E5%BE%AE%E4%BF%A1/"/>
     
   </entry>
   
