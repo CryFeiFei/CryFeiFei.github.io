@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类, Qt, C++">
-    <meta name="description" content="分类 | 张小飞">
+    <meta name="keywords" content="分类: Qt基础1教程, Qt, C++">
+    <meta name="description" content="分类: Qt基础1教程 | 张小飞">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>分类 | 张小飞</title>
+    <title>分类: Qt基础1教程 | 张小飞</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -312,7 +312,7 @@
                 
                 <a href="/categories/Qt/Qt%E5%9F%BA%E7%A1%801%E6%95%99%E7%A8%8B/" title="Qt基础1教程: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
+                             chip-active "
                             style="background-color: #D5F5E3;">Qt基础1教程
                         <span class="tag-length">1</span>
                     </span>
@@ -325,64 +325,77 @@
 </div>
 
     
-    <style type="text/css">
-    #category-radar {
-        width: 100%;
-        height: 360px;
-    }
-</style>
 
-<div class="container" data-aos="fade-up">
-    <div class="card">
-        <div id="category-radar" class="card-content"></div>
-    </div>
-</div>
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/06/28/qt-compile-windows/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Windows下VS2019编译Qt5.13.2源码">
+                            
+                            <span class="card-title">Windows下VS2019编译Qt5.13.2源码</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                编译条件
+Python2.7.5 or later；
+VS2019；
+Qt5.13.2源码；
+perl
+ruby
 
-<script type="text/javascript" src="/libs/echarts/echarts.min.js"></script>
-<script type="text/javascript">
-    let radarChart = echarts.init(document.getElementById('category-radar'));
+下载源码
+http://mirror.bit.edu.cn/qtproject/official_releases/qt/5
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                                
+                                <a href="/categories/Qt/Qt%E5%9F%BA%E7%A1%801%E6%95%99%E7%A8%8B/" class="post-category">
+                                    Qt基础1教程
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
 
-    
-
-    let option = {
-        title: {
-            left: 'center',
-            text: '文章分类雷达图',
-            textStyle: {
-                fontWeight: 500,
-                fontSize: 22
-            }
-        },
-        tooltip: {},
-        radar: {
-            name: {
-                textStyle: {
-                    color: '#3C4858'
-                }
-            },
-            indicator: [{"name":"Qt","max":10},{"name":"Qt基础教程","max":10},{"name":"Qt基础1教程","max":10}],
-            nameGap: 5,
-            center: ['50%','55%'],
-            radius: '66%'
-        },
-        series: [{
-            type: 'radar',
-            color: ['#3ecf8e'],
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data : [
-                {
-                    value : [9,2,1],
-                    name : '文章分类数量'
-                }
-            ]
-        }]
-    };
-
-    radarChart.setOption(option);
-</script>
-    
-
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Qt/">
+                            <span class="chip bg-color">Qt</span>
+                        </a>
+                        
+                        <a href="/tags/%E7%BC%96%E8%AF%91/">
+                            <span class="chip bg-color">编译</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </article>
 </main>
+
+
 
 
     <footer class="page-footer bg-color">

@@ -5159,7 +5159,7 @@ inotify<span class="token punctuation">.</span>cc<span class="token operator">~<
 <li>Python2.7.5 or later；</li>
 <li>VS2019；</li>
 <li>Qt5.13.2源码；</li>
-<li>pure</li>
+<li>perl</li>
 <li>ruby</li>
 </ul>
 <h1 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h1><blockquote>
@@ -5194,6 +5194,7 @@ nmake install</code></pre>
 ]]></content>
       <categories>
         <category>Qt</category>
+        <category>Qt基础1教程</category>
       </categories>
       <tags>
         <tag>Qt</tag>
