@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-30T12:59:49.529Z</updated>
+  <updated>2020-06-30T13:52:33.999Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>QThread线程官方的推荐的写法</title>
+    <link href="https://cryfeifei.top/2020/06/30/qthread-xian-cheng-guan-fang-de-tui-jian-de-xie-fa/"/>
+    <id>https://cryfeifei.top/2020/06/30/qthread-xian-cheng-guan-fang-de-tui-jian-de-xie-fa/</id>
+    <published>2020-06-30T13:50:16.000Z</published>
+    <updated>2020-06-30T13:52:33.999Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/tags/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="QThread" scheme="https://cryfeifei.top/tags/QThread/"/>
+    
+      <category term="QObject" scheme="https://cryfeifei.top/tags/QObject/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt来实现MFC的OnIdle效果</title>
@@ -562,35 +597,6 @@ QByteArray arr&lt;span
       <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
     
       <category term="windows" scheme="https://cryfeifei.top/tags/windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下使用WPS做office的二次开发</title>
-    <link href="https://cryfeifei.top/2020/06/27/linux-xia-shi-yong-wps-zuo-office-de-er-ci-kai-fa/"/>
-    <id>https://cryfeifei.top/2020/06/27/linux-xia-shi-yong-wps-zuo-office-de-er-ci-kai-fa/</id>
-    <published>2020-06-27T11:17:26.000Z</published>
-    <updated>2020-06-27T11:40:03.048Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h1&gt;&lt;p&gt;上个版本WPS在Linux上就已经支持二次开发了，可以直接去看官网相关的介绍。&lt;a href=&quot;https://open.wps.cn/&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="WPS" scheme="https://cryfeifei.top/tags/WPS/"/>
-    
-      <category term="office" scheme="https://cryfeifei.top/tags/office/"/>
     
   </entry>
   
