@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="git配置更换全局用户名, Qt, C++">
-    <meta name="description" content="吐嘈每次在github上提交代码，都发现是默认我原来的git的那个用户名，原来写了globle，现在得在当前git目录下再多设置一下，要不然还是得用默认的用户名
-git config user.name &#34;xxx&#34;
-git config u">
+    <meta name="keywords" content="qt_on_idle, Qt, C++">
+    <meta name="description" content="序很久很久以前，四年以前，我还是win上的开发，前东家自己实现了一套界面库，使用了MFC + Win32API 来实现的。 那时候还没有接触过Qt，就只能自己维护了，当时是看到了MFC的OnIdle函数。这个函数是利用cpu的空余时间来做一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +13,7 @@ git config u">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>git配置更换全局用户名 | 张小飞</title>
+    <title>qt_on_idle | 张小飞</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -243,13 +241,13 @@ git config u">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        git配置更换全局用户名
+                        qt_on_idle
                     </div>
                 </div>
             </div>
@@ -361,14 +359,27 @@ git config u">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/git/">
-                                <span class="chip bg-color">git</span>
+                            <a href="/tags/Qt/">
+                                <span class="chip bg-color">Qt</span>
+                            </a>
+                        
+                            <a href="/tags/Qt%E6%8A%80%E5%B7%A7/">
+                                <span class="chip bg-color">Qt技巧</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Qt/" class="post-category">
+                                Qt
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -377,21 +388,21 @@ git config u">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-30
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-27
+                    2020-06-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    72
+                    322
                 </div>
                 
 
@@ -414,9 +425,45 @@ git config u">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="吐嘈"><a href="#吐嘈" class="headerlink" title="吐嘈"></a>吐嘈</h2><p>每次在github上提交代码，都发现是默认我原来的git的那个用户名，原来写了globle，现在得在当前git目录下再多设置一下，要不然还是得用默认的用户名</p>
-<pre class=" language-shell"><code class="language-shell">git config user.name "xxx"
-git config user.email "xxx"</code></pre>
+                <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>很久很久以前，四年以前，我还是win上的开发，前东家自己实现了一套界面库，使用了MFC + Win32API 来实现的。 那时候还没有接触过Qt，就只能自己维护了，当时是看到了MFC的OnIdle函数。这个函数是利用cpu的空余时间来做一些事儿。现在转到Qt了，还是希望有这个东西。然后搜索资料还是发现一些东西的。</p>
+<h1 id="实现1"><a href="#实现1" class="headerlink" title="实现1"></a>实现1</h1><p>最简单的方式当然是用一个定时器来实时刷新某个按钮的状态了。这是其中一个方法。这里就不多说了</p>
+<h1 id="实现2"><a href="#实现2" class="headerlink" title="实现2"></a>实现2</h1><p>刚转Qt的时候，google的时候发现stackoverflow上已经有人实现了，这里贴上具体的方法<br>这两个函数基本上是最终的实现方法了。 鼠标在applcation中会有对应的事件响应。可以自己看下log，我这里贴上代码</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"mainwindow.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ui_mainwindow.h"</span></span>
+
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QAbstractEventDispatcher></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QDebug></span></span>
+
+
+MainWindow<span class="token operator">::</span><span class="token function">MainWindow</span><span class="token punctuation">(</span>QWidget <span class="token operator">*</span>parent<span class="token punctuation">)</span>
+ <span class="token operator">:</span> <span class="token function">QMainWindow</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+ <span class="token punctuation">,</span> <span class="token function">ui</span><span class="token punctuation">(</span><span class="token keyword">new</span> Ui<span class="token operator">::</span>MainWindow<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ ui<span class="token operator">-</span><span class="token operator">></span><span class="token function">setupUi</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+ dispatcher <span class="token operator">=</span> QAbstractEventDispatcher<span class="token operator">::</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token function">connect</span><span class="token punctuation">(</span>dispatcher<span class="token punctuation">,</span> <span class="token function">SIGNAL</span><span class="token punctuation">(</span><span class="token function">awake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">awake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token function">connect</span><span class="token punctuation">(</span>dispatcher<span class="token punctuation">,</span> <span class="token function">SIGNAL</span><span class="token punctuation">(</span><span class="token function">aboutToBlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">SLOT</span><span class="token punctuation">(</span><span class="token function">aboutToBlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+MainWindow<span class="token operator">::</span><span class="token operator">~</span><span class="token function">MainWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ <span class="token keyword">delete</span> ui<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> MainWindow<span class="token operator">::</span><span class="token function">awake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ lastAwake <span class="token operator">=</span> QTime<span class="token operator">::</span><span class="token function">currentTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"Slept for "</span> <span class="token operator">&lt;&lt;</span> lastBlock<span class="token punctuation">.</span><span class="token function">msecsTo</span><span class="token punctuation">(</span>lastAwake<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" msec"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> MainWindow<span class="token operator">::</span><span class="token function">aboutToBlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ lastBlock <span class="token operator">=</span> QTime<span class="token operator">::</span><span class="token function">currentTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"Worked for "</span> <span class="token operator">&lt;&lt;</span> lastAwake<span class="token punctuation">.</span><span class="token function">msecsTo</span><span class="token punctuation">(</span>lastBlock<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" msec"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
 
             </div>
             <hr/>
@@ -442,7 +489,7 @@ git config user.email "xxx"</code></pre>
                     </i>
                     </span>
                 <span class="reprint-info">
-                    <a href="https://cryfeifei.top/2020/06/27/git-pei-zhi-geng-huan-quan-ju-yong-hu-ming/">https://cryfeifei.top/2020/06/27/git-pei-zhi-geng-huan-quan-ju-yong-hu-ming/</a>
+                    <a href="https://cryfeifei.top/2020/06/30/qt-on-idle/">https://cryfeifei.top/2020/06/30/qt-on-idle/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -480,8 +527,12 @@ git config user.email "xxx"</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/git/">
-                                    <span class="chip bg-color">git</span>
+                                <a href="/tags/Qt/">
+                                    <span class="chip bg-color">Qt</span>
+                                </a>
+                            
+                                <a href="/tags/Qt%E6%8A%80%E5%B7%A7/">
+                                    <span class="chip bg-color">Qt技巧</span>
                                 </a>
                             
                         </div>
@@ -522,42 +573,43 @@ git config user.email "xxx"</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/06/27/qt-da-yin-ji-yuan-li-yuan-ma-pou-xi-linux/">
+                <a href="/2020/06/30/qt-on-idle/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Qt打印机原理源码剖析_Linux">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="qt_on_idle">
                         
-                        <span class="card-title">Qt打印机原理源码剖析_Linux</span>
+                        <span class="card-title">qt_on_idle</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简介Qt在Linux下打印机的原理以及源码相关知识。下边我就详细的讲一下Linux下的打印机原理。
-流程Linux下简单的流程就是这样
-
-
-
-CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来维护。算了我还是粘一下wik
+                            序很久很久以前，四年以前，我还是win上的开发，前东家自己实现了一套界面库，使用了MFC + Win32API 来实现的。 那时候还没有接触过Qt，就只能自己维护了，当时是看到了MFC的OnIdle函数。这个函数是利用cpu的空余时间来做一
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-30
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -565,12 +617,8 @@ CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来�
                         <span class="chip bg-color">Qt</span>
                     </a>
                     
-                    <a href="/tags/Qt%E6%BA%90%E7%A0%81/">
-                        <span class="chip bg-color">Qt源码</span>
-                    </a>
-                    
-                    <a href="/tags/Qt%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
-                        <span class="chip bg-color">Qt源码剖析</span>
+                    <a href="/tags/Qt%E6%8A%80%E5%B7%A7/">
+                        <span class="chip bg-color">Qt技巧</span>
                     </a>
                     
                 </div>
@@ -584,29 +632,34 @@ CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来�
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/27/gtk-widget-yu-qt-widget-de-xiang-hu-qian-tao/">
+                <a href="/2020/06/29/ubuntu-20-04-de-jing-xiang/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Gtk widget 与 Qt Widget的相互嵌套">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Ubuntu 20.04的镜像">
                         
-                        <span class="card-title">Gtk widget 与 Qt Widget的相互嵌套</span>
+                        <span class="card-title">Ubuntu 20.04的镜像</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简述gtk qt窗口的相互嵌套。主要是使用了Gtk中的socket跟plug的模式，与Qt中的QX11EmbedContainer。这是两个不同的UI库的相互嵌套的方法。google了下发现有个老哥写出来了，但是gtk嵌入到Qt的代码中是有
+                            https://mirror.bjtu.edu.cn/ubuntu-releases/20.04/
+
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-29
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            张小飞
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -614,12 +667,12 @@ CUPS目前Linux上打印的通用协议是CUPS协议。目前由苹果公司来�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Qt/">
-                        <span class="chip bg-color">Qt</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/GTK/">
-                        <span class="chip bg-color">GTK</span>
+                    <a href="/tags/Ubuntu/">
+                        <span class="chip bg-color">Ubuntu</span>
                     </a>
                     
                 </div>
