@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-06-30T13:52:33.999Z</updated>
+  <updated>2020-07-01T12:47:32.609Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -17,11 +17,185 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Qt释放线程资源的一些工程上的方法</title>
+    <link href="https://cryfeifei.top/2020/07/01/qt-shi-fang-xian-cheng-zi-yuan-de-yi-xie-gong-cheng-shang-de-fang-fa/"/>
+    <id>https://cryfeifei.top/2020/07/01/qt-shi-fang-xian-cheng-zi-yuan-de-yi-xie-gong-cheng-shang-de-fang-fa/</id>
+    <published>2020-07-01T12:45:56.000Z</published>
+    <updated>2020-07-01T12:47:32.609Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Qt官方文档的方法&quot;&gt;&lt;a href=&quot;#Qt官方文档的方法&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="死锁" scheme="https://cryfeifei.top/tags/%E6%AD%BB%E9%94%81/"/>
+    
+      <category term="线程" scheme="https://cryfeifei.top/tags/%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt线程同步-单生产者多消费者</title>
+    <link href="https://cryfeifei.top/2020/07/01/qt-xian-cheng-tong-bu-dan-sheng-chan-zhe-duo-xiao-fei-zhe/"/>
+    <id>https://cryfeifei.top/2020/07/01/qt-xian-cheng-tong-bu-dan-sheng-chan-zhe-duo-xiao-fei-zhe/</id>
+    <published>2020-07-01T12:44:24.000Z</published>
+    <updated>2020-07-01T12:45:33.346Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="QThread" scheme="https://cryfeifei.top/tags/QThread/"/>
+    
+      <category term="生产者" scheme="https://cryfeifei.top/tags/%E7%94%9F%E4%BA%A7%E8%80%85/"/>
+    
+      <category term="消费者" scheme="https://cryfeifei.top/tags/%E6%B6%88%E8%B4%B9%E8%80%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt线程同步-单生产者单消费者</title>
+    <link href="https://cryfeifei.top/2020/07/01/qt-xian-cheng-tong-bu-dan-sheng-chan-zhe-dan-xiao-fei-zhe/"/>
+    <id>https://cryfeifei.top/2020/07/01/qt-xian-cheng-tong-bu-dan-sheng-chan-zhe-dan-xiao-fei-zhe/</id>
+    <published>2020-07-01T12:42:54.000Z</published>
+    <updated>2020-07-01T12:43:57.637Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;生产者消费者&quot;&gt;&lt;a href=&quot;#生产者消费者&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="生产者" scheme="https://cryfeifei.top/tags/%E7%94%9F%E4%BA%A7%E8%80%85/"/>
+    
+      <category term="消费者" scheme="https://cryfeifei.top/tags/%E6%B6%88%E8%B4%B9%E8%80%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt的线程同步 - QMutex and QMutexLocker</title>
+    <link href="https://cryfeifei.top/2020/07/01/qt-de-xian-cheng-tong-bu-qmutex-and-qmutexlocker/"/>
+    <id>https://cryfeifei.top/2020/07/01/qt-de-xian-cheng-tong-bu-qmutex-and-qmutexlocker/</id>
+    <published>2020-07-01T12:40:18.000Z</published>
+    <updated>2020-07-01T12:41:54.463Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;QMutex&quot;&gt;&lt;a href=&quot;#QMutex&quot; class=&quot;headerlink&quot; title=&quot;QMutex&quot;&gt;&lt;/a&gt;QMutex&lt;/h1&gt;&lt;p&gt;锁是多线程同步常用的方法&lt;br&gt;Qt的锁 - QMutex。&lt;br&gt;C++的锁 -
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="QThread" scheme="https://cryfeifei.top/tags/QThread/"/>
+    
+      <category term="Qt线程" scheme="https://cryfeifei.top/tags/Qt%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="QMutex" scheme="https://cryfeifei.top/tags/QMutex/"/>
+    
+      <category term="QMutexLocker" scheme="https://cryfeifei.top/tags/QMutexLocker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Qt线程的一些控制方法</title>
+    <link href="https://cryfeifei.top/2020/07/01/qt-xian-cheng-de-yi-xie-kong-zhi-fang-fa/"/>
+    <id>https://cryfeifei.top/2020/07/01/qt-xian-cheng-de-yi-xie-kong-zhi-fang-fa/</id>
+    <published>2020-07-01T12:36:29.000Z</published>
+    <updated>2020-07-01T12:39:19.520Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;需求&quot;&gt;&lt;a href=&quot;#需求&quot; class=&quot;headerlink&quot; title=&quot;需求&quot;&gt;&lt;/a&gt;需求&lt;/h1&gt;&lt;p&gt;基于上一篇文章的例子，我们来做一些控制的操作，比如暂停，停止，继续这些操作。&lt;/p&gt;
+&lt;h1 id=&quot;五个控制&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
+    
+      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="Qt线程" scheme="https://cryfeifei.top/tags/Qt%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="线程" scheme="https://cryfeifei.top/tags/%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="Qt控制" scheme="https://cryfeifei.top/tags/Qt%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>QThread线程官方的推荐的写法</title>
     <link href="https://cryfeifei.top/2020/06/30/qthread-xian-cheng-guan-fang-de-tui-jian-de-xie-fa/"/>
     <id>https://cryfeifei.top/2020/06/30/qthread-xian-cheng-guan-fang-de-tui-jian-de-xie-fa/</id>
     <published>2020-06-30T13:50:16.000Z</published>
-    <updated>2020-06-30T13:52:33.999Z</updated>
+    <updated>2020-07-01T12:29:19.362Z</updated>
     
     <summary type="html">
     
@@ -463,140 +637,6 @@ QByteArray arr&lt;span
       <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
     
       <category term="inotify" scheme="https://cryfeifei.top/tags/inotify/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入了解QT消息循环及线程相关性</title>
-    <link href="https://cryfeifei.top/2020/06/27/shen-ru-liao-jie-qt-xiao-xi-xun-huan-ji-xian-cheng-xiang-guan-xing/"/>
-    <id>https://cryfeifei.top/2020/06/27/shen-ru-liao-jie-qt-xiao-xi-xun-huan-ji-xian-cheng-xiang-guan-xing/</id>
-    <published>2020-06-27T15:01:06.000Z</published>
-    <updated>2020-06-27T15:01:41.209Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;一、什么是Qt消息循环&quot;&gt;&lt;a href=&quot;#一、什么是Qt消息循环&quot; class=&quot;headerlink&quot; title=&quot;一、什么是Qt消息循环&quot;&gt;&lt;/a&gt;一、什么是Qt消息循环&lt;/h1&gt;&lt;p&gt; 
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Warning: File &#39;tests/checkasm/Makefile&#39; has modification time 56376655 s in</title>
-    <link href="https://cryfeifei.top/2020/06/27/warning-file-tests-checkasm-makefile-has-modification-time-56376655-s-in/"/>
-    <id>https://cryfeifei.top/2020/06/27/warning-file-tests-checkasm-makefile-has-modification-time-56376655-s-in/</id>
-    <published>2020-06-27T12:22:09.000Z</published>
-    <updated>2020-06-27T14:31:24.338Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="shell" scheme="https://cryfeifei.top/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ffmpeg录屏</title>
-    <link href="https://cryfeifei.top/2020/06/27/ffmpeg-lu-ping/"/>
-    <id>https://cryfeifei.top/2020/06/27/ffmpeg-lu-ping/</id>
-    <published>2020-06-27T11:45:07.000Z</published>
-    <updated>2020-06-27T11:46:03.737Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Linux&lt;/p&gt;
-&lt;pre class=&quot; language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;ffmpeg -video_size 1820x900 -framerate 25 -f x11grab -i :0.0 -t 5
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="ffmpeg" scheme="https://cryfeifei.top/tags/ffmpeg/"/>
-    
-      <category term="linux" scheme="https://cryfeifei.top/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下Qt实现无边框可缩放的窗口</title>
-    <link href="https://cryfeifei.top/2020/06/27/linux-xia-qt-shi-xian-wu-bian-kuang-ke-suo-fang-de-chuang-kou/"/>
-    <id>https://cryfeifei.top/2020/06/27/linux-xia-qt-shi-xian-wu-bian-kuang-ke-suo-fang-de-chuang-kou/</id>
-    <published>2020-06-27T11:43:32.000Z</published>
-    <updated>2020-06-27T11:44:33.467Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="无边框" scheme="https://cryfeifei.top/tags/%E6%97%A0%E8%BE%B9%E6%A1%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>windows下Qt无边框可变化的实现</title>
-    <link href="https://cryfeifei.top/2020/06/27/windows-xia-qt-wu-bian-kuang-ke-bian-hua-de-shi-xian/"/>
-    <id>https://cryfeifei.top/2020/06/27/windows-xia-qt-wu-bian-kuang-ke-bian-hua-de-shi-xian/</id>
-    <published>2020-06-27T11:41:04.000Z</published>
-    <updated>2020-06-27T11:42:14.984Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;pre class=&quot; language-cpp&quot;&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;token macro property&quot;&gt;#&lt;span class=&quot;token directive
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="windows" scheme="https://cryfeifei.top/tags/windows/"/>
     
   </entry>
   

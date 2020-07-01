@@ -222,6 +222,7 @@ TimerThread<span class="token operator">::</span><span class="token operator">~<
 </ul>
 <h2 id="QThread"><a href="#QThread" class="headerlink" title="QThread"></a>QThread</h2><ul>
 <li><a href="https://cryfeifei.top/2020/06/14/qt-xian-cheng-ji-chu/" title="Qt线程基础">Qt线程基础</a></li>
+<li><a href="https://cryfeifei.top/2020/06/30/qthread-xian-cheng-guan-fang-de-tui-jian-de-xie-fa/" title="QThread线程官方的推荐的写法">QThread线程官方的推荐的写法</a></li>
 </ul>
 <h2 id="QThreadPool"><a href="#QThreadPool" class="headerlink" title="QThreadPool"></a>QThreadPool</h2><h2 id="QtConcurrent"><a href="#QtConcurrent" class="headerlink" title="QtConcurrent"></a>QtConcurrent</h2><hr>
 <h1 id="Qt网络"><a href="#Qt网络" class="headerlink" title="Qt网络"></a>Qt网络</h1><h1 id="Qt打印"><a href="#Qt打印" class="headerlink" title="Qt打印"></a>Qt打印</h1>]]></content>
@@ -6291,7 +6292,7 @@ WorkThread<span class="token operator">::</span><span class="token operator">~</
 </ol>
 <p>完美释放了QThread的资源。</p>
 <p>当然有人问你这样的操作太复杂了，没必要。其实对于简单的逻辑来讲，这样确实没必要。但是对于颗粒度控制来讲，这种更有优势，下一篇。我会针对这个代码通过信号槽做一些控制的操作。</p>
-<p><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2" target="_blank" rel="noopener" title="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2</a></p>
+<h2 id="附上工程代码"><a href="#附上工程代码" class="headerlink" title="附上工程代码"></a>附上工程代码</h2><p><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2" target="_blank" rel="noopener" title="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2</a></p>
 ]]></content>
       <categories>
         <category>Qt</category>
@@ -6302,6 +6303,563 @@ WorkThread<span class="token operator">::</span><span class="token operator">~</
         <tag>Qt基础教程</tag>
         <tag>QThread</tag>
         <tag>QObject</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt线程同步-单生产者单消费者</title>
+    <url>/2020/07/01/qt-xian-cheng-tong-bu-dan-sheng-chan-zhe-dan-xiao-fei-zhe/</url>
+    <content><![CDATA[<h1 id="生产者消费者"><a href="#生产者消费者" class="headerlink" title="生产者消费者"></a>生产者消费者</h1><p>生产者消费者是个很经典的模型，我当时上学的时候，记得操作系统老师就讲过。</p>
+<p>现在我们用Qt的条件变量来实现。</p>
+<h1 id="QWaitCondition"><a href="#QWaitCondition" class="headerlink" title="QWaitCondition"></a>QWaitCondition</h1><p>Qt的环境变量为<code>QWaitCondition</code>，对应的CPP的类就是<code>std::condition_variable</code><br>用任意一个就可以。</p>
+<p>Qt是有官方的demo实现的。我觉得对于新手来讲不太好理解，而且并没有充分利用C++的RAII。这次我们自己来实现下<br>Qt的官方demo地址</p>
+<pre class=" language-cpp"><code class="language-cpp">Examples\Qt<span class="token number">-5.14</span><span class="token punctuation">.</span><span class="token number">2</span>\corelib\threads\waitconditions</code></pre>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>现在附上我的实现</p>
+<pre class=" language-cpp"><code class="language-cpp">
+<span class="token keyword">const</span> <span class="token keyword">int</span> DataSize <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>
+QStringList listBuffer<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> bufferSize <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+QWaitCondition bufferNotEmpty<span class="token punctuation">;</span>
+QWaitCondition bufferNotFull<span class="token punctuation">;</span>
+QMutex mutex<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token operator">:</span> <span class="token keyword">public</span> QThread
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Producer</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">QThread</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> DataSize<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            QMutexLocker <span class="token function">locker</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>listBuffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> bufferSize<span class="token punctuation">)</span>
+                bufferNotFull<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            QString strNumer <span class="token operator">=</span> QString<span class="token operator">::</span><span class="token function">number</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">//假设生产者比较慢,一秒一个</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> Q_OS_WIN</span>
+            <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+            <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"producer----------"</span><span class="token operator">&lt;&lt;</span>strNumer<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+            listBuffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>strNumer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            bufferNotEmpty<span class="token punctuation">.</span><span class="token function">wakeAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token operator">:</span> <span class="token keyword">public</span> QThread
+<span class="token punctuation">{</span>
+    Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Consumer</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">QThread</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override
+    <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            QMutexLocker <span class="token function">locker</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>listBuffer<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                bufferNotEmpty<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            QString strText <span class="token operator">=</span> listBuffer<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            listBuffer<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            bufferNotFull<span class="token punctuation">.</span><span class="token function">wakeAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">//在这里手动unlock.</span>
+            locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> Q_OS_WIN</span>
+            <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+            <span class="token comment" spellcheck="true">//最好在这里来消费，如果多个消费者，就不会卡主其它线程消费了。</span>
+            <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"consmer------"</span><span class="token operator">&lt;&lt;</span>strText<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h1 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h1><p>看输出，一开始生产者是比消费者要快的,所以producer输出比较快</p>
+<pre class=" language-bash"><code class="language-bash">producer---------- <span class="token string">"0"</span> 
+producer---------- <span class="token string">"1"</span> 
+consmer------ <span class="token string">"0"</span> 
+producer---------- <span class="token string">"2"</span> 
+producer---------- <span class="token string">"3"</span> 
+producer---------- <span class="token string">"4"</span> 
+consmer------ <span class="token string">"1"</span> 
+producer---------- <span class="token string">"5"</span> </code></pre>
+<p>到后面，listBuffer塞满之后，慢慢的两个size的差距就是buffer的大小了。这当然是正常的。</p>
+<pre><code>producer---------- &quot;74&quot; 
+consmer------ &quot;64&quot; 
+producer---------- &quot;75&quot; 
+consmer------ &quot;65&quot; 
+producer---------- &quot;76&quot; 
+consmer------ &quot;66&quot; 
+producer---------- &quot;77&quot; </code></pre><h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>这是一个使用Qt的QMutex跟QWaitContidion来实现的一个经典的生产者消费者的模型。</p>
+<p>当然你可以<br>把我代码中的QWaitCondition替换成C++的std::condition_variable。<br>把QMutex替换成std::mutex。<br>把QMutexLocker 替换成 std::lock_gard或者 std::unique_lock。<br>这些都是可以的。</p>
+<p>个人觉得我的代码比Qt官方的代码好理解一些233333.</p>
+<p>附上工程代码<br><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread_WaitCondition" target="_blank" rel="noopener" title="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread_WaitCondition">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread_WaitCondition</a></p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+        <category>Qt基础教程</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>生产者</tag>
+        <tag>消费者</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt的线程同步 - QMutex and QMutexLocker</title>
+    <url>/2020/07/01/qt-de-xian-cheng-tong-bu-qmutex-and-qmutexlocker/</url>
+    <content><![CDATA[<h1 id="QMutex"><a href="#QMutex" class="headerlink" title="QMutex"></a>QMutex</h1><p>锁是多线程同步常用的方法<br>Qt的锁 - QMutex。<br>C++的锁 - std::mutex;<br>QMutex可以手动调用Lock跟UnLock来加锁跟解锁。<br>但是既然我们都写C++的，还是充分利用C++的RAII的来进行资源管理，避免线程意外停止，发生死锁。</p>
+<h1 id="QMutexLocker"><a href="#QMutexLocker" class="headerlink" title="QMutexLocker"></a>QMutexLocker</h1><p>可以看下Qt中QMutexLocker的实现</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">inline</span> <span class="token operator">~</span><span class="token function">QMutexLocker</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<p>在QMutex锁的生命周期结束以后，自动解锁。</p>
+<p>对应C++的类就是 </p>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>lock_guard：方便线程对互斥量上锁。
+std<span class="token operator">::</span>unique_lock：方便线程对互斥量上锁，但提供了更好的上锁和解锁控制。</code></pre>
+<p>普通的线程同步，使用QMutexLocker就可以。</p>
+<p>这时候可以上栗子了</p>
+<h1 id="栗子"><a href="#栗子" class="headerlink" title="栗子"></a>栗子</h1><p>两个线程，依次输出12345678。。。</p>
+<p>我这里用QThread举例，你当然可以用继承QObject的方式来实现。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">namespace</span>
+<span class="token punctuation">{</span>
+ QMutex mutex<span class="token punctuation">;</span>
+ <span class="token keyword">static</span> <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">WorkerThread</span> <span class="token operator">:</span> <span class="token keyword">public</span> QThread
+<span class="token punctuation">{</span>
+ Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+ <span class="token function">WorkerThread</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token operator">:</span> <span class="token function">QThread</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+  <span class="token function">setObjectName</span><span class="token punctuation">(</span><span class="token string">"WorkerThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+ <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+   QMutexLocker <span class="token function">locker</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   index <span class="token operator">++</span><span class="token punctuation">;</span>
+   <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">objectName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"---"</span><span class="token operator">&lt;&lt;</span>index<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">WorkerThread1</span> <span class="token operator">:</span> <span class="token keyword">public</span> QThread
+<span class="token punctuation">{</span>
+ Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+ <span class="token function">WorkerThread1</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token operator">:</span> <span class="token function">QThread</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+  <span class="token function">setObjectName</span><span class="token punctuation">(</span><span class="token string">"WorkerThread1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+ <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+   QMutexLocker <span class="token function">locker</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   index <span class="token operator">++</span><span class="token punctuation">;</span>
+   <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">objectName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"---"</span><span class="token operator">&lt;&lt;</span>index<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>然后这样调用</p>
+<pre class=" language-cpp"><code class="language-cpp"> WorkerThread thread<span class="token punctuation">;</span>
+ WorkerThread1 thread1<span class="token punctuation">;</span>
+ thread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ thread1<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+ thread<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ thread1<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>我这里贴上输出</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token string">"WorkerThread"</span> <span class="token operator">--</span><span class="token operator">-</span> <span class="token number">1</span> 
+
+<span class="token string">"WorkerThread1"</span> <span class="token operator">--</span><span class="token operator">-</span> <span class="token number">2</span> 
+
+<span class="token string">"WorkerThread"</span> <span class="token operator">--</span><span class="token operator">-</span> <span class="token number">3</span> 
+
+<span class="token string">"WorkerThread1"</span> <span class="token operator">--</span><span class="token operator">-</span> <span class="token number">4</span> 
+
+<span class="token string">"WorkerThread"</span> <span class="token operator">--</span><span class="token operator">-</span> <span class="token number">5</span> 
+。。。</code></pre>
+<p>代码很简单，工程代码在这里</p>
+<p><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread4" target="_blank" rel="noopener" title="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread4">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread4</a></p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+        <category>Qt基础教程</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>QThread</tag>
+        <tag>Qt线程</tag>
+        <tag>QMutex</tag>
+        <tag>QMutexLocker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt释放线程资源的一些工程上的方法</title>
+    <url>/2020/07/01/qt-shi-fang-xian-cheng-zi-yuan-de-yi-xie-gong-cheng-shang-de-fang-fa/</url>
+    <content><![CDATA[<h1 id="Qt官方文档的方法"><a href="#Qt官方文档的方法" class="headerlink" title="Qt官方文档的方法"></a>Qt官方文档的方法</h1><blockquote>
+<p>QThread创建在栈上，然后QObject需要配合QThread释放资源<br>直接上代码。结束的时候线程quit and wait</p>
+</blockquote>
+<p>直接上代码</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Controller</span> <span class="token operator">:</span> <span class="token keyword">public</span> QObject
+<span class="token punctuation">{</span>
+    Q_OBJECT
+    QThread workerThread<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Controller</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Worker <span class="token operator">*</span>worker <span class="token operator">=</span> <span class="token keyword">new</span> Worker<span class="token punctuation">;</span>
+        worker<span class="token operator">-</span><span class="token operator">></span><span class="token function">moveToThread</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>workerThread<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">connect</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>workerThread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QThread<span class="token operator">::</span>finished<span class="token punctuation">,</span> worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QObject<span class="token operator">::</span>deleteLater<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token operator">~</span><span class="token function">Controller</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        workerThread<span class="token punctuation">.</span><span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        workerThread<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>上了关键核心代码。<br>直接按照顺序来说。</p>
+<h2 id="1-观察析构函数"><a href="#1-观察析构函数" class="headerlink" title="1.观察析构函数"></a>1.观察析构函数</h2><pre class=" language-cpp"><code class="language-cpp">    <span class="token operator">~</span><span class="token function">Controller</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        workerThread<span class="token punctuation">.</span><span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        workerThread<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>一步步来</p>
+<ul>
+<li>工作线程quit跟wait退出结束，发出finished信号。</li>
+</ul>
+<h2 id="2-线程退出"><a href="#2-线程退出" class="headerlink" title="2. 线程退出"></a>2. 线程退出</h2><pre class=" language-cpp"><code class="language-cpp">        <span class="token function">connect</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>workerThread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QThread<span class="token operator">::</span>finished<span class="token punctuation">,</span> worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QObject<span class="token operator">::</span>deleteLater<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>线程退出通知QObject对象删除</p>
+<h2 id="3-QThread释放"><a href="#3-QThread释放" class="headerlink" title="3. QThread释放"></a>3. QThread释放</h2><p>由于QThread在栈上，所以会自己销毁。</p>
+<p>这三部完美的释放了线程资源。</p>
+<h1 id="我的做法"><a href="#我的做法" class="headerlink" title="我的做法"></a>我的做法</h1><p>我上面讲的第二种方法实际上一开始写的并不好，虽说你把我的代码QObject跟QThraed加上析构函数输出发现也会释放，但是还是会有一些小问题。感谢知乎大佬指出来了。我直接上正确的结论。</p>
+<p>工程代码在这里<br><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2" target="_blank" rel="noopener">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread2</a></p>
+<p>我的QThread是放到堆上的。即下面的KThread</p>
+<p>直接上我的代码。</p>
+<pre class=" language-cpp"><code class="language-cpp">    m_workerThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">KThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    WorkThread<span class="token operator">*</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">WorkThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    worker<span class="token operator">-</span><span class="token operator">></span><span class="token function">moveToThread</span><span class="token punctuation">(</span>m_workerThread<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//等工作的QObject结束，让线程停止结束</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>WorkThread<span class="token operator">::</span>workFinished<span class="token punctuation">,</span> m_workerThread<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        m_workerThread<span class="token operator">-</span><span class="token operator">></span><span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        m_workerThread<span class="token operator">-</span><span class="token operator">></span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//线程停止发给QObject让他自己销毁。</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>m_workerThread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QThread<span class="token operator">::</span>finished<span class="token punctuation">,</span> worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>WorkThread<span class="token operator">::</span>deleteLater<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// QObject销毁之后，让线程自己销毁。</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>WorkThread<span class="token operator">::</span>destroyed<span class="token punctuation">,</span> m_workerThread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QThread<span class="token operator">::</span>deleteLater<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>解释都在备注上。</p>
+<p>对比Qt官方的文档，也就是把QThread申请放到了堆上，然后多了一步释放QThread的操作。<br>即</p>
+<pre class=" language-cpp"><code class="language-cpp">    <span class="token comment" spellcheck="true">// QObject销毁之后，让线程自己销毁。</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>WorkThread<span class="token operator">::</span>destroyed<span class="token punctuation">,</span> m_workerThread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QThread<span class="token operator">::</span>deleteLater<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>有兴趣可以自己下载代码调试下，会发现KThread跟worker的析构函数都完美释放了。</p>
+<h1 id="释放线程资源必须要做的（避免死锁"><a href="#释放线程资源必须要做的（避免死锁" class="headerlink" title="释放线程资源必须要做的（避免死锁"></a>释放线程资源必须要做的（避免死锁</h1><p><em>一定要等线程停止之后，再销毁线程</em></p>
+<h3 id="QWaitCondition"><a href="#QWaitCondition" class="headerlink" title="QWaitCondition"></a>QWaitCondition</h3><blockquote>
+<p>一定要等线程停止之后，再销毁线程</p>
+</blockquote>
+<p>生产者消费者是用QWaitCondition来进行同步的。</p>
+<p>现在我想手动把这个流程停掉</p>
+<p>大概有这么几种情况。</p>
+<p>比如生产者生产过快，还在wait，这时候我们的线程需要马上停止。</p>
+<p>生产者线程在这里wait</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>listBuffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> bufferSize<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    bufferNotFull<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这时候是没有办法把生产者停掉的，如果强行delete，那就未知了，运气好，不崩溃，运气差，就crash了。</p>
+<p>再看看我们的控制代码是在上面这段代码之前的。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//xxxxxxx</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_bPause<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        emit <span class="token function">workPause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">continue</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//..................</span>
+    <span class="token comment" spellcheck="true">//xxxxx</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>listBuffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> bufferSize<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        bufferNotFull<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//xxxxxxx</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>也就是这里死锁之后，我们的生产者是永远停不了的。</p>
+<p>同理，消费者过快也会出现这个问题。</p>
+<p>所以需要我们在释放这种资源的时候要手动调用下两个条件变量的</p>
+<pre class=" language-cpp"><code class="language-cpp">xxxx<span class="token punctuation">.</span><span class="token function">wakeAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xxxx<span class="token punctuation">.</span><span class="token function">wakeAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>这样能够避免线程释放资源发生死锁。导致crash。</p>
+<h3 id="还有一个方法。"><a href="#还有一个方法。" class="headerlink" title="还有一个方法。"></a>还有一个方法。</h3><p>QWaitCondition 的wait是有一个超时时间的，你可以设定一个超时时间，这样就会进入下一次循环，也会避免死锁了。逃）</p>
+<p>PS。所有的代码都更新已经放到了github上。公众号的文章发了不能改，以我的代码为准吧。</p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+        <category>Qt基础教程</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>死锁</tag>
+        <tag>线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt线程同步-单生产者多消费者</title>
+    <url>/2020/07/01/qt-xian-cheng-tong-bu-dan-sheng-chan-zhe-duo-xiao-fei-zhe/</url>
+    <content><![CDATA[<h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>单生产者单消费者大家应该已经掌握了。上一篇使用的是QMutex跟QWaitCondition。</p>
+<p>如果你的C++编译器版本比较高的话，那就可以使用C++11的 std::condition_variable了</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>这次对比单生产者单消费者，我们多了mutex来进行消费者之间的同步。这样就可以写单生产者多消费者了。</p>
+<p>这是代码中多的一个锁，用于同步消费者。</p>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>mutex mutexConsumer<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//消费者用来同步用的</span></code></pre>
+<p>上代码,这是线程同步需要的变量</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> ItemRepository
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>deque<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> itemQueue<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//缓冲区</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> MaxSize <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 仓库所容纳的产品最大个数</span>
+    <span class="token keyword">int</span> itemCounterUse <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//消费者用了多少</span>
+    std<span class="token operator">::</span>mutex mutex<span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 互斥量,保护产品缓冲区</span>
+    std<span class="token operator">::</span>mutex mutexConsumer<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//消费者用来同步用的</span>
+    std<span class="token operator">::</span>condition_variable bufferNotFull<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// 条件变量, 指产品仓库缓冲区不为满</span>
+    std<span class="token operator">::</span>condition_variable bufferNotEmpty<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 条件变量, 指产品仓库缓冲区不为空</span>
+<span class="token punctuation">}</span>gItemRepository<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">// 产品库全局变量，生产者和消费者操作该变量.</span></code></pre>
+<p>这里是实现代码</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token operator">:</span> <span class="token keyword">public</span> QThread
+<span class="token punctuation">{</span>
+    Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Producer</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">QThread</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 生产 产品</span>
+    <span class="token keyword">void</span> <span class="token function">ProduceItem</span><span class="token punctuation">(</span>ItemRepository <span class="token operator">&amp;</span>itemRepo<span class="token punctuation">,</span> <span class="token keyword">int</span> item<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>itemRepo<span class="token punctuation">.</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>itemRepo<span class="token punctuation">.</span>itemQueue<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> itemRepo<span class="token punctuation">.</span>MaxSize<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            itemRepo<span class="token punctuation">.</span>bufferNotFull<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"product has full"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//#ifdef Q_OS_WIN</span>
+<span class="token comment" spellcheck="true">//        Sleep(1000);</span>
+<span class="token comment" spellcheck="true">//#endif</span>
+
+        itemRepo<span class="token punctuation">.</span>itemQueue<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">// 仓库放入产品</span>
+        itemRepo<span class="token punctuation">.</span>bufferNotEmpty<span class="token punctuation">.</span><span class="token function">notify_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 通知消费者仓库不为空</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> kItemsToProduce<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">ProduceItem</span><span class="token punctuation">(</span>gItemRepository<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">{</span>
+                <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"procut------------"</span><span class="token operator">&lt;&lt;</span>i<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token operator">:</span> <span class="token keyword">public</span> QThread
+<span class="token punctuation">{</span>
+    Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Consumer</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">QThread</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 消费 产品</span>
+    <span class="token keyword">int</span> <span class="token function">ConsumeItem</span><span class="token punctuation">(</span>ItemRepository <span class="token operator">&amp;</span>itemRepo<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> data<span class="token punctuation">;</span>
+        std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>itemRepo<span class="token punctuation">.</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>itemRepo<span class="token punctuation">.</span>itemQueue<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            itemRepo<span class="token punctuation">.</span>bufferNotEmpty<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        data <span class="token operator">=</span> itemRepo<span class="token punctuation">.</span>itemQueue<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        itemRepo<span class="token punctuation">.</span>itemQueue<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        itemRepo<span class="token punctuation">.</span>bufferNotFull<span class="token punctuation">.</span><span class="token function">notify_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override
+    <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> item <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>gItemRepository<span class="token punctuation">.</span>mutexConsumer<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 仓库产品消费计数器保持多线程互斥</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>gItemRepository<span class="token punctuation">.</span>itemCounterUse <span class="token operator">&lt;</span> kItemsToProduce<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                item <span class="token operator">=</span> <span class="token function">ConsumeItem</span><span class="token punctuation">(</span>gItemRepository<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 消费产品</span>
+                gItemRepository<span class="token punctuation">.</span>itemCounterUse<span class="token operator">++</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 每消费一次进行计数器+1</span>
+            <span class="token punctuation">}</span>
+
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">objectName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"thread0"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> Q_OS_WIN</span>
+                <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">objectName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"thread1"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> Q_OS_WIN</span>
+                <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">objectName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"thread2"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> Q_OS_WIN</span>
+                <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+            <span class="token punctuation">}</span>
+            <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"Consumer------------"</span><span class="token operator">&lt;&lt;</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">objectName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"-----"</span><span class="token operator">&lt;&lt;</span>item<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>有一点需要注意的是，消费的时候，应该在消费者的外面，所以我打的log是解锁之后sleep。这时候应该及时通知其它消费者线程赶紧调度。这样避免cpu的资源浪费。</p>
+<p>稍微吐槽下，目前百度 Qt 单生产者多消费者的例子，十有八九是用Qt的信号量来实现的，可是写那篇文章的人也没有研究明白，那个例子有严重的bug。稍微变通下生产总数跟缓冲区总数就输出有问题了。慎用。</p>
+<p>CSDN的文章就是相互抄袭啊。逃）</p>
+<p>工程代码在这里</p>
+<p><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread_Muliconsmer" target="_blank" rel="noopener" title="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread_Muliconsmer">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread_Muliconsmer</a></p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+        <category>Qt基础教程</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>QThread</tag>
+        <tag>生产者</tag>
+        <tag>消费者</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt线程的一些控制方法</title>
+    <url>/2020/07/01/qt-xian-cheng-de-yi-xie-kong-zhi-fang-fa/</url>
+    <content><![CDATA[<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>基于上一篇文章的例子，我们来做一些控制的操作，比如暂停，停止，继续这些操作。</p>
+<h1 id="五个控制"><a href="#五个控制" class="headerlink" title="五个控制"></a>五个控制</h1><ul>
+<li>Start 开始线程</li>
+<li>Stop 结束线程</li>
+<li>Pause 暂停线程</li>
+<li>Continue 继续线程</li>
+<li>Destory 毁灭线程</li>
+</ul>
+<h1 id="新增加的三个"><a href="#新增加的三个" class="headerlink" title="新增加的三个"></a>新增加的三个</h1><p>上一篇，我们已经有了开始线程跟Destory。现在添加新的三个</p>
+<ul>
+<li>结束线程</li>
+<li>暂停线程</li>
+<li>继续线程</li>
+</ul>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>talk is cheap。还是上代码吧，很简单。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">void</span> WorkThread<span class="token operator">::</span><span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    m_bStop <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    emit <span class="token function">workStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    emit <span class="token function">workStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> WorkThread<span class="token operator">::</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>m_bPause<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            emit <span class="token function">workPause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>m_bStop<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            emit <span class="token function">workStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>m_bDestory<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            emit <span class="token function">workDestory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> Q_OS_WIN</span>
+        <span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+        <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+        <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"--"</span><span class="token operator">&lt;&lt;</span>m_i<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+        m_i<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> WorkThread<span class="token operator">::</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    m_bStop <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> WorkThread<span class="token operator">::</span><span class="token function">Pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    m_bPause <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> WorkThread<span class="token operator">::</span><span class="token function">Continue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    m_bPause <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> WorkThread<span class="token operator">::</span><span class="token function">Destory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    m_bDestory <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>上面的代码为控制线程的函数，下面是UI线程通过信号槽来控制代码</p>
+<pre class=" language-cpp"><code class="language-cpp">
+    m_workerThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">QThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    m_worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">WorkThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    m_worker<span class="token operator">-</span><span class="token operator">></span><span class="token function">moveToThread</span><span class="token punctuation">(</span>m_workerThread<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">connect</span><span class="token punctuation">(</span>ui<span class="token operator">-</span><span class="token operator">></span>btnPause<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QPushButton<span class="token operator">::</span>clicked<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>MainWindow<span class="token operator">::</span>ThreadPause<span class="token punctuation">,</span> Qt<span class="token operator">::</span>DirectConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>ui<span class="token operator">-</span><span class="token operator">></span>btnContinue<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QPushButton<span class="token operator">::</span>clicked<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>MainWindow<span class="token operator">::</span>ThreadContinue <span class="token punctuation">,</span>Qt<span class="token operator">::</span>DirectConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>ui<span class="token operator">-</span><span class="token operator">></span>btnStop<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QPushButton<span class="token operator">::</span>clicked<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>MainWindow<span class="token operator">::</span>ThreadStop<span class="token punctuation">,</span> Qt<span class="token operator">::</span>DirectConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>ui<span class="token operator">-</span><span class="token operator">></span>btnDestory<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QPushButton<span class="token operator">::</span>clicked<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>MainWindow<span class="token operator">::</span>ThreadDestory<span class="token punctuation">,</span> Qt<span class="token operator">::</span>DirectConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//启动线程</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>ui<span class="token operator">-</span><span class="token operator">></span>btnStart<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QPushButton<span class="token operator">::</span>clicked<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>MainWindow<span class="token operator">::</span>ThreadStart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span>m_workerThread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QThread<span class="token operator">::</span>started<span class="token punctuation">,</span> m_worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>WorkThread<span class="token operator">::</span>Start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//stop之后继续走</span>
+    <span class="token function">connect</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>MainWindow<span class="token operator">::</span>threadStart<span class="token punctuation">,</span> m_worker<span class="token punctuation">,</span> <span class="token operator">&amp;</span>WorkThread<span class="token operator">::</span>Start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre>
+<p>你会发现我的控制全部使用信号槽来进行线程之间的通信。</p>
+<p>上面的代码只是一个简单的例子，全部的工程代码都在这里。</p>
+<p><a href="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread3" target="_blank" rel="noopener" title="https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread3">https://github.com/CryFeiFei/Qt_Teach/tree/master/Qt_Teach/Thread3</a></p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+        <category>Qt基础教程</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>Qt线程</tag>
+        <tag>线程</tag>
+        <tag>Qt控制</tag>
       </tags>
   </entry>
 </search>
