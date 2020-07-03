@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-07-01T12:47:32.609Z</updated>
+  <updated>2020-07-03T12:35:52.690Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>单例模式</title>
+    <link href="https://cryfeifei.top/2020/07/03/singletonpattern/"/>
+    <id>https://cryfeifei.top/2020/07/03/singletonpattern/</id>
+    <published>2020-07-03T12:28:30.000Z</published>
+    <updated>2020-07-03T12:35:52.690Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://cryfeifei.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
+    
+      <category term="cpp" scheme="https://cryfeifei.top/tags/cpp/"/>
+    
+      <category term="单例模式" scheme="https://cryfeifei.top/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="设计模式" scheme="https://cryfeifei.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt释放线程资源的一些工程上的方法</title>
@@ -610,33 +643,6 @@ QByteArray arr&lt;span
       <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
     
       <category term="编译" scheme="https://cryfeifei.top/tags/%E7%BC%96%E8%AF%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下使用inotify监控文件动作</title>
-    <link href="https://cryfeifei.top/2020/06/27/linux-inotify/"/>
-    <id>https://cryfeifei.top/2020/06/27/linux-inotify/</id>
-    <published>2020-06-27T15:03:06.000Z</published>
-    <updated>2020-06-28T12:23:51.823Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;Linux下使用inotify监控文件动作&quot;&gt;&lt;a href=&quot;#Linux下使用inotify监控文件动作&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Linux" scheme="https://cryfeifei.top/tags/Linux/"/>
-    
-      <category term="inotify" scheme="https://cryfeifei.top/tags/inotify/"/>
     
   </entry>
   

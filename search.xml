@@ -6874,4 +6874,151 @@ xxxx<span class="token punctuation">.</span><span class="token function">wakeAll
         <tag>Qt控制</tag>
       </tags>
   </entry>
+  <entry>
+    <title>单例模式</title>
+    <url>/2020/07/03/singletonpattern/</url>
+    <content><![CDATA[<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式，顾名思义，就是当前Application只有一个实例存在。既然有一个实例，所以我们必须要保证两件事</p>
+<ul>
+<li>该类不能有public的构造函数</li>
+<li>该类不能够被复制</li>
+</ul>
+<p>对于不能够有public的构造函数这种条件，又可以分为两类</p>
+<ul>
+<li>只有使用这个类时再去构造（懒汉模式）</li>
+<li>当应用程序启动时，这个就已经构造好了（饿汉模式）</li>
+</ul>
+<h1 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h1><p>先上代码</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// 饿汉模式</span>
+<span class="token keyword">class</span> <span class="token class-name">CPPSingleClass1</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">static</span> CPPSingleClass1<span class="token operator">*</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> m_single<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"CPPSingleClass1::function1"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token operator">~</span><span class="token function">CPPSingleClass1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"CPPSingleClass1 destory"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//....</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token function">CPPSingleClass1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token function">CPPSingleClass1</span><span class="token punctuation">(</span><span class="token keyword">const</span> CPPSingleClass1<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    CPPSingleClass1<span class="token operator">&amp;</span> <span class="token keyword">operator</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> CPPSingleClass1<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">static</span> CPPSingleClass1<span class="token operator">*</span> m_single<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+CPPSingleClass1<span class="token operator">*</span> CPPSingleClass1<span class="token operator">::</span>m_single <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">CPPSingleClass1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h1 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a>懒汉模式</h1><pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// 懒汉模式</span>
+<span class="token keyword">class</span> <span class="token class-name">CPPSingleClass2</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">static</span> CPPSingleClass2<span class="token operator">*</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">static</span> CPPSingleClass2 cppSingle<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">&amp;</span>cppSingle<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"CPPSingleClass2::function1"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token operator">~</span><span class="token function">CPPSingleClass2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"CPPSingleClass2 Destory"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment" spellcheck="true">//c++ 03</span>
+    <span class="token function">CPPSingleClass2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token function">CPPSingleClass2</span><span class="token punctuation">(</span><span class="token keyword">const</span> CPPSingleClass2<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    CPPSingleClass2<span class="token operator">&amp;</span> <span class="token keyword">operator</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> CPPSingleClass2<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h1 id="小结与坑"><a href="#小结与坑" class="headerlink" title="小结与坑"></a>小结与坑</h1><h2 id="内存泄露"><a href="#内存泄露" class="headerlink" title="内存泄露"></a>内存泄露</h2><p>上面的饿汉模式是有内存泄露的，自己用智能指针取适配下。（这种正常工程中我不推荐用，你们可以忽略</p>
+<h2 id="C-11-delete"><a href="#C-11-delete" class="headerlink" title="C++11 delete"></a>C++11 delete</h2><p>private中实现构造函数与拷贝构造函数等等已经是03的做法，既然都是modern c++了，可以用 c++ 的 =delete来实现下，比如可以这样</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">CPPSingleClass2</span><span class="token punctuation">(</span><span class="token keyword">const</span> CPPSingleClass2<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span></code></pre>
+<h2 id="std-call-once"><a href="#std-call-once" class="headerlink" title="std::call_once"></a>std::call_once</h2><p>界面的话，在Qt中UI线程是主线程，多线程的拓展我就不多讲了，<br>有兴趣的话，可以了解下C++11的 call_once。这个是线程安全的</p>
+<h2 id="C-11-静态局部变量"><a href="#C-11-静态局部变量" class="headerlink" title="C++11 静态局部变量"></a>C++11 静态局部变量</h2><p>C++11在多线程下的静态局部变量是能够保证线程安全的。所以当前的懒汉模式是工程中常见的用法。</p>
+<p>C++的草案原文 6.7节</p>
+<blockquote>
+<p>such a variable is initialized the first time control passes through its declaration; such a variable is considered initialized upon the completion of its initialization. If the initialization exits by throwing an exception, the initialization is not complete, so it will be tried again the next time control enters the declaration. If control enters the declaration concurrently while the variable is being initialized, the concurrent execution shall wait for completion of the initialization. If control re-enters the declaration recursively while the variable is being initialized, the behavior is undefined.</p>
+</blockquote>
+<h1 id="Qt的另一种实现方式-Q-GLOBAL-STATIC"><a href="#Qt的另一种实现方式-Q-GLOBAL-STATIC" class="headerlink" title="Qt的另一种实现方式  Q_GLOBAL_STATIC"></a>Qt的另一种实现方式  Q_GLOBAL_STATIC</h1><p>上个栗子</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//.h</span>
+<span class="token macro property">#<span class="token directive keyword">ifndef</span> QTSINGLE_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> QTSINGLE_H</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QGlobalStatic></span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">QtSingle</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">QtSingle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">static</span> QtSingle<span class="token operator">*</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">functionQt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment" spellcheck="true">// QTSINGLE_H</span>
+
+
+<span class="token comment" spellcheck="true">//.cpp</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"QtSingle.h"</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QDebug></span></span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token function">Q_GLOBAL_STATIC</span><span class="token punctuation">(</span>QtSingle<span class="token punctuation">,</span> single<span class="token punctuation">)</span>
+
+QtSingle<span class="token operator">*</span> QtSingle<span class="token operator">::</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> single<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> QtSingle<span class="token operator">::</span><span class="token function">functionQt</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">qDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">"QtSingle...."</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>此方法是线程安全的，更多的资料可以看Qt的官方文档</p>
+<p><a href="https://doc.qt.io/qt-5/qglobalstatic.html#Q_GLOBAL_STATIC" target="_blank" rel="noopener">https://doc.qt.io/qt-5/qglobalstatic.html#Q_GLOBAL_STATIC</a></p>
+<h1 id="小结下"><a href="#小结下" class="headerlink" title="小结下"></a>小结下</h1><p>优势：<br>应用程序的生命周期中只有一份实例。不需要频繁初始化，节省资源，方便全局调用。</p>
+<h2 id="Qt源码中的单例举例"><a href="#Qt源码中的单例举例" class="headerlink" title="Qt源码中的单例举例"></a>Qt源码中的单例举例</h2><p>Qt代码中：Qt代码中，Qt代码中懒汉模式是非常常见的，比如Qt的QFileSystemWatcher的实现就使用了懒汉模式</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">QInotifyFileSystemWatcherEngine</span> <span class="token operator">:</span> <span class="token keyword">public</span> QFileSystemWatcherEngine
+<span class="token punctuation">{</span>
+    Q_OBJECT
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token operator">~</span><span class="token function">QInotifyFileSystemWatcherEngine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> QInotifyFileSystemWatcherEngine <span class="token operator">*</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//静态的</span>
+    <span class="token comment" spellcheck="true">//xxxxx</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token function">QInotifyFileSystemWatcherEngine</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//私有构造函数</span>
+    <span class="token comment" spellcheck="true">//xxxxx</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Qt中的这种实现方式，在工程中是相当常见的。这也是主要用法。</p>
+<p>代码在这里<br><a href="https://github.com/CryFeiFei/QtDesignPattern" target="_blank" rel="noopener">https://github.com/CryFeiFei/QtDesignPattern</a></p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+        <tag>cpp</tag>
+        <tag>单例模式</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
 </search>
