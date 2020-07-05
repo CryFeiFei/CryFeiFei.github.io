@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cryfeifei.top/"/>
-  <updated>2020-07-03T12:35:52.690Z</updated>
+  <updated>2020-07-05T03:40:53.898Z</updated>
   <id>https://cryfeifei.top/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>银雪白熊究极日月807版本的资料</title>
+    <link href="https://cryfeifei.top/2020/07/05/yin-xue-bai-xiong-jiu-ji-ri-yue-807-ban-ben-de-zi-liao/"/>
+    <id>https://cryfeifei.top/2020/07/05/yin-xue-bai-xiong-jiu-ji-ri-yue-807-ban-ben-de-zi-liao/</id>
+    <published>2020-07-05T03:40:11.000Z</published>
+    <updated>2020-07-05T03:40:53.898Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;经历了从 口袋妖怪吧-&amp;gt;口袋改版资源吧-&amp;gt;最终的网址！&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://jhbenson.lofter.com/post/1f0c17c3_1c5d573dc&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="游戏" scheme="https://cryfeifei.top/categories/%E6%B8%B8%E6%88%8F/"/>
+    
+    
+      <category term="口袋妖怪" scheme="https://cryfeifei.top/tags/%E5%8F%A3%E8%A2%8B%E5%A6%96%E6%80%AA/"/>
+    
+      <category term="游戏" scheme="https://cryfeifei.top/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>单例模式</title>
@@ -611,38 +641,6 @@ QByteArray arr&lt;span
       <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
     
       <category term="QImage" scheme="https://cryfeifei.top/tags/QImage/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows下VS2019编译Qt5.13.2源码</title>
-    <link href="https://cryfeifei.top/2020/06/28/qt-compile-windows/"/>
-    <id>https://cryfeifei.top/2020/06/28/qt-compile-windows/</id>
-    <published>2020-06-28T12:08:40.000Z</published>
-    <updated>2020-06-30T14:22:04.603Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;编译条件&quot;&gt;&lt;a href=&quot;#编译条件&quot; class=&quot;headerlink&quot; title=&quot;编译条件&quot;&gt;&lt;/a&gt;编译条件&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;Python2.7.5 or
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/categories/Qt/"/>
-    
-      <category term="Qt基础教程" scheme="https://cryfeifei.top/categories/Qt/Qt%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="Qt" scheme="https://cryfeifei.top/tags/Qt/"/>
-    
-      <category term="编译" scheme="https://cryfeifei.top/tags/%E7%BC%96%E8%AF%91/"/>
     
   </entry>
   
